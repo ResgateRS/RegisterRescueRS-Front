@@ -58,10 +58,7 @@ export default function LandingPage() {
 
         <Link
           href={siteRoutes.public.donations}
-          className={cn(
-            buttonVariants({ size: 'link', variant: 'link' }),
-            'hover:text-celeste/80',
-          )}
+          className={cn(buttonVariants({ size: 'link', variant: 'link' }))}
         >
           Ver todas
         </Link>

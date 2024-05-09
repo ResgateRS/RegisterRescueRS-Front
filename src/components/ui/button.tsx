@@ -16,7 +16,7 @@ const buttonVariants = cva(
           'border-2 border-celeste bg-transparent text-celeste hover:bg-celeste hover:text-zinc-50',
         navLink:
           'relative text-zinc-50 underline-offset-4 after:absolute after:-bottom-3 after:left-0 after:h-[3px] after:w-0 after:bg-white after:duration-300 after:hover:w-full',
-        link: 'text-celeste underline underline-offset-4',
+        link: 'text-celeste underline underline-offset-4 hover:text-celeste/80',
       },
       size: {
         default: 'h-14 w-fit rounded-full px-16 py-4',
