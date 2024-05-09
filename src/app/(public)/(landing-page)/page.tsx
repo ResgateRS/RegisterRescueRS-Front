@@ -67,14 +67,14 @@ export default function LandingPage() {
           {donationInfos.map(({ title, description, icon: Icon }) => (
             <div
               key={title}
-              className="flex w-[350px] flex-col gap-5 rounded-2xl px-10 py-8 shadow-lg"
+              className="flex w-[350px] flex-col gap-5 rounded-2xl px-10 py-6 shadow-lg 2xl:py-8"
             >
               <div className="flex size-10 items-center justify-center rounded-full bg-celeste/45 2xl:size-12">
                 <Icon className="size-4 2xl:size-5" />
               </div>
 
-              <h2 className="text-2xl">{title}</h2>
-              <p>{description}</p>
+              <h2 className="text-xl 2xl:text-2xl">{title}</h2>
+              <p className="text-sm 2xl:text-base">{description}</p>
             </div>
           ))}
         </div>
