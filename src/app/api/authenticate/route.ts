@@ -23,16 +23,15 @@ export async function POST(
     const payload = await axios.post(`${apiAddress}/Login`, body, {
       headers: { 'Content-Type': 'application/json' },
     })
-    const jwt = payload.data.token
+    const jwt = payload.Data.token
     const decodedjwt: JwtPayload = jwtDecode(jwt)
     const decodedexp = decodedjwt.exp ? decodedjwt.exp : 0
-    const token = decodedjwt.Data.token
 
     // const now = new Date()
     // const decodedexp = now.setDate(now.getDate() + 30)
     // const exp = new Date(decodedexp * 1000).toUTCString()
 
-    if (!token) {
+    if (!jwt) {
       res
         .status(500)
         .send({ status: false, code: 500, message: 'Token problem' })
@@ -40,7 +39,7 @@ export async function POST(
 
     res.setHeader(
       'Set-Cookie',
-      `sid=${token}; Expires=${decodedexp}; SameSite=Strict; Path=/;`,
+      `sid=${jwt}; Expires=${decodedexp}; SameSite=Strict; Path=/;`,
     )
     res.status(200).json({ status: true })
   } catch (e: any) {
