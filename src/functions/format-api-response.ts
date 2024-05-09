@@ -5,5 +5,6 @@ export function formatApiResponse<T = unknown>(data: BaseApiResponse<T>) {
     result: data.Result,
     message: data.Message,
     data: data.Data,
+    debugMessage: data.DebugMessage,
   } satisfies FormattedBaseApiResponse<T>
 }
