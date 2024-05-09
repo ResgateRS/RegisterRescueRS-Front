@@ -10,6 +10,9 @@ const config = {
   ],
   prefix: '',
   theme: {
+    fontFamily: {
+      poppins: ['var(--font-poppins)'],
+    },
     container: {
       center: true,
       padding: '2rem',
