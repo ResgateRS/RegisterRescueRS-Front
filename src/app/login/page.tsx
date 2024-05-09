@@ -1,4 +1,7 @@
+'use client'
+
 import data from './data.json'
+import LoginForm from './form'
 import './styles.css'
 
 export default function LoginPage() {
@@ -9,7 +12,7 @@ export default function LoginPage() {
         <span className="Login-subtitle">{data.subtitle}</span>
       </div>
       <div className="Login-form-container">
-        <span>form</span>
+        <LoginForm />
       </div>
     </section>
   )
