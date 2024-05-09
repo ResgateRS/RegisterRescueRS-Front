@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export function Header() {
   return (
-    <header className="flex w-full items-center justify-between bg-celeste px-10 pt-7 text-zinc-50">
+    <header className="flex w-full items-center justify-between bg-celeste px-44 pt-7 text-zinc-50">
       <h1 className="text-[40px] font-bold uppercase">Resgate RS</h1>
 
       <nav className="flex items-center gap-8">
