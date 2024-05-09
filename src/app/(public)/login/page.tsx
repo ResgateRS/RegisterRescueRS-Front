@@ -1,7 +1,8 @@
 'use client'
 
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 import data from './data.json'
 import LoginForm from './form'
@@ -13,11 +14,12 @@ export default function LoginPage() {
       <div className="Login-register-container">
         <h1 className="Login-title">{data.title}</h1>
         <h2 className="Login-subtitle">{data.subtitle}</h2>
-        <Button
+        <Link
+          href="https://wa.me/55XXXXXXXXXXX?text=Olá!%20Gostaria%20de%20solicitar%20um%20cadastro!"
           className={cn(buttonVariants({ variant: 'outline' }), 'text-lg')}
         >
           solicitar cadastro
-        </Button>
+        </Link>
       </div>
       <div className="Login-form-container">
         <LoginForm />
