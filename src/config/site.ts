@@ -7,12 +7,31 @@ export const siteConfig = {
 
 export type RouteVisibility = 'public' | 'protected'
 
+export type Contributor = {
+  user: string
+  href: string
+}
+
+export const mainContributors = [
+  {
+    user: 'caieradev',
+    href: 'https://github.com/caieradev',
+  },
+  {
+    user: 'lorenzoa7',
+    href: 'https://github.com/lorenzoa7',
+  },
+] satisfies Contributor[]
+
+export const repositoryHref =
+  'https://github.com/caieradev/RegisterRescueRS-Front'
+
+// Site routes
+
 export const prefixSiteRoutes = {
   protected: '/app',
   public: '',
 } as const satisfies Record<RouteVisibility, string>
-
-// Site routes
 
 export const siteRoutes = {
   public: {

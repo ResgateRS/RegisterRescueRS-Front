@@ -1,8 +1,10 @@
 import { CollaborationFigure } from '@/components/figures/collaboration'
 import { SearchAndListFigure } from '@/components/figures/search-and-list'
+import { GithubIcon } from '@/components/icons/github'
+import { HeartIcon } from '@/components/icons/heart'
 import { buttonVariants } from '@/components/ui/button'
 import { donationInfos } from '@/config/how-to-donate'
-import { siteRoutes } from '@/config/site'
+import { mainContributors, repositoryHref, siteRoutes } from '@/config/site'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { Suspense } from 'react'
@@ -101,6 +103,45 @@ export default function LandingPage() {
           </div>
         </div>
       </Section>
+
+      <footer className="mt-5 flex items-center justify-between bg-celeste px-44 py-5 text-zinc-50">
+        <div className="flex flex-col gap-1">
+          <span className="font-bold">Criado por:</span>
+          <div className="grid grid-cols-2 justify-start gap-2">
+            {mainContributors.map((contributor) => (
+              <Link
+                key={contributor.user}
+                href={contributor.href}
+                target="_blank"
+                className={cn(
+                  buttonVariants({ variant: 'linkSecondary', size: 'link' }),
+                  'justify-start',
+                )}
+              >
+                @{contributor.user}
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-1">
+            <span className="font-bold">Este é um projeto open-source</span>
+            <HeartIcon className="size-4" />
+          </div>
+          <Link
+            href={repositoryHref}
+            target="_blank"
+            className={cn(
+              buttonVariants({ variant: 'linkSecondary', size: 'link' }),
+              'justify-end underline flex gap-1 group',
+            )}
+          >
+            <span>Acesse o GitHub</span>
+            <GithubIcon className="size-6 transition-opacity group-hover:opacity-80" />
+          </Link>
+        </div>
+      </footer>
     </>
   )
 }
