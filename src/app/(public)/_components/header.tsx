@@ -15,7 +15,6 @@ export function Header() {
               <Link
                 key={item.title}
                 href={item.href}
-                target="_blank"
                 className={cn(
                   buttonVariants({ variant: 'link', size: 'link' }),
                   'text-xl',
@@ -30,7 +29,6 @@ export function Header() {
             <Link
               key={item.title}
               href={item.href}
-              target="_blank"
               className={cn(buttonVariants({ variant: 'outline' }), 'text-xl')}
             >
               {item.title}
