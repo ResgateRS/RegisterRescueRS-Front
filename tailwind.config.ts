@@ -21,6 +21,9 @@ const config = {
       },
     },
     extend: {
+      colors: {
+        celeste: '#4682B4',
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
