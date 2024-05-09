@@ -16,11 +16,11 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+  username: z.string().min(1, {
+    message: 'O campo Usuário não pode ser vazio.',
   }),
-  password: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
+  password: z.string().min(1, {
+    message: 'O campo Senha não pode ser vazio.',
   }),
 })
 
