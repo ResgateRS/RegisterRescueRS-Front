@@ -1,3 +1,4 @@
+import { CollaborationFigure } from '@/components/figures/collaboration'
 import { SearchAndListFigure } from '@/components/figures/search-and-list'
 import { buttonVariants } from '@/components/ui/button'
 import { donationInfos } from '@/config/how-to-donate'
@@ -11,11 +12,16 @@ import { FindOutMoreButton } from './_components/find-out-more-button'
 import { HowToDonateButton } from './_components/how-to-donate-button'
 import { Section } from './_components/section'
 import { SectionInfo } from './_components/section-info'
+import { VolunteerList } from './_components/volunteers/volunteer-list'
+import { VolunteerListSkeleton } from './_components/volunteers/volunteer-list-skeleton'
 
 export default function LandingPage() {
   return (
     <>
-      <Section id="inicio" className="justify-between bg-celeste text-zinc-50">
+      <Section
+        id="inicio"
+        className="flex-row justify-between gap-32 bg-celeste text-zinc-50 2xl:gap-32"
+      >
         <div className="flex max-w-xl flex-col gap-5">
           <h1 className="text-5xl font-bold">
             Apoie abrigos e pessoas resgatadas!
@@ -32,7 +38,7 @@ export default function LandingPage() {
         <SearchAndListFigure className="size-[500px] 2xl:size-[600px]" />
       </Section>
 
-      <Section id="doacoes" className="flex-col gap-3 2xl:gap-10">
+      <Section id="doacoes">
         <SectionInfo
           title="Doações"
           description="Sua doação não só fornece apoio imediato, mas também ajuda a
@@ -57,7 +63,7 @@ export default function LandingPage() {
         <HowToDonateButton />
       </Section>
 
-      <Section id="como-doar" className="flex-col gap-3 2xl:gap-10">
+      <Section id="como-doar">
         <SectionInfo
           title="Saiba como e o quê doar"
           description="Sua doação não só fornece apoio imediato, mas também ajuda a construir um futuro mais seguro e promissor para aqueles que precisam. Junte-se a nós nesse ato de solidariedade e faça parte da mudança positiva em nossa comunidade."
@@ -77,6 +83,22 @@ export default function LandingPage() {
               <p className="text-sm 2xl:text-base">{description}</p>
             </div>
           ))}
+        </div>
+      </Section>
+
+      <Section id="abrigos-e-voluntarios" className="2xl:gap-2">
+        <SectionInfo
+          title="Abrigos e Voluntários"
+          description="Seja voluntário em abrigos no RS, oferecendo apoio direto e cuidado às pessoas resgatadas. Faça parte dessa rede de solidariedade e impacte positivamente sua comunidade."
+        />
+
+        <div className="flex items-center gap-6">
+          <CollaborationFigure className="size-[400px] 2xl:size-[500px]" />
+          <div className="flex flex-col gap-6">
+            <Suspense fallback={<VolunteerListSkeleton />}>
+              <VolunteerList />
+            </Suspense>
+          </div>
         </div>
       </Section>
     </>
