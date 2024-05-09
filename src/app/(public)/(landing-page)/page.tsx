@@ -1,9 +1,8 @@
-import SearchAndList from '@/assets/search-and-list.svg'
+import { SearchAndListFigure } from '@/components/figures/search-and-list'
 import { buttonVariants } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
+import { donationInfos } from '@/config/how-to-donate'
 import { siteRoutes } from '@/config/site'
 import { cn } from '@/lib/utils'
-import Image from 'next/image'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { DonationListSkeleton } from './_components/donations/donastion-list-skeleton'
@@ -11,6 +10,7 @@ import { DonationList } from './_components/donations/donation-list'
 import { FindOutMoreButton } from './_components/find-out-more-button'
 import { HowToDonateButton } from './_components/how-to-donate-button'
 import { Section } from './_components/section'
+import { SectionInfo } from './_components/section-info'
 
 export default function LandingPage() {
   return (
@@ -29,26 +29,17 @@ export default function LandingPage() {
           <FindOutMoreButton />
         </div>
 
-        <Image
-          src={SearchAndList}
-          className="size-[500px] 2xl:size-[600px]"
-          alt="Desenho colorido de uma mulher com uma lupa na mão e uma lista de pessoas à sua frente."
-        />
+        <SearchAndListFigure className="size-[500px] 2xl:size-[600px]" />
       </Section>
 
       <Section id="doacoes" className="flex-col gap-3 2xl:gap-10">
-        <div className="flex flex-col items-center gap-5">
-          <h1 className="text-5xl font-bold leading-10 text-celeste 2xl:leading-[56px]">
-            Doações
-          </h1>
-          <Separator className="h-[2px] w-14 bg-zinc-950" />
-          <p className="text-balance text-center">
-            Sua doação não só fornece apoio imediato, mas também ajuda a
+        <SectionInfo
+          title="Doações"
+          description="Sua doação não só fornece apoio imediato, mas também ajuda a
             construir um futuro mais seguro e promissor para aqueles que
             precisam. Junte-se a nós nesse ato de solidariedade e faça parte da
-            mudança positiva em nossa comunidade.
-          </p>
-        </div>
+            mudança positiva em nossa comunidade."
+        />
 
         <div className="grid grid-cols-2 gap-4 2xl:gap-8">
           <Suspense fallback={<DonationListSkeleton />}>
@@ -64,6 +55,29 @@ export default function LandingPage() {
         </Link>
 
         <HowToDonateButton />
+      </Section>
+
+      <Section id="como-doar" className="flex-col gap-3 2xl:gap-10">
+        <SectionInfo
+          title="Saiba como e o quê doar"
+          description="Sua doação não só fornece apoio imediato, mas também ajuda a construir um futuro mais seguro e promissor para aqueles que precisam. Junte-se a nós nesse ato de solidariedade e faça parte da mudança positiva em nossa comunidade."
+        />
+
+        <div className="grid grid-cols-3 gap-4">
+          {donationInfos.map(({ title, description, icon: Icon }) => (
+            <div
+              key={title}
+              className="flex w-[350px] flex-col gap-5 rounded-2xl px-10 py-8 shadow-lg"
+            >
+              <div className="flex size-10 items-center justify-center rounded-full bg-celeste/45 2xl:size-12">
+                <Icon className="size-4 2xl:size-5" />
+              </div>
+
+              <h2 className="text-2xl">{title}</h2>
+              <p>{description}</p>
+            </div>
+          ))}
+        </div>
       </Section>
     </>
   )
