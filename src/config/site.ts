@@ -39,8 +39,7 @@ export const mainContributors = [
   },
 ] satisfies Contributor[]
 
-export const repositoryHref =
-  'https://github.com/caieradev/RegisterRescueRS-Front'
+export const organizationHref = 'https://github.com/ResgateRS'
 
 // Site routes
 

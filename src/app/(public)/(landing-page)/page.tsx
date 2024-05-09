@@ -4,7 +4,7 @@ import { GithubIcon } from '@/components/icons/github'
 import { HeartIcon } from '@/components/icons/heart'
 import { buttonVariants } from '@/components/ui/button'
 import { donationInfos } from '@/config/how-to-donate'
-import { mainContributors, repositoryHref, siteRoutes } from '@/config/site'
+import { mainContributors, organizationHref, siteRoutes } from '@/config/site'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { Suspense } from 'react'
@@ -130,7 +130,7 @@ export default function LandingPage() {
             <HeartIcon className="size-4" />
           </div>
           <Link
-            href={repositoryHref}
+            href={organizationHref}
             target="_blank"
             className={cn(
               buttonVariants({ variant: 'linkSecondary', size: 'link' }),
