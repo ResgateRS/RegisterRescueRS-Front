@@ -12,8 +12,11 @@ const buttonVariants = cva(
         default: 'bg-zinc-50 text-celeste hover:bg-zinc-50/80',
         outline:
           'border border-zinc-50 bg-transparent text-zinc-50 hover:bg-zinc-100 hover:text-celeste',
-        link: 'relative text-zinc-50 underline-offset-4 after:absolute after:-bottom-3 after:left-0 after:h-[3px] after:w-0 after:bg-white after:duration-300 after:hover:w-full',
-        linkSecondary: 'text-celeste underline underline-offset-4',
+        outlineSecondary:
+          'border-2 border-celeste bg-transparent text-celeste hover:bg-celeste hover:text-zinc-50',
+        navLink:
+          'relative text-zinc-50 underline-offset-4 after:absolute after:-bottom-3 after:left-0 after:h-[3px] after:w-0 after:bg-white after:duration-300 after:hover:w-full',
+        link: 'text-celeste underline underline-offset-4',
       },
       size: {
         default: 'h-14 w-fit rounded-full px-16 py-4',

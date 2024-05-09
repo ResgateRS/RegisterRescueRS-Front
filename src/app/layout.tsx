@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`font-poppins antialiased ${poppins.variable} bg-zinc-50 text-zinc-500`}
+        className={`font-poppins antialiased ${poppins.variable} !scroll-smooth bg-zinc-50 text-zinc-500`}
         suppressHydrationWarning
       >
         {children}
