@@ -16,7 +16,7 @@ export function Header() {
                 key={item.title}
                 href={item.href}
                 className={cn(
-                  buttonVariants({ variant: 'link', size: 'link' }),
+                  buttonVariants({ variant: 'navLink', size: 'link' }),
                   'text-xl',
                 )}
               >
