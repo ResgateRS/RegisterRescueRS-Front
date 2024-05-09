@@ -3,7 +3,6 @@ import { api } from '@/lib/axios'
 import { BaseApiResponse } from '@/types/api'
 
 export type ListDonationsRequest = {
-  authToken: string
   cursor?: string | null
   pageSize?: number | null
 }
@@ -19,7 +18,6 @@ export type ListDonationsResponse = {
 }[]
 
 export async function listDonations({
-  authToken,
   cursor,
   pageSize,
 }: ListDonationsRequest) {
@@ -27,7 +25,6 @@ export async function listDonations({
     '/Shelter/ListDonations',
     {
       headers: {
-        Authorization: `Bearer ${authToken}`,
         'X-Cursor': cursor,
         'X-PageSize': pageSize,
       },

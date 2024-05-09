@@ -3,7 +3,6 @@ import { api } from '@/lib/axios'
 import { BaseApiResponse } from '@/types/api'
 
 export type ListVolunteersRequest = {
-  authToken: string
   cursor?: string | null
   pageSize?: number | null
   latitude?: number
@@ -25,7 +24,6 @@ export type ListVolunteersResponse = {
 }[]
 
 export async function listVolunteers({
-  authToken,
   cursor,
   pageSize,
   latitude,
@@ -39,7 +37,6 @@ export async function listVolunteers({
         longitude,
       },
       headers: {
-        Authorization: `Bearer ${authToken}`,
         'X-Cursor': cursor,
         'X-PageSize': pageSize,
       },

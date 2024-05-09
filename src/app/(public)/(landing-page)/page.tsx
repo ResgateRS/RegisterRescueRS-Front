@@ -104,7 +104,7 @@ export default function LandingPage() {
         </div>
       </Section>
 
-      <footer className="mt-5 flex items-center justify-between bg-celeste px-44 py-5 text-zinc-50">
+      <footer className="mt-16 flex items-center justify-between bg-celeste px-44 py-5 text-zinc-50">
         <div className="flex flex-col gap-1">
           <span className="font-bold">Criado por:</span>
           <div className="grid grid-cols-2 justify-start gap-2">
