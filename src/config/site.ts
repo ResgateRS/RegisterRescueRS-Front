@@ -21,6 +21,22 @@ export const mainContributors = [
     user: 'lorenzoa7',
     href: 'https://github.com/lorenzoa7',
   },
+  {
+    user: 'arthuroli29',
+    href: 'https://github.com/arthuroli29',
+  },
+  {
+    user: 'GuiAguirres',
+    href: 'https://github.com/GuiAguirres',
+  },
+  {
+    user: 'germanoferreira',
+    href: 'https://github.com/germanoferreira',
+  },
+  {
+    user: 'Aleuck',
+    href: 'https://github.com/Aleuck',
+  },
 ] satisfies Contributor[]
 
 export const repositoryHref =
