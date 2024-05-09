@@ -3,13 +3,15 @@
 import {
   Form,
   FormControl,
-  FormDescription,
+  // FormDescription,
   FormField,
   FormItem,
-  FormLabel,
+  // FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { cn } from '@/lib/utils'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -32,14 +34,23 @@ function LoginForm() {
     console.log('[LoginForm SUBMIT >]', values)
   }
 
-  function renderFormContent({ field }: any) {
+  function renderUsername({ field }: any) {
     return (
       <FormItem>
-        <FormLabel>Username</FormLabel>
         <FormControl>
-          <input placeholder="shadcn" {...field} />
+          <input placeholder="Usuário" {...field} />
         </FormControl>
-        <FormDescription>Descricao formulario</FormDescription>
+        <FormMessage />
+      </FormItem>
+    )
+  }
+
+  function renderPassword({ field }: any) {
+    return (
+      <FormItem>
+        <FormControl>
+          <input placeholder="Senha" {...field} />
+        </FormControl>
         <FormMessage />
       </FormItem>
     )
@@ -51,9 +62,18 @@ function LoginForm() {
         <FormField
           control={form.control}
           name="username"
-          render={renderFormContent}
+          render={renderUsername}
         />
-        <button type="submit">Submit</button>
+        <FormField
+          control={form.control}
+          name="password"
+          render={renderPassword}
+        />
+        <Button
+          className={cn(buttonVariants({ variant: 'default' }), 'text-xl')}
+        >
+          ENTRAR
+        </Button>
       </form>
     </Form>
   )
