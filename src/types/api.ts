@@ -11,3 +11,10 @@ export type FormattedBaseApiResponse<T = unknown> = {
   data: T
   debugMessage?: string
 }
+
+export type JwtPayload = {
+  userData: string
+  nbf: number
+  exp: number
+  iat: number
+}

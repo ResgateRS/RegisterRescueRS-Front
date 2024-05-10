@@ -10,7 +10,7 @@ import { LoginForm } from './_components/form'
 
 export default function LoginPage() {
   return (
-    <Section className="mb-0 min-h-[calc(100vh-12.75rem)] justify-center bg-celeste text-zinc-50 lg:min-h-[calc(100vh-5.75rem)] lg:flex-row lg:justify-between 2xl:gap-32">
+    <Section className="mb-0 min-h-[calc(100vh-12.75rem)] justify-center bg-celeste text-zinc-50 lg:min-h-[calc(100vh-6.75rem)] lg:flex-row lg:justify-between 2xl:gap-32">
       <div className="flex max-w-none flex-col items-center gap-5 lg:max-w-md lg:items-start xl:max-w-xl">
         <h1 className="text-center text-xl font-bold lg:text-start lg:text-4xl 2xl:text-5xl">
           Solicite seu cadastro conosco!

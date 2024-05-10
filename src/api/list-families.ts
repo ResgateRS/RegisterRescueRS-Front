@@ -1,17 +1,34 @@
 import { formatApiResponse } from '@/functions/format-api-response'
 import { api } from '@/lib/axios'
 import { BaseApiResponse } from '@/types/api'
-import { ListFamiliesResponse } from './global-list-families'
 
 export type ListFamiliesRequest = {
   cursor?: string | null
   pageSize?: number | null
+  searchTerm?: string | null
 }
 
-export async function listFamilies({ cursor, pageSize }: ListFamiliesRequest) {
+export type ListFamiliesResponse = {
+  familyId: string
+  totalPeopleNumber: number
+  responsable: string
+  cellphone: string
+  latitude: number
+  longitude: number
+  updatedAt: Date
+}[]
+
+export async function listFamilies({
+  cursor,
+  pageSize,
+  searchTerm,
+}: ListFamiliesRequest) {
   const response = await api.get<BaseApiResponse<ListFamiliesResponse>>(
     '/Family/List',
     {
+      params: {
+        searchTerm,
+      },
       headers: {
         'X-Cursor': cursor,
         'X-PageSize': pageSize,
