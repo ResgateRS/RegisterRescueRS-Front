@@ -1,7 +1,8 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
+import { cookiesNames } from '@/config/storage'
 import { env } from '@/env'
-import { cookies } from 'next/headers'
 
 export const api = axios.create({
   baseURL: env.NEXT_PUBLIC_API_URL,
@@ -10,7 +11,7 @@ export const api = axios.create({
 api.interceptors.request.use((request) => {
   const headers = request.headers ?? {}
 
-  const token = cookies().get('rescuers:token')
+  const token = Cookies.get(cookiesNames.session)
 
   if (token) {
     headers.Authorization = `Bearer ${token}`

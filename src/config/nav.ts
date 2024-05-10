@@ -18,7 +18,7 @@ export const navConfig = [
     type: 'link',
   },
   {
-    title: 'Login',
+    title: 'Acessar',
     href: siteRoutes.public.login,
     type: 'button',
   },
