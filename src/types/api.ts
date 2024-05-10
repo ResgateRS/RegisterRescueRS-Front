@@ -1,12 +1,12 @@
 export type BaseApiResponse<T = unknown> = {
-  Result: number
+  Result: 0 | 1 | 99
   Message: string
   Data: T
   DebugMessage?: string
 }
 
 export type FormattedBaseApiResponse<T = unknown> = {
-  result: number
+  result: 0 | 1 | 99
   message: string
   data: T
   debugMessage?: string

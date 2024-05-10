@@ -51,7 +51,7 @@ export const whatsappHref =
 // Site routes
 
 export const prefixSiteRoutes = {
-  protected: '/meu-abrigo',
+  protected: '/app',
   public: '',
 } as const satisfies Record<RouteVisibility, string>
 
