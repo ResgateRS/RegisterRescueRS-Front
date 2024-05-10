@@ -17,11 +17,21 @@ export async function POST(req: NextRequest) {
     const body = parsedData.data
     const { data, result } = await login(body)
 
-    if (result !== 1) {
+    if (result === 0) {
       return new Response(
         JSON.stringify({
           Result: 0,
           Message: 'Usuário e/ou senha inválidos!',
+          Data: {},
+        }),
+      )
+    }
+
+    if (result === 99) {
+      return new Response(
+        JSON.stringify({
+          Result: 99,
+          Message: 'O token de autenticação não foi enviado!',
           Data: {},
         }),
       )
