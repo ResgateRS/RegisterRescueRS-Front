@@ -6,6 +6,7 @@ export type ListFamiliesRequest = {
   cursor?: string | null
   pageSize?: number | null
   searchTerm?: string | null
+  authToken?: string | null
 }
 
 export type ListFamiliesResponse = {
@@ -15,13 +16,14 @@ export type ListFamiliesResponse = {
   cellphone: string
   latitude: number
   longitude: number
-  updatedAt: Date
+  updatedAt: string
 }[]
 
 export async function listFamilies({
   cursor,
   pageSize,
   searchTerm,
+  authToken,
 }: ListFamiliesRequest) {
   const response = await api.get<BaseApiResponse<ListFamiliesResponse>>(
     '/Family/List',
@@ -32,6 +34,7 @@ export async function listFamilies({
       headers: {
         'X-Cursor': cursor,
         'X-PageSize': pageSize,
+        Authorization: authToken,
       },
     },
   )
