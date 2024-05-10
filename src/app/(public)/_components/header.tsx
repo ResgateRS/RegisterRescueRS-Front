@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 export function Header() {
   return (
-    <header className="-mb-1 flex h-56 w-full flex-col items-center justify-center gap-4 bg-celeste px-4 pt-1 text-zinc-50 lg:h-24 lg:flex-row lg:justify-between lg:px-20 lg:pt-7 xl:px-44">
+    <header className="-mb-1 flex h-56 w-full flex-col items-center justify-center gap-4 bg-celeste px-4 pt-1 text-zinc-50 lg:h-24 lg:flex-row lg:justify-between lg:px-20 lg:pt-7 xl:px-24 2xl:px-44">
       <Link
         href={siteRoutes.public.landingPage}
         className="cursor-pointer select-none text-[40px] font-bold uppercase"

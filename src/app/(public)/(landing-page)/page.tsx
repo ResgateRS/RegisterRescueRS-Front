@@ -106,7 +106,7 @@ export default function LandingPage() {
         </div>
       </Section>
 
-      <footer className="flex flex-col items-center justify-center gap-4 bg-celeste px-4 py-5 text-zinc-50 xl:flex-row xl:items-end xl:justify-between xl:gap-0 xl:px-44">
+      <footer className="flex flex-col items-center justify-center gap-4 bg-celeste px-4 py-5 text-zinc-50 lg:px-20 xl:flex-row xl:items-end xl:justify-between xl:gap-0 xl:px-24 2xl:px-44">
         <div className="order-2 flex flex-col items-center gap-1 xl:order-none xl:items-start">
           <span className="font-bold">Criado por:</span>
           <div className="grid grid-cols-3 justify-start gap-x-6 gap-y-2">

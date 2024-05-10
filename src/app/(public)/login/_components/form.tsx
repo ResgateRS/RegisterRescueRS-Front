@@ -50,13 +50,13 @@ export function LoginForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-1 flex-col items-center gap-4"
+        className="flex w-full flex-col items-center gap-4 lg:flex-1"
       >
         <FormField
           control={form.control}
           name="login"
           render={({ field }) => (
-            <FormItem className="w-7/12">
+            <FormItem className="w-7/12 lg:w-10/12 2xl:max-w-lg">
               <FormLabel>Usuário</FormLabel>
               <FormControl>
                 <Input placeholder="Digite seu usuário..." {...field} />
@@ -70,7 +70,7 @@ export function LoginForm() {
           control={form.control}
           name="password"
           render={({ field }) => (
-            <FormItem className="w-7/12">
+            <FormItem className="w-7/12 lg:w-10/12 2xl:max-w-lg">
               <FormLabel>Senha</FormLabel>
               <FormControl>
                 <Input type="password" placeholder="******" {...field} />
@@ -83,7 +83,7 @@ export function LoginForm() {
         <Button
           className={cn(
             buttonVariants({ variant: 'default' }),
-            'text-xl mt-6 uppercase',
+            'text-xl xl:mt-6 uppercase',
           )}
           disabled={isPending}
         >
