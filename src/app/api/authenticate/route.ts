@@ -1,4 +1,5 @@
 import { login } from '@/api/login'
+import { cookiesNames } from '@/config/storage'
 import { loginSchema } from '@/schemas/login-schema'
 import { JwtPayload, jwtDecode } from 'jwt-decode'
 import { cookies } from 'next/headers'
@@ -11,13 +12,22 @@ export type AuthenticateResponseData = {
 export async function POST(req: NextRequest) {
   const data = await req.json()
 
-  const result = loginSchema.safeParse(data)
-  if (result.success) {
-    const body = result.data
+  const parsedData = loginSchema.safeParse(data)
+  if (parsedData.success) {
+    const body = parsedData.data
+    const { data, result } = await login(body)
 
-    const {
-      data: { token },
-    } = await login(body)
+    if (result === 0) {
+      return new Response(
+        JSON.stringify({
+          Result: 0,
+          Message: 'Usuário e/ou senha inválidos!',
+          Data: {},
+        }),
+      )
+    }
+
+    const { token } = data
 
     const decodedJwt: JwtPayload = jwtDecode(token)
     const expirationTime = decodedJwt.exp
@@ -33,13 +43,10 @@ export async function POST(req: NextRequest) {
           Message: 'O token de sessão é inválido!',
           Data: {},
         }),
-        {
-          status: 401,
-        },
       )
     }
 
-    cookies().set('rescuers-token', token, {
+    cookies().set(cookiesNames.session, token, {
       expires,
     })
 
@@ -49,9 +56,6 @@ export async function POST(req: NextRequest) {
         Message: '',
         Data: { token },
       }),
-      {
-        status: 200,
-      },
     )
   }
 
@@ -61,8 +65,5 @@ export async function POST(req: NextRequest) {
       Message: 'Requisição inválida!',
       Data: {},
     }),
-    {
-      status: 400,
-    },
   )
 }
