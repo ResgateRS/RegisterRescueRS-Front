@@ -3,6 +3,7 @@ import { SearchAndListFigure } from '@/components/figures/search-and-list'
 import { GithubIcon } from '@/components/icons/github'
 import { HeartIcon } from '@/components/icons/heart'
 import { buttonVariants } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { donationInfos } from '@/config/how-to-donate'
 import { mainContributors, organizationHref, siteRoutes } from '@/config/site'
 import { cn } from '@/lib/utils'
@@ -23,13 +24,13 @@ export default function LandingPage() {
     <>
       <Section
         id="inicio"
-        className="flex-row justify-between gap-32 bg-celeste text-zinc-50 2xl:gap-32"
+        className="min-h-[calc(100vh-12.75rem)] flex-row justify-between gap-32 bg-celeste text-zinc-50 2xl:min-h-[calc(100vh-5.75rem)] 2xl:gap-32"
       >
-        <div className="flex max-w-xl flex-col gap-5">
-          <h1 className="text-5xl font-bold">
+        <div className="flex max-w-xl flex-col items-center gap-5 2xl:items-start">
+          <h1 className="text-center text-5xl font-bold 2xl:text-start">
             Apoie abrigos e pessoas resgatadas!
           </h1>
-          <p className="text-xl font-light">
+          <p className="text-center text-xl font-light 2xl:text-start">
             Faça a diferença na vida das pessoas e ajude abrigos a fornecer
             cuidados essenciais. Saiba o que os abrigos estão precisando e como
             doar da forma correta!
@@ -38,7 +39,7 @@ export default function LandingPage() {
           <FindOutMoreButton />
         </div>
 
-        <SearchAndListFigure className="size-[500px] 2xl:size-[600px]" />
+        <SearchAndListFigure className="hidden size-[500px] xl:block 2xl:size-[600px]" />
       </Section>
 
       <Section id="doacoes">
@@ -50,7 +51,7 @@ export default function LandingPage() {
             mudança positiva em nossa comunidade."
         />
 
-        <div className="grid grid-cols-2 gap-4 2xl:gap-8">
+        <div className="gridlc-cols-1 grid gap-4 xl:grid-cols-2 2xl:gap-8">
           <Suspense fallback={<DonationListSkeleton />}>
             <DonationList />
           </Suspense>
@@ -72,11 +73,11 @@ export default function LandingPage() {
           description="Sua doação não só fornece apoio imediato, mas também ajuda a construir um futuro mais seguro e promissor para aqueles que precisam. Junte-se a nós nesse ato de solidariedade e faça parte da mudança positiva em nossa comunidade."
         />
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
           {donationInfos.map(({ title, description, icon: Icon }) => (
             <div
               key={title}
-              className="flex w-[350px] flex-col gap-5 rounded-2xl px-10 py-6 shadow-lg 2xl:py-8"
+              className="flex w-full flex-col gap-2.5 rounded-2xl px-5 py-3 shadow-lg xl:w-[350px] xl:gap-5 xl:px-10 xl:py-6 2xl:py-8"
             >
               <div className="flex size-10 items-center justify-center rounded-full bg-celeste/45 2xl:size-12">
                 <Icon className="size-4 2xl:size-5" />
@@ -96,8 +97,8 @@ export default function LandingPage() {
         />
 
         <div className="flex items-center gap-6">
-          <CollaborationFigure className="size-[400px] 2xl:size-[500px]" />
-          <div className="flex flex-col gap-6">
+          <CollaborationFigure className="hidden size-[400px] xl:block 2xl:size-[500px]" />
+          <div className="flex flex-col gap-3 xl:gap-6">
             <Suspense fallback={<VolunteerListSkeleton />}>
               <VolunteerList />
             </Suspense>
@@ -105,8 +106,8 @@ export default function LandingPage() {
         </div>
       </Section>
 
-      <footer className="mt-16 flex items-end justify-between bg-celeste px-44 py-5 text-zinc-50">
-        <div className="flex flex-col gap-1">
+      <footer className="flex flex-col items-end justify-center gap-4 bg-celeste px-4 py-5 text-zinc-50 xl:flex-row xl:justify-between xl:gap-0 xl:px-44">
+        <div className="order-2 flex flex-col items-center gap-1 xl:order-none xl:items-start">
           <span className="font-bold">Criado por:</span>
           <div className="grid grid-cols-3 justify-start gap-2">
             {mainContributors.map((contributor) => (
@@ -125,7 +126,9 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <div className="flex flex-col items-end gap-1">
+        <Separator className="order-1 block xl:hidden" />
+
+        <div className="order-0 flex w-full flex-col items-center gap-1 xl:items-end">
           <Link
             href={'mailto:contato@resgaters.app.br'}
             target="_blank"

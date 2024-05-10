@@ -11,8 +11,8 @@ type Props = {
 
 export function DonationItem({ donation }: Props) {
   return (
-    <div className="flex h-56 w-[500px] flex-col gap-4 rounded-2xl px-4 py-10 shadow-lg 2xl:h-64 2xl:w-[630px]">
-      <div className="flex gap-6">
+    <div className="flex h-full w-[300px] flex-col gap-4 rounded-2xl px-4 py-10 shadow-lg xl:h-56 xl:w-[500px] 2xl:h-64 2xl:w-[630px]">
+      <div className="flex gap-3 xl:gap-6">
         <div className="flex size-10 items-center justify-center rounded-full bg-celeste/45 2xl:size-12">
           <HomeIcon className="size-4 2xl:size-5" />
         </div>
@@ -25,7 +25,7 @@ export function DonationItem({ donation }: Props) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 pl-16 2xl:pl-[72px]">
+      <div className="flex flex-col gap-4 pl-0 xl:pl-16 2xl:pl-[72px]">
         <span className="text-sm font-light uppercase 2xl:text-base">
           Precisam de:
         </span>

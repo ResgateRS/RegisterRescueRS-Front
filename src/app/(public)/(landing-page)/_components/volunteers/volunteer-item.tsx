@@ -12,8 +12,8 @@ type Props = {
 
 export function VolunteerItem({ volunteer }: Props) {
   return (
-    <div className="flex h-60 w-[600px] flex-col gap-2 rounded-2xl px-4 py-10 shadow-lg 2xl:h-64 2xl:w-[790px]">
-      <div className="flex gap-6">
+    <div className="flex h-80 w-full flex-col justify-between gap-2 rounded-2xl px-4 py-10 shadow-lg xl:h-60 xl:w-[600px] xl:justify-start 2xl:h-64 2xl:w-[790px]">
+      <div className="flex gap-3 xl:gap-6">
         <div className="flex size-10 items-center justify-center rounded-full bg-celeste/45 2xl:size-12">
           <HomeIcon className="size-4 2xl:size-5" />
         </div>
@@ -26,7 +26,7 @@ export function VolunteerItem({ volunteer }: Props) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 pl-16 2xl:pl-[72px]">
+      <div className="flex flex-col gap-4 pl-0 xl:pl-16 2xl:pl-[72px]">
         <span
           data-available={volunteer.avaliable}
           className="text-sm font-extrabold data-[available=false]:text-red-500 data-[available=true]:text-green-500 2xl:text-base"
