@@ -24,13 +24,13 @@ export default function LandingPage() {
     <>
       <Section
         id="inicio"
-        className="min-h-[calc(100vh-12.75rem)] flex-row justify-between gap-32 bg-celeste text-zinc-50 xl:min-h-[calc(100vh-5.75rem)]"
+        className="min-h-[calc(100vh-12.75rem)] flex-row justify-between bg-celeste text-zinc-50 lg:min-h-[calc(100vh-5.75rem)] xl:gap-32"
       >
-        <div className="flex max-w-none flex-col items-center gap-5 xl:max-w-xl xl:items-start">
-          <h1 className="text-center text-5xl font-bold xl:text-start">
+        <div className="flex max-w-none flex-col items-center gap-5 lg:max-w-md lg:items-start xl:max-w-xl">
+          <h1 className="text-center text-5xl font-bold lg:text-start lg:text-4xl xl:text-5xl">
             Apoie abrigos e pessoas resgatadas!
           </h1>
-          <p className="text-center text-xl font-light xl:text-start">
+          <p className="text-center text-xl font-light lg:text-start lg:text-lg xl:text-xl">
             Faça a diferença na vida das pessoas e ajude abrigos a fornecer
             cuidados essenciais. Saiba o que os abrigos estão precisando e como
             doar da forma correta!
@@ -39,7 +39,7 @@ export default function LandingPage() {
           <FindOutMoreButton />
         </div>
 
-        <SearchAndListFigure className="hidden size-[500px] xl:block 2xl:size-[600px]" />
+        <SearchAndListFigure className="hidden size-[500px] lg:block 2xl:size-[600px]" />
       </Section>
 
       <Section id="doacoes">
@@ -51,7 +51,7 @@ export default function LandingPage() {
             mudança positiva em nossa comunidade."
         />
 
-        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2 2xl:gap-8">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:gap-8">
           <Suspense fallback={<DonationListSkeleton />}>
             <DonationList />
           </Suspense>
@@ -97,8 +97,8 @@ export default function LandingPage() {
         />
 
         <div className="flex items-center gap-6">
-          <CollaborationFigure className="hidden size-[400px] xl:block 2xl:size-[500px]" />
-          <div className="flex flex-col gap-3 xl:gap-6">
+          <CollaborationFigure className="hidden size-[400px] lg:block 2xl:size-[500px]" />
+          <div className="flex flex-col gap-3 lg:gap-6">
             <Suspense fallback={<VolunteerListSkeleton />}>
               <VolunteerList />
             </Suspense>
