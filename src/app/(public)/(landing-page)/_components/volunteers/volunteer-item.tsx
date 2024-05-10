@@ -34,7 +34,7 @@ export function VolunteerItem({ volunteer }: Props) {
           {volunteer.avaliable ? 'Abrigo disponível' : 'Abrigo indisponível'}
         </span>
 
-        <div className="grid grid-cols-2 gap-0.5">
+        <div className="grid grid-cols-2 gap-2 xl:gap-0.5">
           <VolunteerNeed
             condition={volunteer.acceptingVolunteers}
             trueDescription="aceita voluntários"

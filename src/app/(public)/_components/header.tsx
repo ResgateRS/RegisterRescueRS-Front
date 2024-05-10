@@ -1,4 +1,5 @@
 import { buttonVariants } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { navConfig } from '@/config/nav'
 import { siteRoutes } from '@/config/site'
 import { cn } from '@/lib/utils'
@@ -6,7 +7,7 @@ import Link from 'next/link'
 
 export function Header() {
   return (
-    <header className="-mb-1 flex h-52 w-full flex-col items-center justify-center gap-4 bg-celeste px-4 pt-0 text-zinc-50 xl:h-24 xl:flex-row xl:justify-between xl:px-44 xl:pt-7">
+    <header className="-mb-1 flex h-56 w-full flex-col items-center justify-center gap-4 bg-celeste px-4 pt-1 text-zinc-50 xl:h-24 xl:flex-row xl:justify-between xl:px-44 xl:pt-7">
       <Link
         href={siteRoutes.public.landingPage}
         className="cursor-pointer select-none text-[40px] font-bold uppercase"
@@ -40,6 +41,7 @@ export function Header() {
           </Link>
         ))}
       </nav>
+      <Separator className="block h-1 xl:hidden" />
     </header>
   )
 }

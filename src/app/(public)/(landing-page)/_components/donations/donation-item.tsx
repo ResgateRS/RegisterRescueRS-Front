@@ -30,11 +30,20 @@ export function DonationItem({ donation }: Props) {
         <span className="text-sm font-light uppercase 2xl:text-base">
           Precisam de:
         </span>
-        <span className="text-wrap text-sm 2xl:text-base">
+
+        <span className="block text-wrap text-sm sm:hidden lg:block 2xl:text-base">
           {truncateText(
             `${donation.donationDescription} Lorem ipsum dolor sit amet consectetur
           adipisicing elit. Tempora, velit.`,
             60,
+          )}
+        </span>
+
+        <span className="hidden text-wrap text-sm sm:block lg:hidden 2xl:text-base">
+          {truncateText(
+            `${donation.donationDescription} Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Tempora, velit.`,
+            80,
           )}
         </span>
       </div>

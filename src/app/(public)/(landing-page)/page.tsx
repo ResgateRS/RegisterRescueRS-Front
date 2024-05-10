@@ -24,9 +24,9 @@ export default function LandingPage() {
     <>
       <Section
         id="inicio"
-        className="min-h-[calc(100vh-12.75rem)] flex-row justify-between gap-32 bg-celeste text-zinc-50 xl:min-h-[calc(100vh-5.75rem)] xl:gap-32"
+        className="min-h-[calc(100vh-12.75rem)] flex-row justify-between gap-32 bg-celeste text-zinc-50 xl:min-h-[calc(100vh-5.75rem)]"
       >
-        <div className="flex max-w-xl flex-col items-center gap-5 xl:items-start">
+        <div className="flex max-w-none flex-col items-center gap-5 xl:max-w-xl xl:items-start">
           <h1 className="text-center text-5xl font-bold xl:text-start">
             Apoie abrigos e pessoas resgatadas!
           </h1>
@@ -73,7 +73,7 @@ export default function LandingPage() {
           description="Sua doação não só fornece apoio imediato, mas também ajuda a construir um futuro mais seguro e promissor para aqueles que precisam. Junte-se a nós nesse ato de solidariedade e faça parte da mudança positiva em nossa comunidade."
         />
 
-        <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {donationInfos.map(({ title, description, icon: Icon }) => (
             <div
               key={title}
@@ -106,7 +106,7 @@ export default function LandingPage() {
         </div>
       </Section>
 
-      <footer className="flex flex-col items-end justify-center gap-4 bg-celeste px-4 py-5 text-zinc-50 xl:flex-row xl:justify-between xl:gap-0 xl:px-44">
+      <footer className="flex flex-col items-center justify-center gap-4 bg-celeste px-4 py-5 text-zinc-50 xl:flex-row xl:items-end xl:justify-between xl:gap-0 xl:px-44">
         <div className="order-2 flex flex-col items-center gap-1 xl:order-none xl:items-start">
           <span className="font-bold">Criado por:</span>
           <div className="grid grid-cols-3 justify-start gap-x-6 gap-y-2">
