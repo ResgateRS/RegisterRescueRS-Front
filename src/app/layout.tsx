@@ -1,3 +1,5 @@
+import Providers from '@/components/providers'
+import { Toaster } from '@/components/ui/sonner'
 import { siteConfig } from '@/config/site'
 import { poppins } from '@/lib/fonts'
 import type { Metadata } from 'next'
@@ -19,7 +21,10 @@ export default function RootLayout({
         className={`font-poppins antialiased ${poppins.variable} !scroll-smooth bg-zinc-50 text-zinc-500`}
         suppressHydrationWarning
       >
-        {children}
+        <Providers>
+          {children}
+          <Toaster richColors />
+        </Providers>
       </body>
     </html>
   )

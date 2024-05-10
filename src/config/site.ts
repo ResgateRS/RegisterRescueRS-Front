@@ -30,16 +30,23 @@ export const mainContributors = [
     href: 'https://github.com/GuiAguirres',
   },
   {
-    user: 'germanoferreira',
-    href: 'https://github.com/germanoferreira',
+    user: 'luilencina',
+    href: 'https://github.com/luilencina',
   },
   {
-    user: 'Aleuck',
-    href: 'https://github.com/Aleuck',
+    user: 'gbombassaro',
+    href: 'https://github.com/gbombassaro',
+  },
+  {
+    user: 'caiocesarbrito',
+    href: 'https://github.com/caiocesarbrito',
   },
 ] satisfies Contributor[]
 
 export const organizationHref = 'https://github.com/ResgateRS'
+
+export const whatsappHref =
+  'https://wa.me/55XXXXXXXXXXX?text=Olá!%20Gostaria%20de%20solicitar%20um%20cadastro!'
 
 // Site routes
 

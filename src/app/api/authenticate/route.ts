@@ -1,55 +1,68 @@
-import axios from 'axios'
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { jwtDecode, JwtPayload } from 'jwt-decode'
+import { login } from '@/api/login'
+import { loginSchema } from '@/schemas/login-schema'
+import { JwtPayload, jwtDecode } from 'jwt-decode'
+import { cookies } from 'next/headers'
+import type { NextRequest } from 'next/server'
 
-type ResponseData = {
-  status: boolean
-  code?: number
-  message?: string
+export type AuthenticateResponseData = {
+  token: string
 }
 
-export async function POST(
-  req: NextApiRequest,
-  res: NextApiResponse<ResponseData>,
-) {
-  console.log('FUNCIONOU', JSON.parse(req.body))
+export async function POST(req: NextRequest) {
+  const data = await req.json()
 
-  const apiAddress = process.env.NEXT_PUBLIC_API_URL || ''
-  const username = req.body.username || ''
-  const password = req.body.password || ''
-  const body = { login: username, password }
+  const result = loginSchema.safeParse(data)
+  if (result.success) {
+    const body = result.data
 
-  try {
-    const payload = await axios.post(`${apiAddress}/Login`, body, {
-      headers: { 'Content-Type': 'application/json' },
-    })
-    const jwt = payload.Data.token
-    const decodedjwt: JwtPayload = jwtDecode(jwt)
-    const decodedexp = decodedjwt.exp ? decodedjwt.exp : 0
+    const {
+      data: { token },
+    } = await login(body)
 
-    // const now = new Date()
-    // const decodedexp = now.setDate(now.getDate() + 30)
-    // const exp = new Date(decodedexp * 1000).toUTCString()
+    const decodedJwt: JwtPayload = jwtDecode(token)
+    const expirationTime = decodedJwt.exp
+    const oneMonth = 30 * 24 * 60 * 60 * 1000
+    const expires = expirationTime
+      ? new Date(expirationTime).getTime() * 1000
+      : Date.now() + oneMonth
 
-    if (!jwt) {
-      res
-        .status(500)
-        .send({ status: false, code: 500, message: 'Token problem' })
+    if (!decodedJwt) {
+      return new Response(
+        JSON.stringify({
+          Result: 0,
+          Message: 'O token de sessão é inválido!',
+          Data: {},
+        }),
+        {
+          status: 401,
+        },
+      )
     }
 
-    res.setHeader(
-      'Set-Cookie',
-      `sid=${jwt}; Expires=${decodedexp}; SameSite=Strict; Path=/;`,
+    cookies().set('rescuers-token', token, {
+      expires,
+    })
+
+    return new Response(
+      JSON.stringify({
+        Result: 1,
+        Message: '',
+        Data: { token },
+      }),
+      {
+        status: 200,
+      },
     )
-    res.status(200).json({ status: true })
-  } catch (e: any) {
-    const apiErrorMessage = e?.response?.data?.error || ''
-    const requestErrorCode = e?.response?.status || ''
-    console.log('[Fetch Error]', e)
-    res
-      .status(500)
-      .send({ status: false, code: requestErrorCode, message: apiErrorMessage })
   }
-  // return NextResponse.json({ status: 'OK' })
-  // res.status(200).json({ message: 'Hello from Next.js!' })
+
+  return new Response(
+    JSON.stringify({
+      Result: 0,
+      Message: 'Requisição inválida!',
+      Data: {},
+    }),
+    {
+      status: 400,
+    },
+  )
 }

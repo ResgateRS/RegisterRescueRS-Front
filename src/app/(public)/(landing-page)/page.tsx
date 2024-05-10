@@ -6,14 +6,15 @@ import { buttonVariants } from '@/components/ui/button'
 import { donationInfos } from '@/config/how-to-donate'
 import { mainContributors, organizationHref, siteRoutes } from '@/config/site'
 import { cn } from '@/lib/utils'
+import { MailIcon } from 'lucide-react'
 import Link from 'next/link'
 import { Suspense } from 'react'
+import { Section } from '../_components/section'
+import { SectionInfo } from '../_components/section-info'
 import { DonationListSkeleton } from './_components/donations/donastion-list-skeleton'
 import { DonationList } from './_components/donations/donation-list'
 import { FindOutMoreButton } from './_components/find-out-more-button'
 import { HowToDonateButton } from './_components/how-to-donate-button'
-import { Section } from './_components/section'
-import { SectionInfo } from './_components/section-info'
 import { VolunteerList } from './_components/volunteers/volunteer-list'
 import { VolunteerListSkeleton } from './_components/volunteers/volunteer-list-skeleton'
 
@@ -104,10 +105,10 @@ export default function LandingPage() {
         </div>
       </Section>
 
-      <footer className="mt-16 flex items-center justify-between bg-celeste px-44 py-5 text-zinc-50">
+      <footer className="mt-16 flex items-end justify-between bg-celeste px-44 py-5 text-zinc-50">
         <div className="flex flex-col gap-1">
           <span className="font-bold">Criado por:</span>
-          <div className="grid grid-cols-2 justify-start gap-2">
+          <div className="grid grid-cols-3 justify-start gap-2">
             {mainContributors.map((contributor) => (
               <Link
                 key={contributor.user}
@@ -124,7 +125,19 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col items-end gap-1">
+          <Link
+            href={'mailto:contato@resgaters.app.br'}
+            target="_blank"
+            className={cn(
+              buttonVariants({ variant: 'linkSecondary', size: 'link' }),
+              'underline font-light flex gap-1 mb-1 group',
+            )}
+          >
+            contato@resgaters.app.br
+            <MailIcon className="size-4 transition-opacity group-hover:opacity-80" />
+          </Link>
+
           <div className="flex items-center gap-1">
             <span className="font-bold">Este é um projeto open-source</span>
             <HeartIcon className="size-4" />
