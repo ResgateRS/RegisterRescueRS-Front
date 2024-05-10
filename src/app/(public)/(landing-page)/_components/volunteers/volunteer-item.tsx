@@ -12,7 +12,7 @@ type Props = {
 
 export function VolunteerItem({ volunteer }: Props) {
   return (
-    <div className="flex h-80 w-full flex-col justify-between gap-2 rounded-2xl px-4 py-10 shadow-lg xl:h-60 xl:w-[600px] xl:justify-start 2xl:h-64 2xl:w-[790px]">
+    <div className="flex h-72 w-full flex-col justify-center gap-2 rounded-2xl px-4 py-3 shadow-lg xl:h-60 xl:w-[600px] xl:justify-start xl:py-10 2xl:h-64 2xl:w-[790px]">
       <div className="flex gap-3 xl:gap-6">
         <div className="flex size-10 items-center justify-center rounded-full bg-celeste/45 2xl:size-12">
           <HomeIcon className="size-4 2xl:size-5" />
