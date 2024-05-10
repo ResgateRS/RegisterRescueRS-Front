@@ -1,6 +1,7 @@
 import { ListDonationsResponse } from '@/api/list-donations'
 import { HomeIcon } from '@/components/icons/home'
 import { buttonVariants } from '@/components/ui/button'
+import { truncateText } from '@/functions/truncate-text'
 import { cn } from '@/lib/utils'
 import { MapPinIcon } from 'lucide-react'
 import Link from 'next/link'
@@ -11,7 +12,7 @@ type Props = {
 
 export function DonationItem({ donation }: Props) {
   return (
-    <div className="flex h-full w-[300px] flex-col gap-4 rounded-2xl px-4 py-10 shadow-lg xl:h-56 xl:w-[500px] 2xl:h-64 2xl:w-[630px]">
+    <div className="flex h-60 w-full flex-col gap-4 rounded-2xl px-4 py-10 shadow-lg xl:h-56 xl:w-[500px] 2xl:h-64 2xl:w-[630px]">
       <div className="flex gap-3 xl:gap-6">
         <div className="flex size-10 items-center justify-center rounded-full bg-celeste/45 2xl:size-12">
           <HomeIcon className="size-4 2xl:size-5" />
@@ -29,8 +30,12 @@ export function DonationItem({ donation }: Props) {
         <span className="text-sm font-light uppercase 2xl:text-base">
           Precisam de:
         </span>
-        <span className="truncate text-sm 2xl:text-base">
-          {donation.donationDescription}
+        <span className="text-wrap text-sm 2xl:text-base">
+          {truncateText(
+            `${donation.donationDescription} Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Tempora, velit.`,
+            60,
+          )}
         </span>
       </div>
 

@@ -51,7 +51,7 @@ export default function LandingPage() {
             mudança positiva em nossa comunidade."
         />
 
-        <div className="gridlc-cols-1 grid gap-4 xl:grid-cols-2 2xl:gap-8">
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2 2xl:gap-8">
           <Suspense fallback={<DonationListSkeleton />}>
             <DonationList />
           </Suspense>
