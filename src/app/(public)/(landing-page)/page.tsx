@@ -24,13 +24,13 @@ export default function LandingPage() {
     <>
       <Section
         id="inicio"
-        className="min-h-[calc(100vh-12.75rem)] flex-row justify-between gap-32 bg-celeste text-zinc-50 2xl:min-h-[calc(100vh-5.75rem)] 2xl:gap-32"
+        className="min-h-[calc(100vh-12.75rem)] flex-row justify-between gap-32 bg-celeste text-zinc-50 xl:min-h-[calc(100vh-5.75rem)] xl:gap-32"
       >
-        <div className="flex max-w-xl flex-col items-center gap-5 2xl:items-start">
-          <h1 className="text-center text-5xl font-bold 2xl:text-start">
+        <div className="flex max-w-xl flex-col items-center gap-5 xl:items-start">
+          <h1 className="text-center text-5xl font-bold xl:text-start">
             Apoie abrigos e pessoas resgatadas!
           </h1>
-          <p className="text-center text-xl font-light 2xl:text-start">
+          <p className="text-center text-xl font-light xl:text-start">
             Faça a diferença na vida das pessoas e ajude abrigos a fornecer
             cuidados essenciais. Saiba o que os abrigos estão precisando e como
             doar da forma correta!
@@ -109,7 +109,7 @@ export default function LandingPage() {
       <footer className="flex flex-col items-end justify-center gap-4 bg-celeste px-4 py-5 text-zinc-50 xl:flex-row xl:justify-between xl:gap-0 xl:px-44">
         <div className="order-2 flex flex-col items-center gap-1 xl:order-none xl:items-start">
           <span className="font-bold">Criado por:</span>
-          <div className="grid grid-cols-3 justify-start gap-2">
+          <div className="grid grid-cols-3 justify-start gap-x-6 gap-y-2">
             {mainContributors.map((contributor) => (
               <Link
                 key={contributor.user}

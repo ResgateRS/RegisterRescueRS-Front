@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 export function Header() {
   return (
-    <header className="-mb-1 flex h-60 w-full flex-col items-center justify-center gap-4 bg-celeste px-4 pt-7 text-zinc-50 2xl:h-24 2xl:flex-row 2xl:justify-between 2xl:px-44">
+    <header className="-mb-1 flex h-52 w-full flex-col items-center justify-center gap-4 bg-celeste px-4 pt-0 text-zinc-50 xl:h-24 xl:flex-row xl:justify-between xl:px-44 xl:pt-7">
       <Link
         href={siteRoutes.public.landingPage}
         className="cursor-pointer select-none text-[40px] font-bold uppercase"
@@ -14,8 +14,8 @@ export function Header() {
         Resgate RS
       </Link>
 
-      <nav className="flex flex-col items-center gap-6 2xl:flex-row 2xl:gap-8">
-        <div className="flex gap-4 2xl:gap-8">
+      <nav className="flex flex-col items-center gap-6 xl:flex-row xl:gap-8">
+        <div className="flex gap-4 xl:gap-8">
           {navConfig.link.map((item) => (
             <Link
               key={item.title}
