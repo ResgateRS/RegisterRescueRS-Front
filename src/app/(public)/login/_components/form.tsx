@@ -38,7 +38,7 @@ export function LoginForm() {
 
   async function onSubmit(data: LoginSchema) {
     const response = await authenticateUser(data)
-    if (response.result === 0) {
+    if (response.result !== 1) {
       toast.error(response.message)
       return
     }

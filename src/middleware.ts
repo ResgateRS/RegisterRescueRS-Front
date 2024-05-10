@@ -1,13 +1,18 @@
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
+import { isValidSession } from './api/is-valid-session'
 import { prefixSiteRoutes, siteRoutes } from './config/site'
 import { cookiesNames } from './config/storage'
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
   const isProtectedRoute = pathname.startsWith(prefixSiteRoutes.protected)
-  const session = cookies().get(cookiesNames.session)
-  const isAuthenticated = !!session
+  const token = cookies().get(cookiesNames.session)?.value
+  let isAuthenticated = false
+
+  if (token) {
+    isAuthenticated = await isValidSession({ token })
+  }
 
   // NOT AUTHENTICATED SCENARIO...
 

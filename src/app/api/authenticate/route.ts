@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     const body = parsedData.data
     const { data, result } = await login(body)
 
-    if (result === 0) {
+    if (result !== 1) {
       return new Response(
         JSON.stringify({
           Result: 0,
