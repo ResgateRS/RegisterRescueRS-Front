@@ -61,6 +61,7 @@ export const siteRoutes = {
     login: `${prefixSiteRoutes.public}/login`,
     donations: `${prefixSiteRoutes.public}/doacoes`,
     volunteers: `${prefixSiteRoutes.public}/voluntarios`,
+    needs: `${prefixSiteRoutes.public}/necessidades`,
   },
   protected: {
     families: `${prefixSiteRoutes.protected}/familias`,
