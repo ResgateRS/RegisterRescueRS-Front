@@ -7,6 +7,7 @@ export type ListFamiliesGlobalRequest = {
   pageSize?: number | null
   searchTerm?: string | null
   authToken?: string | null
+  global?: boolean
 }
 
 export type ListFamiliesGlobalResponse = {
@@ -23,12 +24,15 @@ export async function listFamiliesGlobal({
   cursor,
   pageSize,
   authToken,
+  searchTerm,
+  global,
 }: ListFamiliesGlobalRequest) {
   const response = await api.get<BaseApiResponse<ListFamiliesGlobalResponse>>(
     '/Family/GlobalList',
     {
       params: {
-        searchTerm: 'j',
+        searchTerm,
+        global,
       },
       headers: {
         'X-Cursor': cursor,

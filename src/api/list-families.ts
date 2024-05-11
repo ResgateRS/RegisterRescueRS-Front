@@ -7,6 +7,7 @@ export type ListFamiliesRequest = {
   pageSize?: number | null
   searchTerm?: string | null
   authToken?: string | null
+  global?: boolean
 }
 
 export type ListFamiliesResponse = {
@@ -24,12 +25,14 @@ export async function listFamilies({
   pageSize,
   authToken,
   searchTerm,
+  global,
 }: ListFamiliesRequest) {
   const response = await api.get<BaseApiResponse<ListFamiliesResponse>>(
     '/Family/List',
 
     {
       params: {
+        global,
         searchTerm,
       },
       headers: {
