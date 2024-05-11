@@ -6,7 +6,7 @@ import { JwtPayload } from '@/types/api'
 import { jwtDecode } from 'jwt-decode'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { FamilyList } from './_components/family-list'
+import { FamilyListWrapper } from './_components/family-list-wrapper'
 
 export default function CadastroFamiliaPage() {
   const token = cookies().get(cookiesNames.session)?.value
@@ -28,7 +28,7 @@ export default function CadastroFamiliaPage() {
         !
       </h1>
 
-      <FamilyList authToken={token} />
+      <FamilyListWrapper authToken={token} />
     </Section>
   )
 }

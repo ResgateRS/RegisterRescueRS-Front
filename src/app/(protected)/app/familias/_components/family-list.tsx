@@ -1,105 +1,72 @@
 'use client'
 
-import { listFamilies } from '@/api/list-families'
-import { listFamiliesGlobal } from '@/api/list-families-global'
-import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
-import { List } from './list'
+import { ListFamiliesResponse, listFamilies } from '@/api/list-families'
+import { useIntersection } from '@mantine/hooks'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { useEffect, useRef } from 'react'
+import { FamilyItem } from './family-item'
+import { SearchForm } from './search-form'
 
 type Props = {
   authToken: string
+  initialData: ListFamiliesResponse
 }
 
-export function FamilyList({ authToken }: Props) {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [searchScope, setSearchScope] = useState<'this' | 'all'>('this')
+export function FamilyList({ authToken, initialData }: Props) {
+  const { data, fetchNextPage } = useInfiniteQuery({
+    queryKey: ['infinite-list-families'],
+    queryFn: async ({ pageParam }) => {
+      const response = await listFamilies({
+        pageSize: 4,
+        cursor: pageParam,
+        authToken,
+      })
 
-  const { data: responseListFamilies, isPending: isPendingListFamilies } =
-    useQuery({
-      queryKey: ['list-families', authToken],
-      queryFn: () => listFamilies({ authToken }),
-      select: (data) => {
-        const filteredFamilies = data.data.filter(
-          (family) =>
-            family.responsable
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase()) ||
-            family.cellphone.toLowerCase().includes(searchTerm.toLowerCase()),
-        )
-        return {
-          ...data,
-          data: filteredFamilies,
-        }
-      },
-      enabled: searchScope === 'this',
-    })
-
-  const {
-    data: responseListFamiliesGlobal,
-    isPending: isPendingListFamiliesGlobal,
-  } = useQuery({
-    queryKey: ['list-families-global', authToken],
-    queryFn: () => listFamiliesGlobal({ authToken }),
-    select: (data) => {
-      const filteredFamilies = data.data.filter(
-        (family) =>
-          family.responsable.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          family.cellphone.toLowerCase().includes(searchTerm.toLowerCase()),
-      )
-      return {
-        ...data,
-        data: filteredFamilies,
+      if (response.result === 1) {
+        return response.data
       }
+
+      throw Error(response.message)
     },
-    enabled: searchScope === 'all',
+    initialPageParam: '',
+    initialData: {
+      pages: [initialData],
+      pageParams: [''],
+    },
+    getNextPageParam: (lastPage) => {
+      if (lastPage.length === 0) {
+        return undefined
+      }
+
+      return lastPage[lastPage.length - 1].familyId
+    },
   })
+
+  const lastFamilyRef = useRef<HTMLElement>(null)
+  const { ref, entry } = useIntersection({
+    root: lastFamilyRef.current,
+    threshold: 1,
+  })
+
+  useEffect(() => {
+    if (entry?.isIntersecting) {
+      fetchNextPage()
+    }
+  }, [entry, fetchNextPage])
+
+  const families = data?.pages.flatMap((family) => family)
 
   return (
     <div className="flex w-full flex-col gap-6 px-8">
-      <div className="flex items-center gap-2">
-        <Input
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-96 border-celeste bg-zinc-50 placeholder:text-zinc-400"
-          placeholder="Buscar abrigado (Nome ou Telefone)"
-        />
-        <Select
-          value={searchScope}
-          onValueChange={(value) => {
-            if (value === 'this' || value === 'all') {
-              setSearchScope(value)
-            }
-          }}
-        >
-          <SelectTrigger className="w-52 border-2 border-celeste bg-zinc-50">
-            <SelectValue placeholder="Escolha o escopo" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="this">Este abrigo</SelectItem>
-            <SelectItem value="all">Todos os abrigos</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <SearchForm />
 
-      <List
-        isPending={
-          searchScope === 'all'
-            ? isPendingListFamiliesGlobal
-            : isPendingListFamilies
-        }
-        response={
-          searchScope === 'all'
-            ? responseListFamiliesGlobal
-            : responseListFamilies
-        }
-      />
+      {families.map((family, index) => (
+        <FamilyItem
+          ref={index === families.length - 1 ? ref : null}
+          key={family.familyId}
+          family={family}
+        />
+      ))}
     </div>
   )
 }

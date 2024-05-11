@@ -23,10 +23,15 @@ export async function listFamilies({
   cursor,
   pageSize,
   authToken,
+  searchTerm,
 }: ListFamiliesRequest) {
   const response = await api.get<BaseApiResponse<ListFamiliesResponse>>(
     '/Family/List',
+
     {
+      params: {
+        searchTerm,
+      },
       headers: {
         'X-Cursor': cursor,
         'X-PageSize': pageSize,
