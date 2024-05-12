@@ -5,24 +5,47 @@ export type NavItem = {
   href: string
 }
 
-export const navConfig = {
-  link: [
-    {
-      title: 'Doações',
-      href: siteRoutes.public.donations,
-    },
-    {
-      title: 'Voluntários',
-      href: siteRoutes.public.volunteers,
-    },
-  ],
-  button: [
-    {
-      title: 'Acessar',
-      href: siteRoutes.public.login,
-    },
-  ],
-} satisfies {
+export type NavConfigItems = {
   link: NavItem[]
   button: NavItem[]
+  icon?: React.ElementType
 }
+
+export type NavConfig = {
+  public: NavConfigItems
+  protected: NavConfigItems
+}
+
+export const navConfig = {
+  public: {
+    link: [
+      {
+        title: 'Doações',
+        href: siteRoutes.public.donations,
+      },
+      {
+        title: 'Voluntários',
+        href: siteRoutes.public.volunteers,
+      },
+    ],
+    button: [
+      {
+        title: 'Acessar',
+        href: siteRoutes.public.login,
+      },
+    ],
+  },
+  protected: {
+    link: [
+      {
+        title: 'Cadastrar necessidades',
+        href: siteRoutes.protected.registerNeeds,
+      },
+      {
+        title: 'Cadastrar família',
+        href: siteRoutes.protected.registerNeeds,
+      },
+    ],
+    button: [],
+  },
+} satisfies NavConfig

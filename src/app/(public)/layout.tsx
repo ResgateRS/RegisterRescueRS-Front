@@ -1,9 +1,9 @@
-import { Header } from './_components/header'
+import { Header } from '../../components/core/header'
 
 export default function PublicLayout({ children }: React.PropsWithChildren) {
   return (
     <div className="flex min-h-screen flex-col">
-      <Header />
+      <Header routeType="public" />
       {children}
     </div>
   )

@@ -1,7 +1,8 @@
 import { login } from '@/api/login'
 import { cookiesNames } from '@/config/storage'
 import { loginSchema } from '@/schemas/login-schema'
-import { JwtPayload, jwtDecode } from 'jwt-decode'
+import { JwtPayload } from '@/types/api'
+import { jwtDecode } from 'jwt-decode'
 import { cookies } from 'next/headers'
 import type { NextRequest } from 'next/server'
 
@@ -39,12 +40,9 @@ export async function POST(req: NextRequest) {
 
     const { token } = data
 
-    const decodedJwt: JwtPayload = jwtDecode(token)
+    const decodedJwt = jwtDecode<JwtPayload>(token)
     const expirationTime = decodedJwt.exp
-    const oneMonth = 30 * 24 * 60 * 60 * 1000
-    const expires = expirationTime
-      ? new Date(expirationTime).getTime() * 1000
-      : Date.now() + oneMonth
+    const expires = new Date(expirationTime).getTime() * 1000
 
     if (!decodedJwt) {
       return new Response(
