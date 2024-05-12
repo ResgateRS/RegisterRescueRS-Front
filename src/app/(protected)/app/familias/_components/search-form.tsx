@@ -52,7 +52,8 @@ export function SearchForm({ searchValues, setSearchValues }: Props) {
           control={form.control}
           name="searchTerm"
           render={({ field }) => (
-            <FormItem className="relative">
+            <FormItem className="relative space-y-0">
+              <FormMessage className="absolute -top-7 left-0" />
               <FormControl>
                 <Input
                   className="w-96 border-celeste bg-zinc-50 placeholder:text-zinc-400"
@@ -60,7 +61,6 @@ export function SearchForm({ searchValues, setSearchValues }: Props) {
                   {...field}
                 />
               </FormControl>
-              <FormMessage className="absolute -bottom-7 left-0" />
             </FormItem>
           )}
         />
@@ -69,7 +69,8 @@ export function SearchForm({ searchValues, setSearchValues }: Props) {
           control={form.control}
           name="scope"
           render={({ field }) => (
-            <FormItem className="relative">
+            <FormItem className="relative space-y-0">
+              <FormMessage className="absolute -top-7 left-0" />
               <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <SelectTrigger className="w-52 border-2 border-celeste bg-zinc-50">
                   <SelectValue placeholder="Escolha o escopo" />
@@ -79,8 +80,6 @@ export function SearchForm({ searchValues, setSearchValues }: Props) {
                   <SelectItem value="global">Todos os abrigos</SelectItem>
                 </SelectContent>
               </Select>
-
-              <FormMessage className="absolute -bottom-7 left-0" />
             </FormItem>
           )}
         />

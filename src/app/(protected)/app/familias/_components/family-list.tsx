@@ -1,11 +1,12 @@
 'use client'
 
 import { ListFamiliesResponse, listFamilies } from '@/api/list-families'
-import { listFamiliesGlobal } from '@/api/list-families-global'
+import { familiesListPageSize } from '@/config/families'
 import { SearchFamilySchema } from '@/schemas/search-family-schema'
 import { useIntersection } from '@mantine/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
+import { FamilyListSkeleton } from './families-list-skeleton'
 import { FamilyItem } from './family-item'
 import { SearchForm } from './search-form'
 
@@ -23,17 +24,13 @@ export function FamilyList({ authToken, initialData }: Props) {
   const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: ['infinite-list-families', searchValues],
     queryFn: async ({ pageParam }) => {
-      const data = {
+      const response = await listFamilies({
         global: searchValues.scope === 'global',
-        pageSize: 4,
+        pageSize: familiesListPageSize,
         cursor: pageParam,
         authToken,
         searchTerm: searchValues.searchTerm,
-      }
-      const response =
-        searchValues.scope === 'local'
-          ? await listFamilies(data)
-          : await listFamiliesGlobal(data)
+      })
 
       if (response.result === 1) {
         return response.data
@@ -42,15 +39,8 @@ export function FamilyList({ authToken, initialData }: Props) {
       throw Error(response.message)
     },
     initialPageParam: '',
-    initialData: {
-      pages:
-        searchValues.searchTerm === '' && searchValues.scope === 'local'
-          ? [initialData]
-          : [],
-      pageParams: [''],
-    },
     getNextPageParam: (lastPage) => {
-      if (!lastPage || lastPage.length === 0) {
+      if (lastPage.length === 0) {
         return undefined
       }
 
@@ -71,22 +61,43 @@ export function FamilyList({ authToken, initialData }: Props) {
     }
   }, [entry, fetchNextPage, searchValues])
 
-  const families = data?.pages.flatMap((family) => family)
+  const families =
+    searchValues.searchTerm.length > 0
+      ? data?.pages.flatMap((family) => family)
+      : initialData
 
   return (
-    <div className="flex w-full flex-col gap-6 px-8">
-      <SearchForm
-        searchValues={searchValues}
-        setSearchValues={setSearchValues}
-      />
-
-      {families.map((family, index) => (
-        <FamilyItem
-          ref={index === families.length - 1 ? ref : null}
-          key={family.familyId}
-          family={family}
+    <div className="relative flex w-full flex-col gap-6 pb-8">
+      <div className="flex w-full flex-col">
+        <SearchForm
+          searchValues={searchValues}
+          setSearchValues={setSearchValues}
         />
-      ))}
+
+        <span className="truncate text-sm">
+          {searchValues.searchTerm.length > 0
+            ? `Procurando por "${searchValues.searchTerm}" ${searchValues.scope === 'local' ? 'neste abrigo.' : 'em todos os abrigos.'}`
+            : `Mostrando ${familiesListPageSize} resultados neste abrigo.`}
+        </span>
+      </div>
+
+      {families ? (
+        families.length === 0 ? (
+          <div className="flex items-center justify-center text-lg">
+            Nenhuma família encontrada.
+          </div>
+        ) : (
+          families.map((family, index) => (
+            <FamilyItem
+              ref={index === families.length - 1 ? ref : null}
+              key={family.familyId}
+              family={family}
+            />
+          ))
+        )
+      ) : (
+        <FamilyListSkeleton withoutWrapper />
+      )}
     </div>
   )
 }

@@ -6,6 +6,8 @@ import { JwtPayload } from '@/types/api'
 import { jwtDecode } from 'jwt-decode'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
+import { FamilyListSkeleton } from './_components/families-list-skeleton'
 import { FamilyListWrapper } from './_components/family-list-wrapper'
 
 export default function CadastroFamiliaPage() {
@@ -19,7 +21,7 @@ export default function CadastroFamiliaPage() {
   )
 
   return (
-    <Section className="mb-0 min-h-[calc(100vh-12.75rem)] items-start justify-start pt-10 lg:min-h-[calc(100vh-6.75rem)]">
+    <Section className="mb-0 min-h-[calc(100vh-12.75rem)] items-start justify-start pt-10 lg:min-h-[calc(100vh-6.75rem)] 2xl:gap-3">
       <h1 className="text-2xl">
         Seja bem vindo,{' '}
         <span className="font-medium">
@@ -28,7 +30,9 @@ export default function CadastroFamiliaPage() {
         !
       </h1>
 
-      <FamilyListWrapper authToken={token} />
+      <Suspense fallback={<FamilyListSkeleton />}>
+        <FamilyListWrapper authToken={token} />
+      </Suspense>
     </Section>
   )
 }
