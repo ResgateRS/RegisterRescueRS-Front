@@ -2,17 +2,14 @@
 
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import NeedsForm from "./form";
+import NeedsForm from "./_components/form";
 import { create } from "zustand";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 
 interface DialogProps {
   isOpen: boolean;
