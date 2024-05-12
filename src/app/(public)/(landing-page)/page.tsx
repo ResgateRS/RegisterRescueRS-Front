@@ -24,7 +24,7 @@ export default function LandingPage() {
     <>
       <Section
         id="inicio"
-        className="min-h-[calc(100vh-12.75rem)] flex-row justify-between bg-celeste text-zinc-50 lg:min-h-[calc(100vh-5.75rem)] xl:gap-32"
+        className="min-h-[calc(100vh-12.75rem)] flex-row justify-between bg-celeste text-zinc-50 lg:min-h-[calc(100vh-6.75rem)] xl:gap-32"
       >
         <div className="flex max-w-none flex-col items-center gap-5 lg:max-w-md lg:items-start xl:max-w-xl">
           <h1 className="text-center text-5xl font-bold lg:text-start lg:text-4xl xl:text-5xl">
