@@ -64,6 +64,7 @@ export const siteRoutes = {
   },
   protected: {
     families: `${prefixSiteRoutes.protected}/familias`,
-    needs: `${prefixSiteRoutes.protected}/necessidades`,
+    registerFamily: `${prefixSiteRoutes.protected}/cadastrar-familia`,
+    registerNeeds: `${prefixSiteRoutes.protected}/cadastrar-necessidades`,
   },
 } as const satisfies Record<RouteVisibility, Record<string, string>>
