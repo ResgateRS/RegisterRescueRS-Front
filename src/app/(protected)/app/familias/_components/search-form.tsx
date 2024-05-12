@@ -54,7 +54,7 @@ export function SearchForm({ searchValues, setSearchValues }: Props) {
             name="searchTerm"
             render={({ field }) => (
               <FormItem className="relative w-full space-y-0 lg:w-fit">
-                <FormMessage className="absolute -top-6 left-0 w-full text-nowrap text-center lg:text-start" />
+                <FormMessage className="absolute -top-6 left-0 w-full text-nowrap" />
                 <FormControl>
                   <Input
                     className="w-full border-celeste bg-zinc-50 placeholder:text-zinc-400 lg:w-96"
@@ -71,12 +71,12 @@ export function SearchForm({ searchValues, setSearchValues }: Props) {
             name="scope"
             render={({ field }) => (
               <FormItem className="relative w-full space-y-0 lg:w-fit">
-                <FormMessage className="absolute -top-6 left-0 w-full text-nowrap text-center lg:text-start" />
+                <FormMessage className="absolute -top-6 left-0 w-full text-nowrap" />
                 <Select
                   defaultValue={field.value}
                   onValueChange={field.onChange}
                 >
-                  <SelectTrigger className="w-full border-2 border-celeste bg-zinc-50 lg:w-52">
+                  <SelectTrigger className="w-full border-2 border-celeste bg-zinc-50 sm:w-52">
                     <SelectValue placeholder="Escolha o escopo" />
                   </SelectTrigger>
                   <SelectContent>
