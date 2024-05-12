@@ -14,8 +14,10 @@ type Props = {
 export function Header({ routeType, className, ...props }: Props) {
   return (
     <header
+      data-protected-route={routeType === 'protected'}
       className={cn(
         '-mb-1 flex h-56 w-full flex-col items-center justify-center gap-4 bg-celeste px-4 pt-1 text-zinc-50 lg:h-28 lg:flex-row lg:justify-between lg:px-20 lg:pt-0 xl:px-24 2xl:px-44',
+        routeType === 'protected' && 'h-64',
         className,
       )}
       {...props}
@@ -28,7 +30,10 @@ export function Header({ routeType, className, ...props }: Props) {
       </Link>
 
       <nav className="flex flex-col items-center gap-6 lg:flex-row lg:gap-8">
-        <div className="flex gap-4 lg:gap-8">
+        <div
+          data-protected-route={routeType === 'protected'}
+          className="flex gap-4 data-[protected-route=true]:flex-col lg:gap-8 lg:data-[protected-route=true]:flex-row"
+        >
           {navConfig[routeType].link.map((item) => (
             <Link
               key={item.title}
@@ -65,7 +70,7 @@ export function Header({ routeType, className, ...props }: Props) {
           </form>
         )}
       </nav>
-      <Separator className="block h-1 lg:hidden" />
+      {routeType === 'public' && <Separator className="block h-1 lg:hidden" />}
     </header>
   )
 }

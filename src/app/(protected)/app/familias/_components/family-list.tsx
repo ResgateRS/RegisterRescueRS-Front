@@ -68,13 +68,13 @@ export function FamilyList({ authToken, initialData }: Props) {
 
   return (
     <div className="relative flex w-full flex-col gap-6 pb-8">
-      <div className="flex w-full flex-col">
+      <div className="flex w-full flex-col gap-3 lg:gap-0">
         <SearchForm
           searchValues={searchValues}
           setSearchValues={setSearchValues}
         />
 
-        <span className="truncate text-sm">
+        <span className="truncate text-center text-sm lg:text-start">
           {searchValues.searchTerm.length > 0
             ? `Procurando por "${searchValues.searchTerm}" ${searchValues.scope === 'local' ? 'neste abrigo.' : 'em todos os abrigos.'}`
             : `Mostrando ${familiesListPageSize} resultados neste abrigo.`}

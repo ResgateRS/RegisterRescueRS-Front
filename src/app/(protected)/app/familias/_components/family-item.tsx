@@ -25,7 +25,7 @@ export const FamilyItem = forwardRef<HTMLDivElement, Props>(
     return (
       <div
         ref={ref}
-        className="flex w-full items-center justify-between rounded-lg bg-zinc-50 p-10 shadow-lg"
+        className="flex w-full flex-col items-start justify-between gap-2 rounded-lg bg-zinc-50 p-4 shadow-lg lg:flex-row lg:items-center lg:gap-0 lg:p-10"
       >
         <div className="flex gap-3 lg:gap-6">
           <div className="flex size-10 items-center justify-center rounded-full bg-celeste/45 2xl:size-12">
@@ -50,7 +50,7 @@ export const FamilyItem = forwardRef<HTMLDivElement, Props>(
           href={siteRoutes.protected.registerFamily}
           className={cn(
             buttonVariants({ variant: 'outlineSecondary' }),
-            'text-xl',
+            'text-xl self-center lg:self-auto',
           )}
         >
           Saiba mais

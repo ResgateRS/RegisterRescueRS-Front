@@ -44,56 +44,71 @@ export function SearchForm({ searchValues, setSearchValues }: Props) {
 
   return (
     <Form {...form}>
-      <form
-        className="mb-2 flex items-center gap-2"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        <FormField
-          control={form.control}
-          name="searchTerm"
-          render={({ field }) => (
-            <FormItem className="relative space-y-0">
-              <FormMessage className="absolute -top-7 left-0" />
-              <FormControl>
-                <Input
-                  className="w-96 border-celeste bg-zinc-50 placeholder:text-zinc-400"
-                  placeholder="Buscar abrigado (Nome ou Telefone)"
-                  {...field}
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
+      <div className="flex flex-col gap-2">
+        <form
+          className="mb-2 flex items-center gap-2"
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <FormField
+            control={form.control}
+            name="searchTerm"
+            render={({ field }) => (
+              <FormItem className="relative w-full space-y-0 lg:w-fit">
+                <FormMessage className="absolute -top-6 left-0 w-full text-nowrap text-center lg:text-start" />
+                <FormControl>
+                  <Input
+                    className="w-full border-celeste bg-zinc-50 placeholder:text-zinc-400 lg:w-96"
+                    placeholder="Buscar abrigado (Nome ou Telefone)"
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="scope"
-          render={({ field }) => (
-            <FormItem className="relative space-y-0">
-              <FormMessage className="absolute -top-7 left-0" />
-              <Select defaultValue={field.value} onValueChange={field.onChange}>
-                <SelectTrigger className="w-52 border-2 border-celeste bg-zinc-50">
-                  <SelectValue placeholder="Escolha o escopo" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="local">Este abrigo</SelectItem>
-                  <SelectItem value="global">Todos os abrigos</SelectItem>
-                </SelectContent>
-              </Select>
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="scope"
+            render={({ field }) => (
+              <FormItem className="relative w-full space-y-0 lg:w-fit">
+                <FormMessage className="absolute -top-6 left-0 w-full text-nowrap text-center lg:text-start" />
+                <Select
+                  defaultValue={field.value}
+                  onValueChange={field.onChange}
+                >
+                  <SelectTrigger className="w-full border-2 border-celeste bg-zinc-50 lg:w-52">
+                    <SelectValue placeholder="Escolha o escopo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="local">Este abrigo</SelectItem>
+                    <SelectItem value="global">Todos os abrigos</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormItem>
+            )}
+          />
+
+          <Button
+            type="submit"
+            size={'sm'}
+            variant={'outlineSecondary'}
+            className="group hidden gap-2 text-lg lg:flex"
+          >
+            <SearchIcon className="size-5" />
+            Pesquisar
+          </Button>
+        </form>
 
         <Button
           type="submit"
           size={'sm'}
           variant={'outlineSecondary'}
-          className="group flex gap-2 text-lg"
+          className="group flex w-full gap-2 text-lg lg:hidden"
         >
           <SearchIcon className="size-5" />
           Pesquisar
         </Button>
-      </form>
+      </div>
     </Form>
   )
 }
