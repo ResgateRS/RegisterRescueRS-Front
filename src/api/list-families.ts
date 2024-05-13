@@ -29,7 +29,6 @@ export async function listFamilies({
 }: ListFamiliesRequest) {
   const response = await api.get<BaseApiResponse<ListFamiliesResponse>>(
     '/Family/List',
-
     {
       params: {
         global,
@@ -38,7 +37,7 @@ export async function listFamilies({
       headers: {
         'X-Cursor': cursor,
         'X-PageSize': pageSize,
-        Authorization: authToken,
+        Authorization: `Bearer ${authToken}`,
       },
     },
   )
