@@ -8,9 +8,6 @@ import {
 } from '@/components/ui/card'
 import { siteRoutes } from '@/config/site'
 import { cookiesNames } from '@/config/storage'
-import { jwtUserDataSchema } from '@/schemas/jwt-user-data-schema'
-import { JwtPayload } from '@/types/api'
-import { jwtDecode } from 'jwt-decode'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { RegisterFamilyForm } from './_components/register-family-form'
@@ -18,14 +15,6 @@ import { RegisterFamilyForm } from './_components/register-family-form'
 export default function RegistrarFamiliaPage() {
   const token = cookies().get(cookiesNames.session)?.value
   if (!token) {
-    redirect(siteRoutes.public.landingPage)
-  }
-  const decodedToken = jwtDecode<JwtPayload>(token)
-  const userData = jwtUserDataSchema.safeParse(
-    JSON.parse(decodedToken.userData),
-  )
-
-  if (!userData.success) {
     redirect(siteRoutes.public.landingPage)
   }
 
@@ -39,10 +28,7 @@ export default function RegistrarFamiliaPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <RegisterFamilyForm
-            shelterId={userData.data.shelterId}
-            authToken={token}
-          />
+          <RegisterFamilyForm authToken={token} />
         </CardContent>
       </Card>
     </Section>

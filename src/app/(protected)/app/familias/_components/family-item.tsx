@@ -18,7 +18,7 @@ export const FamilyItem = forwardRef<HTMLDivElement, Props>(
       'BR',
     )?.formatNational()
     const updatedAt = new Date(family.updatedAt)
-    const hour = updatedAt.toLocaleTimeString('pt-br').split(':')[1]
+    const hour = updatedAt.toLocaleTimeString('pt-br').split(':')[0]
     const day = updatedAt.toLocaleDateString('pt-br').split('/')[0]
     const month = updatedAt.toLocaleDateString('pt-br').split('/')[1]
 

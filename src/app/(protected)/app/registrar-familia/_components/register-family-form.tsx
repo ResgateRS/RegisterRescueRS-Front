@@ -1,6 +1,7 @@
 'use client'
 
-import { updateShelterNeeds } from '@/api/update-shelter-needs'
+import { ListFamiliesResponse } from '@/api/list-families'
+import { updateFamily } from '@/api/update-family'
 import { Spinner } from '@/components/spinner'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -13,50 +14,65 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
+import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 import {
-  RegisterNeedsSchema,
-  registerNeedsSchema,
-} from '@/schemas/register-needs-schema'
+  RegisterFamilySchema,
+  registerFamilySchema,
+} from '@/schemas/register-family-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
-import { useForm } from 'react-hook-form'
+import { PlusIcon, TrashIcon } from 'lucide-react'
+import { FieldErrors, useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { v4 as uuid } from 'uuid'
 
 type Props = {
-  shelterId: string
   authToken: string
+  family?: ListFamiliesResponse[number]
 }
 
-export function RegisterFamilyForm({ shelterId, authToken }: Props) {
-  const { mutateAsync: registerShelterNeeds, isPending } = useMutation({
-    mutationKey: ['register-needs'],
-    mutationFn: updateShelterNeeds,
+export function RegisterFamilyForm({ authToken, family }: Props) {
+  const { mutateAsync: registerFamily, isPending } = useMutation({
+    mutationKey: ['register-family'],
+    mutationFn: updateFamily,
   })
 
-  const form = useForm<RegisterNeedsSchema>({
-    resolver: zodResolver(registerNeedsSchema),
+  const form = useForm<RegisterFamilySchema>({
+    resolver: zodResolver(registerFamilySchema),
     defaultValues: {
-      shelterId,
-      acceptingUnsheltered: false,
-      acceptingVolunteers: false,
-      acceptingDoctors: false,
-      acceptingVeterinary: false,
-      acceptingDonations: false,
-      formLink: '',
-      donationsDescription: '',
+      familyId: family?.familyId,
+      houseds: [
+        {
+          id: uuid(),
+          name: '',
+          age: 1,
+          cellphone: '',
+          responsable: true,
+        },
+      ],
     },
   })
 
-  async function onSubmit(data: RegisterNeedsSchema) {
-    const { message, result } = await registerShelterNeeds({
+  const { control, formState } = form
+
+  const errors = formState.errors as FieldErrors<
+    RegisterFamilySchema & { global: number }
+  >
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'houseds',
+  })
+
+  async function onSubmit(data: RegisterFamilySchema) {
+    const { message, result } = await registerFamily({
       ...data,
       authToken,
     })
 
     if (result === 1) {
-      toast.success('Necessidades salvas com sucesso!')
+      toast.success('Família registrada com sucesso!')
       return
     }
 
@@ -67,136 +83,152 @@ export function RegisterFamilyForm({ shelterId, authToken }: Props) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-3"
+        className="flex w-full flex-col items-center p-1"
       >
-        <FormField
-          control={form.control}
-          name="acceptingUnsheltered"
-          render={({ field }) => (
-            <FormItem>
-              <div className="flex items-center gap-2">
-                <FormControl>
-                  <Checkbox
-                    id="acceptingUnsheltered"
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <Label htmlFor="acceptingUnsheltered">
-                  Aceitando desabrigados
-                </Label>
-              </div>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="acceptingVolunteers"
-          render={({ field }) => (
-            <FormItem>
-              <div className="flex items-center gap-2">
-                <FormControl>
-                  <Checkbox
-                    id="acceptingVolunteers"
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <Label htmlFor="acceptingVolunteers">
-                  Aceitando voluntários
-                </Label>
-              </div>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="acceptingDoctors"
-          render={({ field }) => (
-            <FormItem>
-              <div className="flex items-center gap-2">
-                <FormControl>
-                  <Checkbox
-                    id="acceptingDoctors"
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <Label htmlFor="acceptingDoctors">Aceitando médicos</Label>
-              </div>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="acceptingVeterinary"
-          render={({ field }) => (
-            <FormItem>
-              <div className="flex items-center gap-2">
-                <FormControl>
-                  <Checkbox
-                    id="acceptingVeterinary"
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <Label htmlFor="acceptingVeterinary">
-                  Aceitando veterinários
-                </Label>
-              </div>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="formLink"
-          render={({ field }) => (
-            <FormItem>
-              <Label htmlFor="formLink">Link do formulário (opcional)</Label>
-              <FormControl>
-                <Input
-                  id="formLink"
-                  placeholder="forms.google.com/meu-abrigo"
-                  {...field}
+        <div className="flex max-h-[32rem] flex-col items-center overflow-y-auto rounded-lg border border-zinc-100 p-6">
+          {fields.map((field, index) => (
+            <div
+              key={field.id}
+              className="flex w-[32rem] flex-col items-center"
+            >
+              <div className="flex w-full flex-col rounded-lg bg-zinc-100 p-5">
+                <div className="flex w-full items-center justify-between">
+                  <Label className="text-lg font-bold">
+                    Familiar {index + 1}
+                  </Label>
+                  {fields.length > 1 && (
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      className="h-fit border-none p-0 text-red-500 hover:bg-transparent hover:text-red-800"
+                      onClick={() => {
+                        remove(index)
+                      }}
+                    >
+                      <TrashIcon className="size-5" />
+                    </Button>
+                  )}
+                </div>
+                <FormField
+                  control={form.control}
+                  name={`houseds.${index}.name`}
+                  render={({ field }) => (
+                    <FormItem className="mt-2">
+                      <Label htmlFor={`houseds.${index}.name`}>
+                        Nome completo
+                      </Label>
+                      <FormControl>
+                        <Input
+                          id={`houseds.${index}.name`}
+                          placeholder="Insira o nome completo do abrigado..."
+                          className="bg-zinc-50"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
-        <div className="flex w-full flex-col gap-1.5">
-          <Label htmlFor="donationsDescription">
-            Descrição das Doações (opcional)
-          </Label>
-          <FormField
-            control={form.control}
-            name="donationsDescription"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Textarea
-                    id={field.name}
-                    className="resize-none"
-                    placeholder="Escreva uma breve descrição sobre as doações..."
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                <FormField
+                  control={form.control}
+                  name={`houseds.${index}.age`}
+                  render={({ field }) => (
+                    <FormItem className="mt-2">
+                      <Label htmlFor={`houseds.${index}.age`}>Idade</Label>
+                      <FormControl>
+                        <Input
+                          id={`houseds.${index}.name`}
+                          type="number"
+                          placeholder="Insira a idade..."
+                          className="bg-zinc-50"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name={`houseds.${index}.cellphone`}
+                  render={({ field }) => (
+                    <FormItem className="mt-2">
+                      <Label htmlFor={`houseds.${index}.cellphone`}>
+                        Telefone
+                      </Label>
+                      <FormControl>
+                        <Input
+                          id={`houseds.${index}.cellphone`}
+                          placeholder="Insira um número de contato..."
+                          className="bg-zinc-50"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name={`houseds.${index}.responsable`}
+                  render={({ field }) => (
+                    <FormItem className="mt-4">
+                      <div className="flex items-center gap-2">
+                        <FormControl>
+                          <Checkbox
+                            id={`houseds.${index}.responsable`}
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <Label htmlFor={`houseds.${index}.responsable`}>
+                          Responsável pela família
+                        </Label>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <Separator
+                orientation="vertical"
+                className="h-5 w-1 bg-zinc-100"
+              />
+              {index === fields.length - 1 && (
+                <>
+                  <Button
+                    type="button"
+                    className={cn(
+                      buttonVariants({ size: 'sm', variant: 'outline' }),
+                      'border-zinc-200 text-zinc-500 border-2',
+                    )}
+                    onClick={() => {
+                      append({
+                        id: uuid(),
+                        name: '',
+                        age: 1,
+                        cellphone: '',
+                        responsable: false,
+                      })
+                    }}
+                  >
+                    <PlusIcon className="size-5" />
+                  </Button>
+                </>
+              )}
+            </div>
+          ))}
         </div>
-
-        <div className="flex justify-end">
+        <div className="flex w-full flex-col items-end gap-2">
+          {errors.global && (
+            <p className="text-sm font-medium text-red-700">
+              {errors.global.message}
+            </p>
+          )}
           <Button
             type="submit"
             className={cn(
@@ -206,7 +238,7 @@ export function RegisterFamilyForm({ shelterId, authToken }: Props) {
             disabled={isPending}
           >
             {isPending && <Spinner className="mr-2" />}
-            Salvar
+            Registrar
           </Button>
         </div>
       </form>

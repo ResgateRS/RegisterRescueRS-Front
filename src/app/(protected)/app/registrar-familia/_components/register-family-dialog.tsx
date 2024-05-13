@@ -11,14 +11,13 @@ import {
 import { XIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
-import { RegisterNeedsForm } from '../../registrar-necessidades/_components/register-needs-form'
+import { RegisterFamilyForm } from './register-family-form'
 
 type Props = {
-  shelterId: string
   authToken: string
 }
 
-export function RegisterFamilyDialog({ shelterId, authToken }: Props) {
+export function RegisterFamilyDialog({ authToken }: Props) {
   const router = useRouter()
   const onDismiss = useCallback(() => {
     router.back()
@@ -30,6 +29,7 @@ export function RegisterFamilyDialog({ shelterId, authToken }: Props) {
         onEscapeKeyDown={onDismiss}
         onPointerDownOutside={onDismiss}
         hasCloseButton={false}
+        className="max-w-2xl"
       >
         <DialogClose
           onClick={onDismiss}
@@ -44,7 +44,7 @@ export function RegisterFamilyDialog({ shelterId, authToken }: Props) {
             Preencha o formulário para adicionar uma família ao abrigo.
           </DialogDescription>
         </DialogHeader>
-        <RegisterNeedsForm shelterId={shelterId} authToken={authToken} />
+        <RegisterFamilyForm authToken={authToken} />
       </DialogContent>
     </Dialog>
   )
