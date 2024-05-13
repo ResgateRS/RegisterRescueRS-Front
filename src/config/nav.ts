@@ -38,11 +38,11 @@ export const navConfig = {
   protected: {
     link: [
       {
-        title: 'Cadastrar necessidades',
+        title: 'Registrar necessidades',
         href: siteRoutes.protected.registerNeeds,
       },
       {
-        title: 'Cadastrar família',
+        title: 'Registrar família',
         href: siteRoutes.protected.registerNeeds,
       },
     ],

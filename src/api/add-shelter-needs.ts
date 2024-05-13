@@ -10,9 +10,18 @@ export type AddShelterNeedsRequest = {
   acceptingDonations: boolean
   donationDescription?: string
   volunteersSubscriptionLink?: string
+  authToken?: string | null
 }
-export async function addShelterNeeds(form: AddShelterNeedsRequest) {
-  const response = await api.post<BaseApiResponse>('/Shelter/Needs', form)
+
+export async function addShelterNeeds({
+  authToken,
+  ...data
+}: AddShelterNeedsRequest) {
+  const response = await api.post<BaseApiResponse>('/Shelter/Needs', data, {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  })
 
   return formatApiResponse(response.data)
 }
