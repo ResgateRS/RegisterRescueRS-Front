@@ -1,22 +1,16 @@
 import { formatApiResponse } from '@/functions/format-api-response'
 import { api } from '@/lib/axios'
+import { RegisterNeedsSchema } from '@/schemas/register-needs-schema'
 import { BaseApiResponse } from '@/types/api'
 
-export type AddShelterNeedsRequest = {
-  shelterId?: string
-  acceptingVolunteers: boolean
-  acceptingDoctors: boolean
-  acceptingVeterinarians: boolean
-  acceptingDonations: boolean
-  donationDescription?: string
-  volunteersSubscriptionLink?: string
+export type UpdateShelterNeedsRequest = {
   authToken?: string | null
-}
+} & RegisterNeedsSchema
 
-export async function addShelterNeeds({
+export async function updateShelterNeeds({
   authToken,
   ...data
-}: AddShelterNeedsRequest) {
+}: UpdateShelterNeedsRequest) {
   const response = await api.post<BaseApiResponse>('/Shelter/Needs', data, {
     headers: {
       Authorization: `Bearer ${authToken}`,

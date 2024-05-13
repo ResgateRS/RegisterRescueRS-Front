@@ -29,7 +29,7 @@ type Props = {
   authToken: string
 }
 
-export function RegisterNeedsForm({ shelterId, authToken }: Props) {
+export function RegisterFamilyForm({ shelterId, authToken }: Props) {
   const { mutateAsync: registerShelterNeeds, isPending } = useMutation({
     mutationKey: ['register-needs'],
     mutationFn: updateShelterNeeds,
@@ -50,7 +50,7 @@ export function RegisterNeedsForm({ shelterId, authToken }: Props) {
   })
 
   async function onSubmit(data: RegisterNeedsSchema) {
-    const { result, message } = await registerShelterNeeds({
+    const { message, result } = await registerShelterNeeds({
       ...data,
       authToken,
     })
@@ -149,26 +149,6 @@ export function RegisterNeedsForm({ shelterId, authToken }: Props) {
                 <Label htmlFor="acceptingVeterinary">
                   Aceitando veterinários
                 </Label>
-              </div>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="acceptingDonations"
-          render={({ field }) => (
-            <FormItem>
-              <div className="flex items-center gap-2">
-                <FormControl>
-                  <Checkbox
-                    id="acceptingDonations"
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <Label htmlFor="acceptingDonations">Aceitando doações</Label>
               </div>
               <FormMessage />
             </FormItem>

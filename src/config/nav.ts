@@ -43,7 +43,7 @@ export const navConfig = {
       },
       {
         title: 'Registrar família',
-        href: siteRoutes.protected.registerNeeds,
+        href: siteRoutes.protected.registerFamily,
       },
     ],
     button: [],
