@@ -11,12 +11,13 @@ export type ListDonationsRequest = {
 
 export type ListDonationsResponse = {
   shelterId: string
-  shelterName: string
   acceptingDonations: boolean
+  shelterName: string
   address: string
-  donationDescription: string
   latitude: number
   longitude: number
+  updatedAt: string
+  donationDescription?: string
 }[]
 
 export async function listDonations({

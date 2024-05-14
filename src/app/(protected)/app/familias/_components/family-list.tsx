@@ -75,7 +75,7 @@ export function FamilyList({ authToken, initialData }: Props) {
         <span className="truncate text-center text-sm lg:text-start">
           {searchValues.searchTerm.length > 0
             ? `Procurando por "${searchValues.searchTerm}" ${searchValues.scope === 'local' ? 'neste abrigo.' : 'em todos os abrigos.'}`
-            : `Mostrando ${familiesListPageSize} resultados neste abrigo.`}
+            : `Mostrando ${initialData.length} resultados neste abrigo.`}
         </span>
       </div>
 

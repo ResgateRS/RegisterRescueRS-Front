@@ -67,7 +67,7 @@ export function DonationList({ initialData }: Props) {
         <span className="truncate text-center text-sm lg:text-start">
           {searchTerm.length > 0
             ? `Procurando por "${searchTerm}".`
-            : `Mostrando ${donationsListPageSize} resultados.`}
+            : `Mostrando ${initialData.length} resultados.`}
         </span>
       </div>
 
