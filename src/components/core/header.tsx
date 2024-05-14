@@ -44,6 +44,7 @@ export function Header({ routeType, className, ...props }: Props) {
                 buttonVariants({ variant: 'navLink', size: 'link' }),
                 'text-xl',
               )}
+              scroll={false}
             >
               {item.title}
             </Link>

@@ -1,6 +1,6 @@
 'use client'
 
-import { addShelterNeeds } from '@/api/add-shelter-needs'
+import { updateShelterNeeds } from '@/api/update-shelter-needs'
 import { Spinner } from '@/components/spinner'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -32,39 +32,35 @@ type Props = {
 export function RegisterNeedsForm({ shelterId, authToken }: Props) {
   const { mutateAsync: registerShelterNeeds, isPending } = useMutation({
     mutationKey: ['register-needs'],
-    mutationFn: addShelterNeeds,
+    mutationFn: updateShelterNeeds,
   })
 
   const form = useForm<RegisterNeedsSchema>({
     resolver: zodResolver(registerNeedsSchema),
     defaultValues: {
+      shelterId,
       acceptingUnsheltered: false,
       acceptingVolunteers: false,
       acceptingDoctors: false,
       acceptingVeterinary: false,
+      acceptingDonations: false,
       formLink: '',
       donationsDescription: '',
     },
   })
 
   async function onSubmit(data: RegisterNeedsSchema) {
-    const { result } = await registerShelterNeeds({
-      shelterId,
-      acceptingVolunteers: data.acceptingVolunteers,
-      acceptingDoctors: data.acceptingDoctors,
-      acceptingVeterinarians: data.acceptingVeterinary,
-      acceptingDonations: data.donationsDescription !== '',
-      donationDescription: data.donationsDescription,
-      volunteersSubscriptionLink: data.formLink,
+    const { result, message } = await registerShelterNeeds({
+      ...data,
       authToken,
     })
 
     if (result === 1) {
-      toast.success('Necessidades inseridas com sucesso!')
+      toast.success('Necessidades salvas com sucesso!')
       return
     }
 
-    toast.error('Houve um erro ao inserir necessidades!')
+    toast.error(message)
   }
 
   return (
@@ -153,6 +149,26 @@ export function RegisterNeedsForm({ shelterId, authToken }: Props) {
                 <Label htmlFor="acceptingVeterinary">
                   Aceitando veterinários
                 </Label>
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="acceptingDonations"
+          render={({ field }) => (
+            <FormItem>
+              <div className="flex items-center gap-2">
+                <FormControl>
+                  <Checkbox
+                    id="acceptingDonations"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <Label htmlFor="acceptingDonations">Aceitando doações</Label>
               </div>
               <FormMessage />
             </FormItem>

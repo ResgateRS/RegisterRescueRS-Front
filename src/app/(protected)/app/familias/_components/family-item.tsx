@@ -2,8 +2,9 @@ import { ListFamiliesResponse } from '@/api/list-families'
 import { HomeIcon } from '@/components/icons/home'
 import { buttonVariants } from '@/components/ui/button'
 import { siteRoutes } from '@/config/site'
+import { cellphoneMask } from '@/functions/cellphone-mask'
 import { cn } from '@/lib/utils'
-import parsePhoneNumber from 'libphonenumber-js'
+import { EyeIcon } from 'lucide-react'
 import Link from 'next/link'
 import { forwardRef } from 'react'
 
@@ -13,12 +14,11 @@ type Props = {
 
 export const FamilyItem = forwardRef<HTMLDivElement, Props>(
   ({ family }, ref) => {
-    const phoneNumber = parsePhoneNumber(
-      family.cellphone,
-      'BR',
-    )?.formatNational()
+    const phoneNumber = family.cellphone
+      ? cellphoneMask(family.cellphone)
+      : family.cellphone
     const updatedAt = new Date(family.updatedAt)
-    const hour = updatedAt.toLocaleTimeString('pt-br').split(':')[1]
+    const hour = updatedAt.toLocaleTimeString('pt-br').split(':')[0]
     const day = updatedAt.toLocaleDateString('pt-br').split('/')[0]
     const month = updatedAt.toLocaleDateString('pt-br').split('/')[1]
 
@@ -47,13 +47,15 @@ export const FamilyItem = forwardRef<HTMLDivElement, Props>(
         </div>
 
         <Link
-          href={siteRoutes.protected.registerFamily}
+          href={`${siteRoutes.protected.registerFamily}/${family.familyId}`}
           className={cn(
             buttonVariants({ variant: 'outlineSecondary' }),
             'text-xl self-center lg:self-auto',
           )}
+          scroll={false}
         >
-          Saiba mais
+          <EyeIcon className="mr-2 size-5" />
+          Ver mais
         </Link>
       </div>
     )

@@ -10,7 +10,7 @@ import { Suspense } from 'react'
 import { FamilyListSkeleton } from './_components/families-list-skeleton'
 import { FamilyListWrapper } from './_components/family-list-wrapper'
 
-export default function CadastroFamiliaPage() {
+export default function FamiliasPage() {
   const token = cookies().get(cookiesNames.session)?.value
   if (!token) {
     redirect(siteRoutes.public.landingPage)

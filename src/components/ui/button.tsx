@@ -14,6 +14,8 @@ const buttonVariants = cva(
           'border border-zinc-50 bg-transparent text-zinc-50 hover:bg-zinc-100 hover:text-celeste',
         outlineSecondary:
           'border-2 border-celeste bg-transparent text-celeste hover:bg-celeste hover:text-zinc-50',
+        outlineDestructive:
+          'border-2 border-red-500 bg-transparent text-red-500 hover:bg-red-500 hover:text-zinc-50',
         navLink:
           'relative text-zinc-50 underline-offset-4 after:absolute after:-bottom-3 after:left-0 after:h-[3px] after:w-full after:bg-white after:duration-300 lg:after:w-0 lg:after:hover:w-full',
         link: 'text-celeste underline underline-offset-4 hover:text-celeste/80',
