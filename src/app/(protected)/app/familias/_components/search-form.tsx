@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useFamilyStore } from '@/hooks/use-family-store'
 import {
   SearchFamilySchema,
   searchFamilySchema,
@@ -24,12 +25,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { SearchIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 
-type Props = {
-  searchValues: SearchFamilySchema
-  setSearchValues: React.Dispatch<React.SetStateAction<SearchFamilySchema>>
-}
-
-export function SearchForm({ searchValues, setSearchValues }: Props) {
+export function SearchForm() {
+  const { searchValues } = useFamilyStore()
   const form = useForm<SearchFamilySchema>({
     resolver: zodResolver(searchFamilySchema),
     defaultValues: {
@@ -39,7 +36,7 @@ export function SearchForm({ searchValues, setSearchValues }: Props) {
   })
 
   function onSubmit(data: SearchFamilySchema) {
-    setSearchValues(data)
+    useFamilyStore.setState((state) => ({ ...state, searchValues: data }))
   }
 
   return (

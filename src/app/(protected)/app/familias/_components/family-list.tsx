@@ -2,10 +2,10 @@
 
 import { ListFamiliesResponse, listFamilies } from '@/api/list-families'
 import { familiesListPageSize } from '@/config/families'
-import { SearchFamilySchema } from '@/schemas/search-family-schema'
+import { useFamilyStore } from '@/hooks/use-family-store'
 import { useIntersection } from '@mantine/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { FamilyListSkeleton } from './families-list-skeleton'
 import { FamilyItem } from './family-item'
 import { SearchForm } from './search-form'
@@ -16,10 +16,7 @@ type Props = {
 }
 
 export function FamilyList({ authToken, initialData }: Props) {
-  const [searchValues, setSearchValues] = useState<SearchFamilySchema>({
-    searchTerm: '',
-    scope: 'local',
-  })
+  const { searchValues } = useFamilyStore()
 
   const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: [
@@ -73,10 +70,7 @@ export function FamilyList({ authToken, initialData }: Props) {
   return (
     <div className="relative flex w-full flex-col gap-6 pb-8">
       <div className="flex w-full flex-col gap-3 lg:gap-0">
-        <SearchForm
-          searchValues={searchValues}
-          setSearchValues={setSearchValues}
-        />
+        <SearchForm />
 
         <span className="truncate text-center text-sm lg:text-start">
           {searchValues.searchTerm.length > 0

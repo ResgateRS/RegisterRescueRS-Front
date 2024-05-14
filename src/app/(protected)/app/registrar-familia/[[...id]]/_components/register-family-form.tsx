@@ -1,6 +1,8 @@
 'use client'
 
 import { revalidatePath } from '@/actions/revalidate'
+import { deleteFamily } from '@/api/delete-family'
+import { ListFamiliesResponse } from '@/api/list-families'
 import { ListFamilyDetailsResponse } from '@/api/list-family-details'
 import { updateFamily } from '@/api/update-family'
 import { Spinner } from '@/components/spinner'
@@ -18,14 +20,20 @@ import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { siteRoutes } from '@/config/site'
 import { cellphoneMask } from '@/functions/cellphone-mask'
+import { useFamilyStore } from '@/hooks/use-family-store'
 import { cn } from '@/lib/utils'
 import {
   RegisterFamilySchema,
   registerFamilySchema,
 } from '@/schemas/register-family-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { PlusIcon, TrashIcon } from 'lucide-react'
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
+import { PlusIcon, SaveIcon, TrashIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { FieldErrors, useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { v4 as uuid } from 'uuid'
@@ -36,10 +44,27 @@ type Props = {
 }
 
 export function RegisterFamilyForm({ authToken, family }: Props) {
+  const { searchValues } = useFamilyStore()
   const queryClient = useQueryClient()
-  const { mutateAsync: registerFamily, isPending } = useMutation({
-    mutationKey: ['register-family'],
-    mutationFn: updateFamily,
+  const router = useRouter()
+
+  const closeDialog = () => {
+    router.back()
+    router.refresh()
+  }
+
+  const { mutateAsync: registerFamily, isPending: isPendingRegisterFamily } =
+    useMutation({
+      mutationKey: ['register-family'],
+      mutationFn: updateFamily,
+    })
+
+  const {
+    mutateAsync: deleteFamilyMutation,
+    isPending: isPendingDeleteFamily,
+  } = useMutation({
+    mutationKey: ['delete-family'],
+    mutationFn: deleteFamily,
   })
 
   const form = useForm<RegisterFamilySchema>({
@@ -95,6 +120,42 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
       return
     }
 
+    toast.error(message)
+  }
+
+  async function onDeleteFamily(
+    familyId: ListFamiliesResponse[number]['familyId'],
+  ) {
+    const { result, message } = await deleteFamilyMutation({
+      familyId,
+      authToken,
+    })
+
+    if (result === 1) {
+      toast.success('A família foi excluída!')
+
+      revalidatePath(siteRoutes.protected.families)
+      queryClient.setQueryData<InfiniteData<ListFamiliesResponse>>(
+        ['infinite-list-families', searchValues.scope, searchValues.searchTerm],
+        (state) => {
+          if (state) {
+            return {
+              ...state,
+              pages: state.pages.map((page) =>
+                page.filter((family) => family.familyId !== familyId),
+              ),
+            }
+          }
+
+          return state
+        },
+      )
+      closeDialog()
+
+      return
+    }
+
+    closeDialog()
     toast.error(message)
   }
 
@@ -258,17 +319,44 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
               {errors.global.message}
             </p>
           )}
-          <Button
-            type="submit"
-            className={cn(
-              buttonVariants({ size: 'sm', variant: 'outlineSecondary' }),
-              'mt-2 uppercase',
+          <div className="mt-2 flex flex-col items-center gap-2 self-center sm:flex-row sm:self-end">
+            {family && (
+              <Button
+                type="button"
+                className={cn(
+                  buttonVariants({ size: 'sm', variant: 'outlineDestructive' }),
+                  'uppercase',
+                )}
+                disabled={isPendingRegisterFamily || isPendingDeleteFamily}
+                onClick={() => {
+                  onDeleteFamily(family.familyId)
+                }}
+              >
+                {isPendingDeleteFamily ? (
+                  <Spinner className="mr-2 fill-red-800" />
+                ) : (
+                  <TrashIcon className="mr-2 size-4" />
+                )}
+                Excluir
+              </Button>
             )}
-            disabled={isPending}
-          >
-            {isPending && <Spinner className="mr-2" />}
-            {family ? 'Salvar' : 'Registrar'}
-          </Button>
+
+            <Button
+              type="submit"
+              className={cn(
+                buttonVariants({ size: 'sm', variant: 'outlineSecondary' }),
+                'uppercase',
+              )}
+              disabled={isPendingRegisterFamily || isPendingDeleteFamily}
+            >
+              {isPendingRegisterFamily ? (
+                <Spinner className="mr-2" />
+              ) : (
+                <SaveIcon className="mr-2 size-4" />
+              )}
+              {family ? 'Salvar' : 'Registrar'}
+            </Button>
+          </div>
         </div>
       </form>
     </Form>
