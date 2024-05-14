@@ -2,6 +2,7 @@ import { Separator } from '@/components/ui/separator'
 import { RouteVisibility, siteRoutes } from '@/config/site'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
+import { LogoIcon } from '../icons/logo'
 import { Nav } from './nav'
 
 type Props = {
@@ -23,9 +24,10 @@ export function Header({ routeType, className, ...props }: Props) {
     >
       <Link
         href={siteRoutes.public.landingPage}
-        className="cursor-pointer select-none text-[40px] font-bold uppercase"
+        className="flex cursor-pointer select-none items-center gap-4 text-[40px] font-bold uppercase"
       >
-        Resgate RS
+        <LogoIcon className="size-8" />
+        Abrigo RS
       </Link>
 
       <Nav routeType={routeType} />
