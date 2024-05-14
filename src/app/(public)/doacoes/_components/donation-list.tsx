@@ -6,6 +6,7 @@ import { useDonationStore } from '@/hooks/use-donation-store'
 import { useIntersection } from '@mantine/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
+import { useGeolocated } from 'react-geolocated'
 import { DonationItem } from './donation-item'
 import { DonationListSkeleton } from './donation-list-skeleton'
 import { SearchForm } from './search-form'
@@ -16,13 +17,21 @@ type Props = {
 
 export function DonationList({ initialData }: Props) {
   const { searchTerm } = useDonationStore()
+  const { coords } = useGeolocated()
 
   const { data, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['infinite-list-donations', searchTerm],
+    queryKey: [
+      'infinite-list-donations',
+      searchTerm,
+      coords?.latitude,
+      coords?.longitude,
+    ],
     queryFn: async ({ pageParam }) => {
       const response = await listDonations({
         pageSize: donationsListPageSize,
         cursor: pageParam,
+        latitude: coords?.latitude,
+        longitude: coords?.longitude,
       })
 
       if (response.result === 1) {
