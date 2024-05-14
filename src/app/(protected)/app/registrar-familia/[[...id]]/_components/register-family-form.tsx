@@ -1,5 +1,6 @@
 'use client'
 
+import { revalidatePath } from '@/actions/revalidate'
 import { ListFamilyDetailsResponse } from '@/api/list-family-details'
 import { updateFamily } from '@/api/update-family'
 import { Spinner } from '@/components/spinner'
@@ -15,6 +16,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
+import { siteRoutes } from '@/config/site'
 import { cellphoneMask } from '@/functions/cellphone-mask'
 import { cn } from '@/lib/utils'
 import {
@@ -22,7 +24,7 @@ import {
   registerFamilySchema,
 } from '@/schemas/register-family-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon, TrashIcon } from 'lucide-react'
 import { FieldErrors, useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -34,6 +36,7 @@ type Props = {
 }
 
 export function RegisterFamilyForm({ authToken, family }: Props) {
+  const queryClient = useQueryClient()
   const { mutateAsync: registerFamily, isPending } = useMutation({
     mutationKey: ['register-family'],
     mutationFn: updateFamily,
@@ -72,14 +75,23 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
   })
 
   async function onSubmit(data: RegisterFamilySchema) {
-    console.log(data)
     const { message, result } = await registerFamily({
       ...data,
       authToken,
     })
 
     if (result === 1) {
-      toast.success('Família registrada com sucesso!')
+      toast.success(
+        family
+          ? 'Família atualizada com sucesso!'
+          : 'Família registrada com sucesso!',
+      )
+
+      revalidatePath(siteRoutes.protected.families)
+      queryClient.invalidateQueries({
+        queryKey: ['infinite-list-families'],
+      })
+
       return
     }
 

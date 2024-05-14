@@ -22,7 +22,11 @@ export function FamilyList({ authToken, initialData }: Props) {
   })
 
   const { data, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['infinite-list-families', searchValues],
+    queryKey: [
+      'infinite-list-families',
+      searchValues.scope,
+      searchValues.searchTerm,
+    ],
     queryFn: async ({ pageParam }) => {
       const response = await listFamilies({
         global: searchValues.scope === 'global',
