@@ -32,6 +32,7 @@ export function DonationList({ initialData }: Props) {
         cursor: pageParam,
         latitude: coords?.latitude,
         longitude: coords?.longitude,
+        searchTerm,
       })
 
       if (response.result === 1) {
