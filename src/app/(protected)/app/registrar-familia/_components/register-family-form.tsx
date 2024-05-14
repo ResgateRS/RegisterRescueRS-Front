@@ -15,6 +15,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
+import { cellphoneMask } from '@/lib/masks'
 import { cn } from '@/lib/utils'
 import {
   RegisterFamilySchema,
@@ -162,9 +163,19 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
                       <FormControl>
                         <Input
                           id={`houseds.${index}.cellphone`}
-                          placeholder="Insira um número de contato..."
+                          type="tel"
+                          inputMode="numeric"
+                          autoComplete="cc-number"
+                          placeholder="(51) 00000-0000"
                           className="bg-zinc-50"
                           {...field}
+                          onChange={(e) => {
+                            const { value } = e.target
+                            form.setValue(
+                              `houseds.${index}.cellphone`,
+                              cellphoneMask(value),
+                            )
+                          }}
                         />
                       </FormControl>
                       <FormMessage />

@@ -7,7 +7,12 @@ export const registerFamilySchema = z
       z.object({
         id: z.string().min(1, 'Este campo não pode ser vazio.'),
         name: z.string().min(1, 'Este campo não pode ser vazio.'),
-        cellphone: z.string().min(1, 'Este campo não pode ser vazio.'),
+        cellphone: z
+          .string()
+          .min(1, 'Este campo não pode ser vazio.')
+          .min(14, 'Número inválido.')
+          .max(15, 'Número inválido.')
+          .transform((value) => value.replace(/[\s()-]/g, '')),
         age: z.coerce
           .number()
           .gt(0, 'A idade deve ser maior que 0.')
