@@ -28,10 +28,10 @@ export function Nav({ routeType }: Props) {
             href={item.href}
             className={cn(
               buttonVariants({ variant: 'navLink', size: 'link' }),
-              'text-xl',
+              'text-xl after:bg-zinc-50/50 text-zinc-50/50 lg:after:bg-white lg:text-zinc-50',
               ((pathname.includes(item.href) && item.href !== '/') ||
                 pathname === item.href) &&
-                'lg:after:w-full',
+                'lg:after:w-full after:bg-white text-zinc-50',
             )}
             scroll={false}
           >
