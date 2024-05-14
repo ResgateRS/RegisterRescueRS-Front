@@ -1,11 +1,8 @@
-import { handleLogout } from '@/actions/auth'
-import { Button, buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { navConfig } from '@/config/nav'
 import { RouteVisibility, siteRoutes } from '@/config/site'
 import { cn } from '@/lib/utils'
-import { LogOutIcon } from 'lucide-react'
 import Link from 'next/link'
+import { Nav } from './nav'
 
 type Props = {
   routeType: RouteVisibility
@@ -31,48 +28,7 @@ export function Header({ routeType, className, ...props }: Props) {
         Resgate RS
       </Link>
 
-      <nav className="flex flex-col items-center gap-6 lg:flex-row lg:gap-8">
-        <div
-          data-protected-route={routeType === 'protected'}
-          className="flex gap-4 data-[protected-route=true]:flex-col lg:gap-8 lg:data-[protected-route=true]:flex-row"
-        >
-          {navConfig[routeType].link.map((item) => (
-            <Link
-              key={item.title}
-              href={item.href}
-              className={cn(
-                buttonVariants({ variant: 'navLink', size: 'link' }),
-                'text-xl',
-              )}
-              scroll={false}
-            >
-              {item.title}
-            </Link>
-          ))}
-        </div>
-
-        {navConfig[routeType].button.map((item) => (
-          <Link
-            key={item.title}
-            href={item.href}
-            className={cn(buttonVariants({ variant: 'outline' }), 'text-xl')}
-          >
-            {item.title}
-          </Link>
-        ))}
-
-        {routeType === 'protected' && (
-          <form action={handleLogout}>
-            <Button
-              type="submit"
-              className={cn(buttonVariants({ variant: 'outline' }), 'text-xl')}
-            >
-              Sair
-              <LogOutIcon className="ml-2 size-4" />
-            </Button>
-          </form>
-        )}
-      </nav>
+      <Nav routeType={routeType} />
       {routeType === 'public' && <Separator className="block h-1 lg:hidden" />}
     </header>
   )

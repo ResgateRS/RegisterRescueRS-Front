@@ -26,27 +26,21 @@ export function DonationItem({ donation }: Props) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 pl-0 lg:pl-16 2xl:pl-[72px]">
-        <span className="text-sm font-light uppercase 2xl:text-base">
-          Precisam de:
-        </span>
+      {donation.donationDescription && (
+        <div className="flex flex-col gap-4 pl-0 lg:pl-16 2xl:pl-[72px]">
+          <span className="text-sm font-light uppercase 2xl:text-base">
+            Precisam de:
+          </span>
 
-        <span className="block text-wrap text-sm sm:hidden lg:block 2xl:text-base">
-          {truncateText(
-            `${donation.donationDescription} Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Tempora, velit.`,
-            60,
-          )}
-        </span>
+          <span className="block text-wrap text-sm sm:hidden lg:block 2xl:text-base">
+            {truncateText(donation.donationDescription, 60)}
+          </span>
 
-        <span className="hidden text-wrap text-sm sm:block lg:hidden 2xl:text-base">
-          {truncateText(
-            `${donation.donationDescription} Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Tempora, velit.`,
-            80,
-          )}
-        </span>
-      </div>
+          <span className="hidden text-wrap text-sm sm:block lg:hidden 2xl:text-base">
+            {truncateText(donation.donationDescription, 80)}
+          </span>
+        </div>
+      )}
 
       <div className="flex justify-end">
         <Link

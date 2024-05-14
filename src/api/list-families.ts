@@ -8,6 +8,8 @@ export type ListFamiliesRequest = {
   searchTerm?: string | null
   authToken?: string | null
   global?: boolean
+  latitude?: number | null
+  longitude?: number | null
 }
 
 export type ListFamiliesResponse = {

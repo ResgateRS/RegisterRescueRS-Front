@@ -6,6 +6,7 @@ import { useFamilyStore } from '@/hooks/use-family-store'
 import { useIntersection } from '@mantine/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
+import { useGeolocated } from 'react-geolocated'
 import { FamilyListSkeleton } from './families-list-skeleton'
 import { FamilyItem } from './family-item'
 import { SearchForm } from './search-form'
@@ -17,12 +18,15 @@ type Props = {
 
 export function FamilyList({ authToken, initialData }: Props) {
   const { searchValues } = useFamilyStore()
+  const { coords } = useGeolocated()
 
   const { data, fetchNextPage } = useInfiniteQuery({
     queryKey: [
       'infinite-list-families',
       searchValues.scope,
       searchValues.searchTerm,
+      coords?.latitude,
+      coords?.longitude,
     ],
     queryFn: async ({ pageParam }) => {
       const response = await listFamilies({
@@ -31,6 +35,8 @@ export function FamilyList({ authToken, initialData }: Props) {
         cursor: pageParam,
         authToken,
         searchTerm: searchValues.searchTerm,
+        latitude: coords?.latitude,
+        longitude: coords?.longitude,
       })
 
       if (response.result === 1) {
@@ -75,7 +81,7 @@ export function FamilyList({ authToken, initialData }: Props) {
         <span className="truncate text-center text-sm lg:text-start">
           {searchValues.searchTerm.length > 0
             ? `Procurando por "${searchValues.searchTerm}" ${searchValues.scope === 'local' ? 'neste abrigo.' : 'em todos os abrigos.'}`
-            : `Mostrando ${familiesListPageSize} resultados neste abrigo.`}
+            : `Mostrando ${initialData.length} resultados neste abrigo.`}
         </span>
       </div>
 
