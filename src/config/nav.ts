@@ -20,6 +20,10 @@ export const navConfig = {
   public: {
     link: [
       {
+        title: 'Início',
+        href: siteRoutes.public.landingPage,
+      },
+      {
         title: 'Doações',
         href: siteRoutes.public.donations,
       },
