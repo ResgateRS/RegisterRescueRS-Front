@@ -7,6 +7,7 @@ export type ListVolunteersRequest = {
   pageSize?: number | null
   latitude?: number
   longitude?: number
+  searchTerm?: string | null
 }
 
 export type ListVolunteersResponse = {
@@ -21,6 +22,7 @@ export type ListVolunteersResponse = {
   latitude: number
   longitude: number
   shelterName: string
+  updatedAt: string
 }[]
 
 export async function listVolunteers({
@@ -28,6 +30,7 @@ export async function listVolunteers({
   pageSize,
   latitude,
   longitude,
+  searchTerm,
 }: ListVolunteersRequest) {
   const response = await api.get<BaseApiResponse<ListVolunteersResponse>>(
     '/Shelter/ListVolunteers',
@@ -35,6 +38,7 @@ export async function listVolunteers({
       params: {
         latitude,
         longitude,
+        searchTerm,
       },
       headers: {
         'X-Cursor': cursor,

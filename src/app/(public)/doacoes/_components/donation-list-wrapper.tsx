@@ -4,11 +4,6 @@ import { donationsListPageSize } from '@/config/donations'
 import { DonationList } from './donation-list'
 
 export async function DonationListWrapper() {
-  await new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true)
-    }, 1000)
-  })
   const { data, message, result } = await listDonations({
     pageSize: donationsListPageSize,
   })
