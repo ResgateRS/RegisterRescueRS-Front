@@ -86,11 +86,11 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex w-full flex-col items-center p-1"
       >
-        <div className="flex max-h-[32rem] flex-col items-center overflow-y-auto rounded-lg border border-zinc-100 p-6">
+        <div className="flex max-h-80 flex-col items-center overflow-y-auto rounded-lg border border-zinc-100 p-2 sm:max-h-[32rem] sm:p-6">
           {fields.map((field, index) => (
             <div
               key={field.id}
-              className="flex w-[32rem] flex-col items-center"
+              className="flex w-80 flex-col items-center sm:w-[32rem]"
             >
               <div className="flex w-full flex-col rounded-lg bg-zinc-100 p-5">
                 <div className="flex w-full items-center justify-between">
@@ -236,7 +236,7 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
         </div>
         <div className="flex w-full flex-col items-end gap-2">
           {errors.global && (
-            <p className="text-sm font-medium text-red-700">
+            <p className="text-balance text-center text-sm font-medium text-red-700 sm:text-wrap sm:text-start">
               {errors.global.message}
             </p>
           )}

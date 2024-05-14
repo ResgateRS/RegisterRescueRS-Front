@@ -29,7 +29,7 @@ export function RegisterFamilyDialog({ authToken }: Props) {
         onEscapeKeyDown={onDismiss}
         onPointerDownOutside={onDismiss}
         hasCloseButton={false}
-        className="max-w-2xl"
+        className="max-w-2xl p-3 sm:p-6"
       >
         <DialogClose
           onClick={onDismiss}

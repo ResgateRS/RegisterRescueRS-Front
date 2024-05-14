@@ -20,7 +20,7 @@ export default function RegistrarFamiliaPage() {
 
   return (
     <Section className="mb-0 min-h-[calc(100vh-12.75rem)] items-center justify-center gap-7 pt-10 lg:min-h-[calc(100vh-6.75rem)] 2xl:gap-5">
-      <Card className="w-full lg:w-1/2">
+      <Card className="w-full lg:w-3/4 xl:w-1/2">
         <CardHeader>
           <CardTitle>Registrar família</CardTitle>
           <CardDescription>
