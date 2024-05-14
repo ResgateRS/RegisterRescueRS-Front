@@ -14,10 +14,10 @@ export type ListFamiliesResponse = {
   familyId: string
   totalPeopleNumber: number
   responsable: string
-  cellphone: string
   latitude: number
   longitude: number
   updatedAt: string
+  cellphone?: string
 }[]
 
 export async function listFamilies({

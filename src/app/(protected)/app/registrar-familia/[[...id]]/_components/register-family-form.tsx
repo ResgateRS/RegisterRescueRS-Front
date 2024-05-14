@@ -15,7 +15,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
-import { cellphoneMask } from '@/lib/masks'
+import { cellphoneMask } from '@/functions/cellphone-mask'
 import { cn } from '@/lib/utils'
 import {
   RegisterFamilySchema,
@@ -46,7 +46,7 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
       houseds: family
         ? family.houseds.map((housed) => ({
             ...housed,
-            cellphone: cellphoneMask(housed.cellphone),
+            cellphone: housed.cellphone ? cellphoneMask(housed.cellphone) : '',
           }))
         : [
             {
@@ -72,6 +72,7 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
   })
 
   async function onSubmit(data: RegisterFamilySchema) {
+    console.log(data)
     const { message, result } = await registerFamily({
       ...data,
       authToken,

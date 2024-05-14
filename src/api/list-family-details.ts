@@ -18,9 +18,9 @@ export type ListFamilyDetailsResponse = {
   houseds: {
     id: string
     name: string
-    cellphone: string
     age: number
     responsable: boolean
+    cellphone?: string
   }[]
 }
 
