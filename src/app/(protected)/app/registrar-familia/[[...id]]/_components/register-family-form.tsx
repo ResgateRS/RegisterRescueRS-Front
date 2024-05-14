@@ -89,6 +89,7 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
   })
 
   const { control, formState } = form
+  const { isDirty } = formState
 
   const errors = formState.errors as FieldErrors<
     RegisterFamilySchema & { global: number }
@@ -342,12 +343,17 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
             )}
 
             <Button
-              type="submit"
+              type={isDirty ? 'submit' : 'button'}
               className={cn(
                 buttonVariants({ size: 'sm', variant: 'outlineSecondary' }),
                 'uppercase',
               )}
               disabled={isPendingRegisterFamily || isPendingDeleteFamily}
+              onClick={() => {
+                if (!isDirty) {
+                  closeDialog()
+                }
+              }}
             >
               {isPendingRegisterFamily ? (
                 <Spinner className="mr-2" />
