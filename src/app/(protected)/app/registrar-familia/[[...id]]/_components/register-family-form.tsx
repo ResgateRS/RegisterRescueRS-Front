@@ -1,6 +1,6 @@
 'use client'
 
-import { ListFamiliesResponse } from '@/api/list-families'
+import { ListFamilyDetailsResponse } from '@/api/list-family-details'
 import { updateFamily } from '@/api/update-family'
 import { Spinner } from '@/components/spinner'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -30,7 +30,7 @@ import { v4 as uuid } from 'uuid'
 
 type Props = {
   authToken: string
-  family?: ListFamiliesResponse[number]
+  family?: ListFamilyDetailsResponse
 }
 
 export function RegisterFamilyForm({ authToken, family }: Props) {
@@ -43,15 +43,20 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
     resolver: zodResolver(registerFamilySchema),
     defaultValues: {
       familyId: family?.familyId,
-      houseds: [
-        {
-          id: uuid(),
-          name: '',
-          age: 1,
-          cellphone: '',
-          responsable: true,
-        },
-      ],
+      houseds: family
+        ? family.houseds.map((housed) => ({
+            ...housed,
+            cellphone: cellphoneMask(housed.cellphone),
+          }))
+        : [
+            {
+              id: uuid(),
+              name: '',
+              age: 1,
+              cellphone: '',
+              responsable: true,
+            },
+          ],
     },
   })
 
@@ -86,7 +91,7 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex w-full flex-col items-center p-1"
       >
-        <div className="flex max-h-80 flex-col items-center overflow-y-auto rounded-lg border border-zinc-100 p-2 sm:max-h-[32rem] sm:p-6">
+        <div className="flex max-h-80 flex-col items-center overflow-y-auto rounded-lg border-2 border-zinc-100 p-2 sm:max-h-[32rem] sm:p-6">
           {fields.map((field, index) => (
             <div
               key={field.id}
@@ -249,7 +254,7 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
             disabled={isPending}
           >
             {isPending && <Spinner className="mr-2" />}
-            Registrar
+            {family ? 'Salvar' : 'Registrar'}
           </Button>
         </div>
       </form>

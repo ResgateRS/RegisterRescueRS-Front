@@ -4,6 +4,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { siteRoutes } from '@/config/site'
 import { cn } from '@/lib/utils'
 import parsePhoneNumber from 'libphonenumber-js'
+import { EyeIcon } from 'lucide-react'
 import Link from 'next/link'
 import { forwardRef } from 'react'
 
@@ -47,13 +48,15 @@ export const FamilyItem = forwardRef<HTMLDivElement, Props>(
         </div>
 
         <Link
-          href={siteRoutes.protected.registerFamily}
+          href={`${siteRoutes.protected.registerFamily}/b2a97c17-d85f-4680-a39c-59944c1beb45`}
           className={cn(
             buttonVariants({ variant: 'outlineSecondary' }),
             'text-xl self-center lg:self-auto',
           )}
+          scroll={false}
         >
-          Saiba mais
+          <EyeIcon className="mr-2 size-5" />
+          Ver mais
         </Link>
       </div>
     )
