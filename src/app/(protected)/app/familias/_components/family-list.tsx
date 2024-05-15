@@ -20,40 +20,41 @@ export function FamilyList({ authToken }: Props) {
   const { searchValues } = useFamilyStore()
   const { coords } = useGeolocated()
 
-  const { data, fetchNextPage, isPending, error } = useInfiniteQuery({
-    queryKey: [
-      'infinite-list-families',
-      searchValues.scope,
-      searchValues.searchTerm,
-      coords?.latitude,
-      coords?.longitude,
-    ],
-    queryFn: async ({ pageParam }) => {
-      const response = await listFamilies({
-        global: searchValues.scope === 'global',
-        pageSize: infiniteFamiliesListPageSize,
-        cursor: pageParam,
-        authToken,
-        searchTerm: searchValues.searchTerm,
-        latitude: coords?.latitude,
-        longitude: coords?.longitude,
-      })
+  const { data, fetchNextPage, isPending, error, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: [
+        'infinite-list-families',
+        searchValues.scope,
+        searchValues.searchTerm,
+        coords?.latitude,
+        coords?.longitude,
+      ],
+      queryFn: async ({ pageParam }) => {
+        const response = await listFamilies({
+          global: searchValues.scope === 'global',
+          pageSize: infiniteFamiliesListPageSize,
+          cursor: pageParam,
+          authToken,
+          searchTerm: searchValues.searchTerm,
+          latitude: coords?.latitude,
+          longitude: coords?.longitude,
+        })
 
-      if (response.result === 1) {
-        return response.data
-      }
+        if (response.result === 1) {
+          return response.data
+        }
 
-      throw Error(response.message)
-    },
-    initialPageParam: '',
-    getNextPageParam: (lastPage) => {
-      if (lastPage.length === 0) {
-        return undefined
-      }
+        throw Error(response.message)
+      },
+      initialPageParam: '',
+      getNextPageParam: (lastPage) => {
+        if (lastPage.length === 0) {
+          return undefined
+        }
 
-      return lastPage[lastPage.length - 1].familyId
-    },
-  })
+        return lastPage[lastPage.length - 1].familyId
+      },
+    })
 
   const lastFamilyRef = useRef<HTMLElement>(null)
   const { ref, entry } = useIntersection({
@@ -62,10 +63,14 @@ export function FamilyList({ authToken }: Props) {
   })
 
   useEffect(() => {
-    if (entry?.isIntersecting && searchValues.searchTerm.length > 0) {
+    if (
+      entry?.isIntersecting &&
+      searchValues.searchTerm.length > 0 &&
+      hasNextPage
+    ) {
       fetchNextPage()
     }
-  }, [entry, fetchNextPage, searchValues])
+  }, [entry, fetchNextPage, searchValues, hasNextPage])
 
   const families = data?.pages.flatMap((family) => family)
 

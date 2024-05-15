@@ -16,37 +16,38 @@ export function DonationList() {
   const { searchTerm } = useDonationStore()
   const { coords } = useGeolocated()
 
-  const { data, fetchNextPage, isPending, error } = useInfiniteQuery({
-    queryKey: [
-      'infinite-list-donations',
-      searchTerm,
-      coords?.latitude,
-      coords?.longitude,
-    ],
-    queryFn: async ({ pageParam }) => {
-      const response = await listDonations({
-        pageSize: infiniteDonationsListPageSize,
-        cursor: pageParam,
-        latitude: coords?.latitude,
-        longitude: coords?.longitude,
+  const { data, fetchNextPage, isPending, error, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: [
+        'infinite-list-donations',
         searchTerm,
-      })
+        coords?.latitude,
+        coords?.longitude,
+      ],
+      queryFn: async ({ pageParam }) => {
+        const response = await listDonations({
+          pageSize: infiniteDonationsListPageSize,
+          cursor: pageParam,
+          latitude: coords?.latitude,
+          longitude: coords?.longitude,
+          searchTerm,
+        })
 
-      if (response.result === 1) {
-        return response.data
-      }
+        if (response.result === 1) {
+          return response.data
+        }
 
-      throw Error(response.message)
-    },
-    initialPageParam: '',
-    getNextPageParam: (lastPage) => {
-      if (lastPage.length === 0) {
-        return undefined
-      }
+        throw Error(response.message)
+      },
+      initialPageParam: '',
+      getNextPageParam: (lastPage) => {
+        if (lastPage.length === 0) {
+          return undefined
+        }
 
-      return lastPage[lastPage.length - 1].shelterId
-    },
-  })
+        return lastPage[lastPage.length - 1].shelterId
+      },
+    })
 
   const lastDonationRef = useRef<HTMLElement>(null)
   const { ref, entry } = useIntersection({
@@ -55,10 +56,10 @@ export function DonationList() {
   })
 
   useEffect(() => {
-    if (entry?.isIntersecting && searchTerm.length > 0) {
+    if (entry?.isIntersecting && searchTerm.length > 0 && hasNextPage) {
       fetchNextPage()
     }
-  }, [entry, fetchNextPage, searchTerm])
+  }, [entry, fetchNextPage, searchTerm, hasNextPage])
 
   const donations = data?.pages.flatMap((donation) => donation)
 
