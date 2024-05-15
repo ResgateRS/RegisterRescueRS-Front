@@ -7,6 +7,7 @@ export type ListDonationsRequest = {
   pageSize?: number | null
   latitude?: number
   longitude?: number
+  searchTerm?: string | null
 }
 
 export type ListDonationsResponse = {
@@ -25,6 +26,7 @@ export async function listDonations({
   pageSize,
   latitude,
   longitude,
+  searchTerm,
 }: ListDonationsRequest) {
   const response = await api.get<BaseApiResponse<ListDonationsResponse>>(
     '/Shelter/ListDonations',
@@ -32,6 +34,7 @@ export async function listDonations({
       params: {
         latitude,
         longitude,
+        searchTerm,
       },
       headers: {
         'X-Cursor': cursor,

@@ -4,27 +4,27 @@ type Props = {
   withoutWrapper?: boolean
 }
 
-function DonationSkeletonContent() {
+function VolunteerSkeletonContent() {
   return (
     <>
       {Array.from({ length: 4 }).map((_, index) => (
         <Skeleton
           key={index}
-          className="flex h-72 w-full items-center justify-between rounded-lg p-10"
+          className="flex h-80 w-full items-center justify-between rounded-lg p-10"
         />
       ))}
     </>
   )
 }
 
-export function DonationListSkeleton({ withoutWrapper }: Props) {
+export function VolunteerListSkeleton({ withoutWrapper }: Props) {
   return (
     <>
       {withoutWrapper ? (
-        <DonationSkeletonContent />
+        <VolunteerSkeletonContent />
       ) : (
         <div className="flex w-full flex-col gap-6 pb-8">
-          <DonationSkeletonContent />
+          <VolunteerSkeletonContent />
         </div>
       )}
     </>
