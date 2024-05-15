@@ -1,14 +1,11 @@
 import Providers from '@/components/providers'
 import { Toaster } from '@/components/ui/sonner'
-import { siteConfig } from '@/config/site'
+import { siteMetadata } from '@/config/site'
 import { poppins } from '@/lib/fonts'
 import type { Metadata } from 'next'
 import './globals.css'
 
-export const metadata: Metadata = {
-  title: siteConfig.title,
-  description: siteConfig.description,
-}
+export const metadata: Metadata = siteMetadata
 
 export default function RootLayout({
   children,
@@ -16,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body
         className={`font-poppins antialiased ${poppins.variable} !scroll-smooth bg-zinc-100 text-zinc-500`}
         suppressHydrationWarning
