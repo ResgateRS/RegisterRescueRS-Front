@@ -1,25 +1,22 @@
 'use client'
 
-import { ListDonationsResponse, listDonations } from '@/api/list-donations'
+import { listDonations } from '@/api/list-donations'
 import { infiniteDonationsListPageSize } from '@/config/donations'
 import { useDonationStore } from '@/hooks/use-donation-store'
 import { useIntersection } from '@mantine/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 import { useGeolocated } from 'react-geolocated'
+import { ErrorContainer } from '../../(landing-page)/_components/error-container'
 import { DonationItem } from './donation-item'
 import { DonationListSkeleton } from './donation-list-skeleton'
 import { SearchForm } from './search-form'
 
-type Props = {
-  initialData: ListDonationsResponse
-}
-
-export function DonationList({ initialData }: Props) {
+export function DonationList() {
   const { searchTerm } = useDonationStore()
   const { coords } = useGeolocated()
 
-  const { data, fetchNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, isPending, error } = useInfiniteQuery({
     queryKey: [
       'infinite-list-donations',
       searchTerm,
@@ -49,7 +46,6 @@ export function DonationList({ initialData }: Props) {
 
       return lastPage[lastPage.length - 1].shelterId
     },
-    enabled: searchTerm.length > 0,
   })
 
   const lastDonationRef = useRef<HTMLElement>(null)
@@ -64,10 +60,7 @@ export function DonationList({ initialData }: Props) {
     }
   }, [entry, fetchNextPage, searchTerm])
 
-  const donations =
-    searchTerm.length > 0
-      ? data?.pages.flatMap((donation) => donation)
-      : initialData
+  const donations = data?.pages.flatMap((donation) => donation)
 
   return (
     <div className="relative flex w-full flex-col gap-6 pb-8">
@@ -75,18 +68,19 @@ export function DonationList({ initialData }: Props) {
         <SearchForm />
 
         <span className="truncate text-center text-sm lg:text-start">
-          {searchTerm.length > 0
-            ? `Procurando por "${searchTerm}".`
-            : `Mostrando ${initialData.length} resultados.`}
+          {donations &&
+            (searchTerm.length > 0
+              ? `Procurando por "${searchTerm}".`
+              : `Mostrando ${donations.length} resultados.`)}
         </span>
       </div>
 
-      {donations ? (
-        donations.length === 0 ? (
-          <div className="flex items-center justify-center text-lg">
-            Nenhum abrigo encontrado procurando doações.
-          </div>
-        ) : (
+      {isPending && <DonationListSkeleton />}
+      {!isPending && !!error && <ErrorContainer message={error.message} />}
+      {!isPending &&
+        !error &&
+        donations &&
+        (donations.length > 0 ? (
           donations.map((donation, index) => (
             <DonationItem
               ref={index === donations.length - 1 ? ref : null}
@@ -94,10 +88,11 @@ export function DonationList({ initialData }: Props) {
               donation={donation}
             />
           ))
-        )
-      ) : (
-        <DonationListSkeleton withoutWrapper />
-      )}
+        ) : (
+          <div className="flex items-center justify-center text-lg">
+            Nenhum abrigo encontrado procurando doações.
+          </div>
+        ))}
     </div>
   )
 }

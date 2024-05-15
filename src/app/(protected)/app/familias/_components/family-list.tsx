@@ -78,7 +78,7 @@ export function FamilyList({ authToken }: Props) {
           {families &&
             (searchValues.searchTerm.length > 0
               ? `Procurando por "${searchValues.searchTerm}" ${searchValues.scope === 'local' ? 'neste abrigo.' : 'em todos os abrigos.'}`
-              : `Mostrando ${families?.length} resultados neste abrigo.`)}
+              : `Mostrando ${families.length} resultados neste abrigo.`)}
         </span>
       </div>
 
@@ -87,7 +87,7 @@ export function FamilyList({ authToken }: Props) {
       {!isPending &&
         !error &&
         families &&
-        (families.length > 1 ? (
+        (families.length > 0 ? (
           families.map((family, index) => (
             <FamilyItem
               ref={index === families.length - 1 ? ref : null}

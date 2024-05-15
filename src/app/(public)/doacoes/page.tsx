@@ -1,7 +1,5 @@
 import { Section } from '@/app/(public)/_components/section'
-import { Suspense } from 'react'
-import { DonationListSkeleton } from './_components/donation-list-skeleton'
-import { DonationListWrapper } from './_components/donation-list-wrapper'
+import { DonationList } from './_components/donation-list'
 
 export default function DoacoesPage() {
   return (
@@ -10,9 +8,7 @@ export default function DoacoesPage() {
         Todos os abrigos aceitando doações
       </h1>
 
-      <Suspense fallback={<DonationListSkeleton />}>
-        <DonationListWrapper />
-      </Suspense>
+      <DonationList />
     </Section>
   )
 }
