@@ -7,7 +7,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { RegisterNeedsDialog } from '../../registrar-necessidades/_components/register-needs-dialog'
 
-export default async function RegistrarNecessidadesModalPage() {
+export default function RegistrarNecessidadesModalPage() {
   const token = cookies().get(cookiesNames.session)?.value
   if (!token) {
     redirect(siteRoutes.public.landingPage)

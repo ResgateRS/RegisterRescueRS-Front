@@ -1,5 +1,6 @@
 'use client'
 
+import { ListNeedsResponse, listNeeds } from '@/api/list-needs'
 import { updateShelterNeeds } from '@/api/update-shelter-needs'
 import { Spinner } from '@/components/spinner'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -20,7 +21,8 @@ import {
   registerNeedsSchema,
 } from '@/schemas/register-needs-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -30,6 +32,17 @@ type Props = {
 }
 
 export function RegisterNeedsForm({ shelterId, authToken }: Props) {
+  const queryClient = useQueryClient()
+
+  const {
+    data: needs,
+    isPending: isPendingNeeds,
+    isError,
+  } = useQuery({
+    queryKey: ['list-needs', authToken],
+    queryFn: () => listNeeds({ authToken }),
+  })
+
   const { mutateAsync: registerShelterNeeds, isPending } = useMutation({
     mutationKey: ['register-needs'],
     mutationFn: updateShelterNeeds,
@@ -39,15 +52,18 @@ export function RegisterNeedsForm({ shelterId, authToken }: Props) {
     resolver: zodResolver(registerNeedsSchema),
     defaultValues: {
       shelterId,
-      acceptingUnsheltered: false,
-      acceptingVolunteers: false,
+      avaliable: false,
       acceptingDoctors: false,
-      acceptingVeterinary: false,
       acceptingDonations: false,
-      formLink: '',
+      acceptingUnsheltered: false,
+      acceptingVeterinary: false,
+      acceptingVolunteers: false,
       donationsDescription: '',
+      formLink: '',
     },
   })
+
+  const { reset } = form
 
   async function onSubmit(data: RegisterNeedsSchema) {
     const { result, message } = await registerShelterNeeds({
@@ -57,11 +73,35 @@ export function RegisterNeedsForm({ shelterId, authToken }: Props) {
 
     if (result === 1) {
       toast.success('Necessidades salvas com sucesso!')
+
+      queryClient.setQueryData<ListNeedsResponse>(
+        ['list-needs', authToken],
+        (state) => {
+          if (state) {
+            return {
+              acceptingDoctors: data.acceptingDoctors,
+              acceptingDonations: data.acceptingDonations,
+              acceptingVeterinarians: data.acceptingVeterinary,
+              acceptingVolunteers: data.acceptingVolunteers,
+              avaliable: data.avaliable,
+              donationDescription: data.donationsDescription ?? '',
+              volunteersSubscriptionLink: data.formLink ?? '',
+            }
+          }
+          return state
+        },
+      )
       return
     }
 
     toast.error(message)
   }
+
+  useEffect(() => {
+    if (needs && needs.result === 1) {
+      reset({ shelterId, ...needs.data })
+    }
+  }, [needs, reset, shelterId])
 
   return (
     <Form {...form}>
@@ -69,6 +109,16 @@ export function RegisterNeedsForm({ shelterId, authToken }: Props) {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-3"
       >
+        {isPendingNeeds && (
+          <p className="text-sm font-light">Carregando seus dados...</p>
+        )}
+
+        {!isPendingNeeds && ((needs && needs.result !== 1) || isError) && (
+          <p className="text-sm font-light text-red-500">
+            Não foi possível carregar seus dados.
+          </p>
+        )}
+
         <FormField
           control={form.control}
           name="acceptingUnsheltered"
