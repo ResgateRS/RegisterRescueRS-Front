@@ -4,7 +4,7 @@ import { listVolunteers } from '@/api/list-volunteers'
 import { volunteersListPageSize } from '@/config/volunteers'
 import { useQuery } from '@tanstack/react-query'
 import { useGeolocated } from 'react-geolocated'
-import { ErrorContainer } from '../error-container'
+import { ErrorContainer } from '../../../../../components/core/error-container'
 import { VolunteerItem } from './volunteer-item'
 import { VolunteerListSkeleton } from './volunteer-list-skeleton'
 

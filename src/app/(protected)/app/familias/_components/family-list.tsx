@@ -1,7 +1,7 @@
 'use client'
 
 import { listFamilies } from '@/api/list-families'
-import { ErrorContainer } from '@/app/(public)/(landing-page)/_components/error-container'
+import { ErrorContainer } from '@/components/core/error-container'
 import { infiniteFamiliesListPageSize } from '@/config/families'
 import { useFamilyStore } from '@/hooks/use-family-store'
 import { useIntersection } from '@mantine/hooks'

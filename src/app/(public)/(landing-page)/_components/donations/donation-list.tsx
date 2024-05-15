@@ -4,7 +4,7 @@ import { listDonations } from '@/api/list-donations'
 import { donationsListPageSize } from '@/config/donations'
 import { useQuery } from '@tanstack/react-query'
 import { useGeolocated } from 'react-geolocated'
-import { ErrorContainer } from '../error-container'
+import { ErrorContainer } from '../../../../../components/core/error-container'
 import { DonationListSkeleton } from './donastion-list-skeleton'
 import { DonationItem } from './donation-item'
 

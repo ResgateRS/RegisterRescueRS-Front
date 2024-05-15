@@ -1,5 +1,5 @@
 import { listFamilyDetails } from '@/api/list-family-details'
-import { Section } from '@/app/(public)/_components/section'
+import { Section } from '@/components/core/section'
 import {
   Card,
   CardContent,

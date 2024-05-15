@@ -5,7 +5,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { whatsappHref } from '@/config/site'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
-import { Section } from '../_components/section'
+import { Section } from '../../../components/core/section'
 import { LoginForm } from './_components/form'
 
 export default function LoginPage() {

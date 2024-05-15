@@ -1,4 +1,4 @@
-import { Section } from '@/app/(public)/_components/section'
+import { Section } from '@/components/core/section'
 import { VolunteerList } from './_components/volunteer-list'
 
 export default function VoluntariosPage() {

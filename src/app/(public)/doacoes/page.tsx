@@ -1,4 +1,4 @@
-import { Section } from '@/app/(public)/_components/section'
+import { Section } from '@/components/core/section'
 import { DonationList } from './_components/donation-list'
 
 export default function DoacoesPage() {

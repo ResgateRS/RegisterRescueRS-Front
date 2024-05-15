@@ -1,4 +1,4 @@
-import { Section } from '@/app/(public)/_components/section'
+import { Section } from '@/components/core/section'
 import { siteRoutes } from '@/config/site'
 import { cookiesNames } from '@/config/storage'
 import { jwtUserDataSchema } from '@/schemas/jwt-user-data-schema'
