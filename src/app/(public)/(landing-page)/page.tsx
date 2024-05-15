@@ -9,14 +9,12 @@ import { mainContributors, organizationHref, siteRoutes } from '@/config/site'
 import { cn } from '@/lib/utils'
 import { MailIcon } from 'lucide-react'
 import Link from 'next/link'
-import { Suspense } from 'react'
 import { Section } from '../_components/section'
 import { SectionInfo } from '../_components/section-info'
 import { DonationList } from './_components/donations/donation-list'
 import { FindOutMoreButton } from './_components/find-out-more-button'
 import { HowToDonateButton } from './_components/how-to-donate-button'
 import { VolunteerList } from './_components/volunteers/volunteer-list'
-import { VolunteerListSkeleton } from './_components/volunteers/volunteer-list-skeleton'
 
 export default function LandingPage() {
   return (
@@ -95,10 +93,8 @@ export default function LandingPage() {
 
         <div className="flex items-center gap-6">
           <CollaborationFigure className="hidden size-[400px] lg:block 2xl:size-[500px]" />
-          <div className="flex flex-col gap-3 lg:gap-6">
-            <Suspense fallback={<VolunteerListSkeleton />}>
-              <VolunteerList />
-            </Suspense>
+          <div className="flex w-full flex-col gap-3 lg:gap-6">
+            <VolunteerList />
           </div>
         </div>
       </Section>

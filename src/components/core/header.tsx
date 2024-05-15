@@ -15,10 +15,8 @@ export function Header({ routeType, className, ...props }: Props) {
     <header
       data-protected-route={routeType === 'protected'}
       className={cn(
-        '-mb-1 flex h-64 sm:h-56 w-full flex-col items-center justify-center gap-4 bg-celeste px-4 pt-1 text-zinc-50 xl:px-24 2xl:px-44',
-        routeType === 'protected'
-          ? 'h-64 lg:h-44 xl:h-28 xl:flex-row xl:justify-between xl:px-20 xl:pt-0'
-          : 'lg:h-28 lg:flex-row lg:justify-between lg:px-20 lg:pt-0',
+        '-mb-1 flex h-64 sm:h-56 w-full flex-col items-center justify-center gap-4 bg-celeste px-4 pt-1 text-zinc-50 2xl:px-44 xl:flex-row xl:h-28 xl:justify-between xl:px-20 xl:pt-0',
+        routeType === 'protected' && 'h-64 lg:h-44 ',
         className,
       )}
       {...props}
@@ -29,7 +27,7 @@ export function Header({ routeType, className, ...props }: Props) {
           className="flex cursor-pointer select-none items-center gap-4 text-[40px] font-bold uppercase"
         >
           <LogoIcon className="size-8" />
-          Abrigo RS
+          Abrigos RS
         </Link>
 
         <Link
