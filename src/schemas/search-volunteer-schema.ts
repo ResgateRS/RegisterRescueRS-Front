@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const searchVolunteerSchema = z.object({
-  searchTerm: z.string().min(1, 'Este campo não pode ser vazio.'),
+  searchTerm: z.string(),
 })
 
 export type SearchVolunteerSchema = z.infer<typeof searchVolunteerSchema>

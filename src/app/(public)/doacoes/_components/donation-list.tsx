@@ -30,7 +30,7 @@ export function DonationList() {
           cursor: pageParam,
           latitude: coords?.latitude,
           longitude: coords?.longitude,
-          searchTerm,
+          searchTerm: searchTerm.length === 0 ? null : searchTerm,
         })
 
         if (response.result === 1) {
@@ -56,10 +56,10 @@ export function DonationList() {
   })
 
   useEffect(() => {
-    if (entry?.isIntersecting && searchTerm.length > 0 && hasNextPage) {
+    if (entry?.isIntersecting && hasNextPage) {
       fetchNextPage()
     }
-  }, [entry, fetchNextPage, searchTerm, hasNextPage])
+  }, [entry, fetchNextPage, hasNextPage])
 
   const donations = data?.pages.flatMap((donation) => donation)
 
@@ -69,10 +69,9 @@ export function DonationList() {
         <SearchForm />
 
         <span className="truncate text-center text-sm lg:text-start">
-          {donations &&
-            (searchTerm.length > 0
-              ? `Procurando por "${searchTerm}".`
-              : `Mostrando ${donations.length} resultados.`)}
+          {donations && searchTerm.length > 0
+            ? `Procurando por "${searchTerm}".`
+            : ''}
         </span>
       </div>
 

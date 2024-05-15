@@ -35,7 +35,10 @@ export function FamilyList({ authToken }: Props) {
           pageSize: infiniteFamiliesListPageSize,
           cursor: pageParam,
           authToken,
-          searchTerm: searchValues.searchTerm,
+          searchTerm:
+            searchValues.searchTerm.length === 0
+              ? null
+              : searchValues.searchTerm,
           latitude: coords?.latitude,
           longitude: coords?.longitude,
         })
@@ -63,14 +66,10 @@ export function FamilyList({ authToken }: Props) {
   })
 
   useEffect(() => {
-    if (
-      entry?.isIntersecting &&
-      searchValues.searchTerm.length > 0 &&
-      hasNextPage
-    ) {
+    if (entry?.isIntersecting && hasNextPage) {
       fetchNextPage()
     }
-  }, [entry, fetchNextPage, searchValues, hasNextPage])
+  }, [entry, fetchNextPage, hasNextPage])
 
   const families = data?.pages.flatMap((family) => family)
 
@@ -81,9 +80,7 @@ export function FamilyList({ authToken }: Props) {
 
         <span className="truncate text-center text-sm lg:text-start">
           {families &&
-            (searchValues.searchTerm.length > 0
-              ? `Procurando por "${searchValues.searchTerm}" ${searchValues.scope === 'local' ? 'neste abrigo.' : 'em todos os abrigos.'}`
-              : `Mostrando ${families.length} resultados neste abrigo.`)}
+            `Procurando ${searchValues.searchTerm.length > 0 ? `por "${searchValues.searchTerm}"` : ''} ${searchValues.scope === 'local' ? 'neste abrigo.' : 'em todos os abrigos.'}`}
         </span>
       </div>
 

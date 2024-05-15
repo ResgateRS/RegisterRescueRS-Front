@@ -19,6 +19,7 @@ export type ListFamiliesResponse = {
   latitude: number
   longitude: number
   updatedAt: string
+  shelter: string
   cellphone?: string
 }[]
 
