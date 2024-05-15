@@ -31,7 +31,7 @@ export function DonationList() {
             <DonationItem key={donation.shelterId} donation={donation} />
           ))
         ) : (
-          <ErrorContainer message={data?.message} />
+          <ErrorContainer message={data.message} />
         ))}
     </>
   )

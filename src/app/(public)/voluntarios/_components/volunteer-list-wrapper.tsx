@@ -1,11 +1,11 @@
 import { listVolunteers } from '@/api/list-volunteers'
 import { ErrorContainer } from '@/app/(public)/(landing-page)/_components/error-container'
-import { volunteersListPageSize } from '@/config/volunteers'
+import { infiniteVolunteersListPageSize } from '@/config/volunteers'
 import { VolunteerList } from './volunteer-list'
 
 export async function VolunteerListWrapper() {
   const { data, message, result } = await listVolunteers({
-    pageSize: volunteersListPageSize,
+    pageSize: infiniteVolunteersListPageSize,
   })
 
   if (result === 1) {

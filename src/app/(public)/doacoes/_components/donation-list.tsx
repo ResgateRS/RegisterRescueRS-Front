@@ -1,7 +1,7 @@
 'use client'
 
 import { ListDonationsResponse, listDonations } from '@/api/list-donations'
-import { donationsListPageSize } from '@/config/donations'
+import { infiniteDonationsListPageSize } from '@/config/donations'
 import { useDonationStore } from '@/hooks/use-donation-store'
 import { useIntersection } from '@mantine/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -28,7 +28,7 @@ export function DonationList({ initialData }: Props) {
     ],
     queryFn: async ({ pageParam }) => {
       const response = await listDonations({
-        pageSize: donationsListPageSize,
+        pageSize: infiniteDonationsListPageSize,
         cursor: pageParam,
         latitude: coords?.latitude,
         longitude: coords?.longitude,

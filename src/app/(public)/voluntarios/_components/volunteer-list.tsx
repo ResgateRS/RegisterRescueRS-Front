@@ -1,7 +1,7 @@
 'use client'
 
 import { ListVolunteersResponse, listVolunteers } from '@/api/list-volunteers'
-import { volunteersListPageSize } from '@/config/volunteers'
+import { infiniteVolunteersListPageSize } from '@/config/volunteers'
 import { useVolunteerStore } from '@/hooks/use-volunteer-store'
 import { useIntersection } from '@mantine/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -28,7 +28,7 @@ export function VolunteerList({ initialData }: Props) {
     ],
     queryFn: async ({ pageParam }) => {
       const response = await listVolunteers({
-        pageSize: volunteersListPageSize,
+        pageSize: infiniteVolunteersListPageSize,
         cursor: pageParam,
         latitude: coords?.latitude,
         longitude: coords?.longitude,
