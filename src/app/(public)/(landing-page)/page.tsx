@@ -12,7 +12,6 @@ import Link from 'next/link'
 import { Suspense } from 'react'
 import { Section } from '../_components/section'
 import { SectionInfo } from '../_components/section-info'
-import { DonationListSkeleton } from './_components/donations/donastion-list-skeleton'
 import { DonationList } from './_components/donations/donation-list'
 import { FindOutMoreButton } from './_components/find-out-more-button'
 import { HowToDonateButton } from './_components/how-to-donate-button'
@@ -52,9 +51,7 @@ export default function LandingPage() {
         />
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:gap-8">
-          <Suspense fallback={<DonationListSkeleton />}>
-            <DonationList />
-          </Suspense>
+          <DonationList />
         </div>
 
         <Link
