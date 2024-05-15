@@ -7,7 +7,7 @@ import { cookiesNames } from '@/config/storage'
 import { cookies } from 'next/headers'
 import { notFound, redirect } from 'next/navigation'
 import { validate as validateUuid } from 'uuid'
-import { RegisterFamilyDialog } from '../../../registrar-familia/[[...id]]/_components/register-family-dialog'
+import { RegisterFamilyDialog } from '../../../registrar-familia/_components/register-family-dialog'
 
 type Props = {
   params: {
