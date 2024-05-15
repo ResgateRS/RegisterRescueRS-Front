@@ -1,2 +1,2 @@
-export const infiniteDonationsListPageSize = 4
+export const infiniteDonationsListPageSize = 8
 export const donationsListPageSize = 4

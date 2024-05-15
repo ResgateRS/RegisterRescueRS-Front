@@ -1,1 +1,1 @@
-export const infiniteFamiliesListPageSize = 4
+export const infiniteFamiliesListPageSize = 8

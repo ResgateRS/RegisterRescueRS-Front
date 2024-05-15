@@ -1,4 +1,4 @@
-export const cookiePrefix = 'rescuers'
+export const cookiePrefix = 'abrigosrs'
 
 export const cookiesNames = {
   session: `${cookiePrefix}-session`,
