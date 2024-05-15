@@ -3,6 +3,7 @@ import { HomeIcon } from '@/components/icons/home'
 import { buttonVariants } from '@/components/ui/button'
 import { siteRoutes } from '@/config/site'
 import { cellphoneMask } from '@/functions/cellphone-mask'
+import { truncateText } from '@/functions/truncate-text'
 import { cn } from '@/lib/utils'
 import { EyeIcon } from 'lucide-react'
 import Link from 'next/link'
@@ -10,10 +11,11 @@ import { forwardRef } from 'react'
 
 type Props = {
   family: ListFamiliesResponse[number]
+  showShelter?: boolean
 }
 
 export const FamilyItem = forwardRef<HTMLDivElement, Props>(
-  ({ family }, ref) => {
+  ({ family, showShelter = false }, ref) => {
     const phoneNumber = family.cellphone
       ? cellphoneMask(family.cellphone)
       : family.cellphone
@@ -36,6 +38,12 @@ export const FamilyItem = forwardRef<HTMLDivElement, Props>(
             <h2 className="text-xl font-bold uppercase 2xl:text-2xl">
               {family.responsable}
             </h2>
+            {showShelter && (
+              <p className="text-sm 2xl:text-base">
+                <span className="mr-1 font-bold">Abrigo:</span>
+                {truncateText(family.shelter, 80)}
+              </p>
+            )}
             <p className="text-sm 2xl:text-base">
               {phoneNumber ?? family.cellphone}
             </p>

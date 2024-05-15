@@ -95,6 +95,7 @@ export function FamilyList({ authToken }: Props) {
               ref={index === families.length - 1 ? ref : null}
               key={family.familyId}
               family={family}
+              showShelter={searchValues.scope === 'global'}
             />
           ))
         ) : (
