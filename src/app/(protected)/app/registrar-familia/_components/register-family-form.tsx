@@ -1,6 +1,5 @@
 'use client'
 
-import { revalidatePath } from '@/actions/revalidate'
 import { deleteFamily } from '@/api/delete-family'
 import { ListFamiliesResponse } from '@/api/list-families'
 import { ListFamilyDetailsResponse } from '@/api/list-family-details'
@@ -18,7 +17,6 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
-import { siteRoutes } from '@/config/site'
 import { cellphoneMask } from '@/functions/cellphone-mask'
 import { useFamilyStore } from '@/hooks/use-family-store'
 import { cn } from '@/lib/utils'
@@ -34,6 +32,7 @@ import {
 } from '@tanstack/react-query'
 import { PlusIcon, SaveIcon, TrashIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useGeolocated } from 'react-geolocated'
 import { FieldErrors, useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { v4 as uuid } from 'uuid'
@@ -44,6 +43,8 @@ type Props = {
 }
 
 export function RegisterFamilyForm({ authToken, family }: Props) {
+  const { coords } = useGeolocated()
+
   const { searchValues } = useFamilyStore()
   const queryClient = useQueryClient()
   const router = useRouter()
@@ -113,7 +114,6 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
           : 'Família registrada com sucesso!',
       )
 
-      revalidatePath(siteRoutes.protected.families)
       queryClient.invalidateQueries({
         queryKey: ['infinite-list-families'],
       })
@@ -135,9 +135,14 @@ export function RegisterFamilyForm({ authToken, family }: Props) {
     if (result === 1) {
       toast.success('A família foi excluída!')
 
-      revalidatePath(siteRoutes.protected.families)
       queryClient.setQueryData<InfiniteData<ListFamiliesResponse>>(
-        ['infinite-list-families', searchValues.scope, searchValues.searchTerm],
+        [
+          'infinite-list-families',
+          searchValues.scope,
+          searchValues.searchTerm,
+          coords?.latitude,
+          coords?.longitude,
+        ],
         (state) => {
           if (state) {
             return {
