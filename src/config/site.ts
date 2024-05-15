@@ -1,6 +1,13 @@
 // General config
 
-import { Metadata } from 'next'
+import { env } from '@/env'
+import { Metadata, Viewport } from 'next'
+
+export const siteConfig = {
+  title: 'Abrigos RS',
+  description:
+    'Sistema de Ajuda e Resgate no Rio Grande do Sul | Divulgue pedidos de doações, encontre voluntários (médicos e veterinários), e receba avisos importantes sobre acolhimento. Conectamos quem precisa de ajuda com quem pode oferecer apoio. Juntos, fazemos a diferença!',
+} satisfies Record<string, string>
 
 export type RouteVisibility = 'public' | 'protected'
 
@@ -41,9 +48,8 @@ export const mainContributors = [
 ] satisfies Contributor[]
 
 export const siteMetadata: Metadata = {
-  title: 'Abrigos RS',
-  description:
-    'Aplicativo para ajudar na procura e gerenciamento de abrigos no Rio Grande do Sul.',
+  title: siteConfig.title,
+  description: siteConfig.description,
   keywords:
     'rio grande do sul, desastre, abrigo, tragedia, resgate, resgaters, abrigors, abrigosrs, abrigos, rs, ajuda, aplicativo, site',
   authors: [
@@ -57,11 +63,30 @@ export const siteMetadata: Metadata = {
     type: 'website',
     locale: 'pt_BR',
     url: 'https://abrigosrs.app.br',
-    title: 'Abrigos RS',
-    description:
-      'Aplicativo para ajudar na procura e gerenciamento de abrigos no Rio Grande do Sul.',
-    siteName: 'Abrigos RS',
+    title: siteConfig.title,
+    description: siteConfig.description,
+    siteName: siteConfig.title,
   },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: siteConfig.title,
+  },
+  twitter: {
+    card: 'summary',
+    title: siteConfig.title,
+    description: siteConfig.description,
+  },
+  applicationName: siteConfig.title,
+  metadataBase: new URL(env.NEXT_PUBLIC_NEXT_API_URL),
+  formatDetection: {
+    telephone: false,
+  },
+}
+
+export const siteViewport: Viewport = {
+  themeColor: '#4682B4',
 }
 
 export const organizationHref = 'https://github.com/ResgateRS'

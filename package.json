@@ -9,6 +9,7 @@
     "lint": "next lint --fix"
   },
   "dependencies": {
+    "@ducanh2912/next-pwa": "^10.2.7",
     "@hookform/resolvers": "^3.3.4",
     "@mantine/hooks": "^7.9.1",
     "@radix-ui/react-checkbox": "^1.0.4",
