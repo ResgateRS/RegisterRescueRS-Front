@@ -6,9 +6,7 @@ import { JwtPayload } from '@/types/api'
 import { jwtDecode } from 'jwt-decode'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { Suspense } from 'react'
-import { FamilyListSkeleton } from './_components/families-list-skeleton'
-import { FamilyListWrapper } from './_components/family-list-wrapper'
+import { FamilyList } from './_components/family-list'
 
 export default function FamiliasPage() {
   const token = cookies().get(cookiesNames.session)?.value
@@ -30,9 +28,7 @@ export default function FamiliasPage() {
         !
       </h1>
 
-      <Suspense fallback={<FamilyListSkeleton />}>
-        <FamilyListWrapper authToken={token} />
-      </Suspense>
+      <FamilyList authToken={token} />
     </Section>
   )
 }

@@ -1,7 +1,8 @@
 'use client'
 
-import { ListFamiliesResponse, listFamilies } from '@/api/list-families'
-import { familiesListPageSize } from '@/config/families'
+import { listFamilies } from '@/api/list-families'
+import { ErrorContainer } from '@/app/(public)/(landing-page)/_components/error-container'
+import { infiniteFamiliesListPageSize } from '@/config/families'
 import { useFamilyStore } from '@/hooks/use-family-store'
 import { useIntersection } from '@mantine/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -13,14 +14,13 @@ import { SearchForm } from './search-form'
 
 type Props = {
   authToken: string
-  initialData: ListFamiliesResponse
 }
 
-export function FamilyList({ authToken, initialData }: Props) {
+export function FamilyList({ authToken }: Props) {
   const { searchValues } = useFamilyStore()
   const { coords } = useGeolocated()
 
-  const { data, fetchNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, isPending, error } = useInfiniteQuery({
     queryKey: [
       'infinite-list-families',
       searchValues.scope,
@@ -31,7 +31,7 @@ export function FamilyList({ authToken, initialData }: Props) {
     queryFn: async ({ pageParam }) => {
       const response = await listFamilies({
         global: searchValues.scope === 'global',
-        pageSize: familiesListPageSize,
+        pageSize: infiniteFamiliesListPageSize,
         cursor: pageParam,
         authToken,
         searchTerm: searchValues.searchTerm,
@@ -53,7 +53,6 @@ export function FamilyList({ authToken, initialData }: Props) {
 
       return lastPage[lastPage.length - 1].familyId
     },
-    enabled: searchValues.searchTerm.length > 0,
   })
 
   const lastFamilyRef = useRef<HTMLElement>(null)
@@ -68,10 +67,7 @@ export function FamilyList({ authToken, initialData }: Props) {
     }
   }, [entry, fetchNextPage, searchValues])
 
-  const families =
-    searchValues.searchTerm.length > 0
-      ? data?.pages.flatMap((family) => family)
-      : initialData
+  const families = data?.pages.flatMap((family) => family)
 
   return (
     <div className="relative flex w-full flex-col gap-6 pb-8">
@@ -79,18 +75,19 @@ export function FamilyList({ authToken, initialData }: Props) {
         <SearchForm />
 
         <span className="truncate text-center text-sm lg:text-start">
-          {searchValues.searchTerm.length > 0
-            ? `Procurando por "${searchValues.searchTerm}" ${searchValues.scope === 'local' ? 'neste abrigo.' : 'em todos os abrigos.'}`
-            : `Mostrando ${initialData.length} resultados neste abrigo.`}
+          {families &&
+            (searchValues.searchTerm.length > 0
+              ? `Procurando por "${searchValues.searchTerm}" ${searchValues.scope === 'local' ? 'neste abrigo.' : 'em todos os abrigos.'}`
+              : `Mostrando ${families?.length} resultados neste abrigo.`)}
         </span>
       </div>
 
-      {families ? (
-        families.length === 0 ? (
-          <div className="flex items-center justify-center text-lg">
-            Nenhuma família encontrada.
-          </div>
-        ) : (
+      {isPending && <FamilyListSkeleton />}
+      {!isPending && !!error && <ErrorContainer message={error.message} />}
+      {!isPending &&
+        !error &&
+        families &&
+        (families.length > 1 ? (
           families.map((family, index) => (
             <FamilyItem
               ref={index === families.length - 1 ? ref : null}
@@ -98,10 +95,11 @@ export function FamilyList({ authToken, initialData }: Props) {
               family={family}
             />
           ))
-        )
-      ) : (
-        <FamilyListSkeleton withoutWrapper />
-      )}
+        ) : (
+          <div className="flex items-center justify-center text-lg">
+            Nenhuma família encontrada.
+          </div>
+        ))}
     </div>
   )
 }
