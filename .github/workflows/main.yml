@@ -43,6 +43,7 @@ jobs:
           pwd
           ls -la
           npm run build
+          pwd
           ls -la
       - name: Setup Pages
         uses: actions/configure-pages@v4
