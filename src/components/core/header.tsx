@@ -15,8 +15,10 @@ export function Header({ routeType, className, ...props }: Props) {
     <header
       data-protected-route={routeType === 'protected'}
       className={cn(
-        '-mb-1 flex h-64 sm:h-56 w-full flex-col items-center justify-center gap-4 bg-celeste px-4 pt-1 text-zinc-50 2xl:px-44 xl:flex-row xl:h-28 xl:justify-between xl:px-20 xl:pt-0',
-        routeType === 'protected' && 'h-64 lg:h-44 ',
+        '-mb-1 flex h-64 sm:h-56 w-full flex-col items-center justify-center gap-4 bg-celeste px-4 pt-1 text-zinc-50 2xl:px-44 ',
+        routeType === 'protected'
+          ? 'h-80 lg:h-44 2xl:flex-row 2xl:h-28 2xl:justify-between 2xl:pt-0'
+          : 'xl:flex-row xl:h-28 xl:justify-between xl:pt-0 xl:px-20',
         className,
       )}
       {...props}
