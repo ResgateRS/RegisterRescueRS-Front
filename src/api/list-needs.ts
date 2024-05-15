@@ -9,11 +9,11 @@ export type ListNeedsRequest = {
 export type ListNeedsResponse = {
   acceptingVolunteers: boolean
   acceptingDoctors: boolean
-  acceptingVeterinarians: boolean
+  acceptingVeterinary: boolean
   acceptingDonations: boolean
-  avaliable: boolean
-  donationDescription: string
-  volunteersSubscriptionLink: string
+  acceptingUnsheltered: boolean
+  donationsDescription?: string
+  formLink?: string
 }
 
 export async function listNeeds({ authToken }: ListNeedsRequest) {

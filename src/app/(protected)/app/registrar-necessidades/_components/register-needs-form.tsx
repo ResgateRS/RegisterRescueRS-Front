@@ -20,6 +20,7 @@ import {
   RegisterNeedsSchema,
   registerNeedsSchema,
 } from '@/schemas/register-needs-schema'
+import { FormattedBaseApiResponse } from '@/types/api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
@@ -52,7 +53,6 @@ export function RegisterNeedsForm({ shelterId, authToken }: Props) {
     resolver: zodResolver(registerNeedsSchema),
     defaultValues: {
       shelterId,
-      avaliable: false,
       acceptingDoctors: false,
       acceptingDonations: false,
       acceptingUnsheltered: false,
@@ -74,20 +74,15 @@ export function RegisterNeedsForm({ shelterId, authToken }: Props) {
     if (result === 1) {
       toast.success('Necessidades salvas com sucesso!')
 
-      queryClient.setQueryData<ListNeedsResponse>(
+      queryClient.setQueryData<FormattedBaseApiResponse<ListNeedsResponse>>(
         ['list-needs', authToken],
         (state) => {
           if (state) {
-            return {
-              acceptingDoctors: data.acceptingDoctors,
-              acceptingDonations: data.acceptingDonations,
-              acceptingVeterinarians: data.acceptingVeterinary,
-              acceptingVolunteers: data.acceptingVolunteers,
-              avaliable: data.avaliable,
-              donationDescription: data.donationsDescription ?? '',
-              volunteersSubscriptionLink: data.formLink ?? '',
-            }
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { shelterId: _, ...newData } = data
+            return { ...state, data: newData }
           }
+
           return state
         },
       )
@@ -99,7 +94,12 @@ export function RegisterNeedsForm({ shelterId, authToken }: Props) {
 
   useEffect(() => {
     if (needs && needs.result === 1) {
-      reset({ shelterId, ...needs.data })
+      reset({
+        shelterId,
+        formLink: needs.data.formLink ?? '',
+        donationsDescription: needs.data.donationsDescription ?? '',
+        ...needs.data,
+      })
     }
   }, [needs, reset, shelterId])
 
