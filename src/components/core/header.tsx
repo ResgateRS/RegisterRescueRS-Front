@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { LogoIcon } from '../icons/logo'
 import { ResgateLogoIcon } from '../icons/resgate-logo'
 import { Nav } from './nav'
+import { PwaInstallButton } from './pwa-install-button'
 
 type Props = {
   routeType: RouteVisibility
@@ -42,6 +43,7 @@ export function Header({ routeType, className, ...props }: Props) {
           <span className="z-10 font-bold uppercase">Resgate RS</span>
         </Link>
       </div>
+      <PwaInstallButton />
 
       <Nav routeType={routeType} />
       {routeType === 'public' && <Separator className="block h-1 lg:hidden" />}

@@ -32,12 +32,24 @@ export function DonationItem({ donation }: Props) {
             Precisam de:
           </span>
 
-          <span className="block text-wrap text-sm sm:hidden lg:block 2xl:text-base">
-            {truncateText(donation.donationDescription, 60)}
+          {/* XS Screens */}
+          <span className="block text-wrap text-sm sm:hidden 2xl:text-base">
+            {truncateText(donation.donationDescription, 40)}
           </span>
 
+          {/* SM-MD Screens */}
           <span className="hidden text-wrap text-sm sm:block lg:hidden 2xl:text-base">
             {truncateText(donation.donationDescription, 80)}
+          </span>
+
+          {/* LG Screens */}
+          <span className="hidden text-wrap lg:block xl:hidden 2xl:text-base">
+            {truncateText(donation.donationDescription, 40)}
+          </span>
+
+          {/* XL+ Screens */}
+          <span className="hidden text-wrap xl:block 2xl:text-base">
+            {truncateText(donation.donationDescription, 50)}
           </span>
         </div>
       )}
