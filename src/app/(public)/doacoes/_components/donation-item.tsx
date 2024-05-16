@@ -21,7 +21,7 @@ export const DonationItem = forwardRef<HTMLDivElement, Props>(
     return (
       <div
         ref={ref}
-        className="flex h-72 w-full flex-col items-start justify-between gap-2 rounded-lg bg-zinc-50 p-4 shadow-lg lg:p-10"
+        className="flex h-[26rem] w-full flex-col items-start justify-between gap-2 rounded-lg bg-zinc-50 p-4 shadow-lg lg:p-10"
       >
         <div className="flex flex-col gap-2">
           <div className="flex gap-3 lg:gap-6">
@@ -29,7 +29,7 @@ export const DonationItem = forwardRef<HTMLDivElement, Props>(
               <HomeIcon className="size-4 2xl:size-5" />
             </div>
 
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-1 flex-col gap-1">
               <h2 className="text-xl font-bold uppercase 2xl:text-2xl">
                 {donation.shelterName}
               </h2>
@@ -44,7 +44,7 @@ export const DonationItem = forwardRef<HTMLDivElement, Props>(
               </span>
 
               <span className="block text-wrap text-sm 2xl:text-base">
-                {truncateText(donation.donationDescription, 120)}
+                {truncateText(donation.donationDescription, 350)}
               </span>
             </div>
           )}

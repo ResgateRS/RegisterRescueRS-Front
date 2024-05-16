@@ -7,8 +7,11 @@ export const registerNeedsSchema = z.object({
   acceptingDoctors: z.boolean(),
   acceptingVeterinary: z.boolean(),
   acceptingDonations: z.boolean(),
-  formLink: z.string(),
-  donationsDescription: z.string(),
+  formLink: z.string().url('Insira um link válido.').or(z.literal('')),
+  donationsDescription: z
+    .string()
+    .max(350, 'Você só pode escrever até 350 caracteres neste campo.')
+    .or(z.literal('')),
 })
 
 export type RegisterNeedsSchema = z.infer<typeof registerNeedsSchema>

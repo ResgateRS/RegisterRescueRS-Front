@@ -6,7 +6,10 @@ export const registerFamilySchema = z
     houseds: z.array(
       z.object({
         id: z.string().min(1, 'Este campo não pode ser vazio.'),
-        name: z.string().min(1, 'Este campo não pode ser vazio.'),
+        name: z
+          .string()
+          .min(1, 'Este campo não pode ser vazio.')
+          .max(60, 'Você só pode escrever até 60 caracteres neste campo.'),
         cellphone: z
           .string()
           .min(1, 'Este campo não pode ser vazio.')
