@@ -25,5 +25,5 @@ export function usePWAInstallPrompt() {
     }
   }, [])
 
-  return { installPromptEvent, setInstallPromptEvent }
+  return { installPromptEvent }
 }
