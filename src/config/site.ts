@@ -92,7 +92,7 @@ export const siteViewport: Viewport = {
 export const organizationHref = 'https://github.com/ResgateRS'
 
 export const whatsappHref =
-  'https://wa.me/55XXXXXXXXXXX?text=Olá!%20Gostaria%20de%20solicitar%20um%20cadastro!'
+  'https://wa.me/5551991732630?text=Olá!%20Gostaria%20de%20solicitar%20um%20cadastro%20para%20o%20Abrigos%20RS!'
 
 // Site routes
 
