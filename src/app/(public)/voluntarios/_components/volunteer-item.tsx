@@ -1,6 +1,7 @@
 import { ListVolunteersResponse } from '@/api/list-volunteers'
 import { HomeIcon } from '@/components/icons/home'
 import { buttonVariants } from '@/components/ui/button'
+import { truncateText } from '@/functions/truncate-text'
 import { cn } from '@/lib/utils'
 import { MapPinIcon } from 'lucide-react'
 import Link from 'next/link'
@@ -21,7 +22,7 @@ export const VolunteerItem = forwardRef<HTMLDivElement, Props>(
     return (
       <div
         ref={ref}
-        className="flex h-80 w-full flex-col items-start justify-between gap-2 rounded-lg bg-zinc-50 p-4 shadow-lg lg:p-10"
+        className="flex h-[21rem] w-full flex-col items-start justify-between gap-2 rounded-lg bg-zinc-50 p-4 shadow-lg lg:p-10"
       >
         <div className="flex gap-3 xl:gap-6">
           <div className="flex size-10 items-center justify-center rounded-full bg-celeste/45 2xl:size-12">
@@ -37,6 +38,19 @@ export const VolunteerItem = forwardRef<HTMLDivElement, Props>(
         </div>
 
         <div className="flex w-full flex-col gap-4 pl-0 xl:pl-16 2xl:pl-[72px]">
+          {volunteer.volunteersSubscriptionLink &&
+            volunteer.volunteersSubscriptionLink.length > 0 && (
+              <Link
+                href={volunteer.volunteersSubscriptionLink}
+                className={cn(
+                  buttonVariants({ variant: 'link' }),
+                  'text-sm 2xl:text-base p-0 m-0 h-fit w-fit ',
+                )}
+                target="_blank"
+              >
+                {truncateText(volunteer.volunteersSubscriptionLink, 40)}
+              </Link>
+            )}
           <span
             data-available={volunteer.avaliable}
             className="text-sm font-extrabold data-[available=false]:text-red-500 data-[available=true]:text-green-500 2xl:text-base"

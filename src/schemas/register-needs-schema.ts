@@ -7,7 +7,11 @@ export const registerNeedsSchema = z.object({
   acceptingDoctors: z.boolean(),
   acceptingVeterinary: z.boolean(),
   acceptingDonations: z.boolean(),
-  formLink: z.string().url('Insira um link válido.').or(z.literal('')),
+  formLink: z
+    .string()
+    .url('Insira um link válido.')
+    .max(40, 'Você só pode escrever até 40 caracteres neste campo.')
+    .or(z.literal('')),
   donationsDescription: z
     .string()
     .max(350, 'Você só pode escrever até 350 caracteres neste campo.')
