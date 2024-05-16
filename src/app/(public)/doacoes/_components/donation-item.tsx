@@ -44,7 +44,7 @@ export const DonationItem = forwardRef<HTMLDivElement, Props>(
               </span>
 
               <span className="block text-wrap text-sm 2xl:text-base">
-                {truncateText(donation.donationDescription, 250)}
+                {truncateText(donation.donationDescription, 120)}
               </span>
             </div>
           )}
