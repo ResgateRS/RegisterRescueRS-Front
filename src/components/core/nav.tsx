@@ -2,7 +2,7 @@
 
 import { handleLogout } from '@/actions/auth'
 import { navConfig } from '@/config/nav'
-import { RouteVisibility } from '@/config/site'
+import { RouteVisibility, siteRoutes } from '@/config/site'
 import { cn } from '@/lib/utils'
 import { LogOutIcon } from 'lucide-react'
 import Link from 'next/link'
@@ -47,7 +47,10 @@ export function Nav({ routeType }: Props) {
           className={cn(
             buttonVariants({ variant: 'outline' }),
             'text-xl',
-            (pathname.includes(item.href) || pathname === item.href) &&
+            (pathname.includes(item.href) ||
+              pathname === item.href ||
+              (pathname === siteRoutes.public.signup &&
+                item.href === '/login')) &&
               'bg-zinc-100 text-celeste',
           )}
         >

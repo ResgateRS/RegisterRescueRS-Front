@@ -6,13 +6,13 @@ import { whatsappHref } from '@/config/site'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { Section } from '../../../components/core/section'
-import { LoginForm } from './_components/form'
+import { CadastroForm } from './_components/form'
 
-export default function LoginPage() {
+export default function CadastroPage() {
   return (
     <Section className="mb-0 min-h-[calc(100vh-12.75rem)] justify-center bg-celeste text-zinc-50 lg:min-h-[calc(100vh-6.75rem)] lg:flex-row lg:justify-between 2xl:gap-32">
       <div className="flex max-w-none flex-col items-center gap-5 lg:max-w-md lg:items-start xl:max-w-xl">
-        <h1 className="text-center text-xl font-bold lg:text-start lg:text-4xl 2xl:text-5xl">
+        <h1 className="mt-4 text-center text-xl font-bold lg:mt-0 lg:text-start lg:text-4xl 2xl:text-5xl">
           Acesse o aplicativo!
         </h1>
         <p className="hidden text-center text-xl font-light lg:block lg:text-start lg:text-base xl:text-lg 2xl:text-xl">
@@ -35,10 +35,10 @@ export default function LoginPage() {
       </div>
 
       <h1 className="mt-2 block text-center text-xl font-bold lg:mt-0 lg:hidden lg:text-start lg:text-5xl">
-        Ou acesse com seu usuário
+        Ou cadastre seu abrigo
       </h1>
 
-      <LoginForm />
+      <CadastroForm />
     </Section>
   )
 }

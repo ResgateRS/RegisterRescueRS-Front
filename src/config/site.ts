@@ -105,6 +105,7 @@ export const siteRoutes = {
   public: {
     landingPage: `${prefixSiteRoutes.public}/`,
     login: `${prefixSiteRoutes.public}/login`,
+    signup: `${prefixSiteRoutes.public}/cadastro`,
     donations: `${prefixSiteRoutes.public}/doacoes`,
     volunteers: `${prefixSiteRoutes.public}/voluntarios`,
   },

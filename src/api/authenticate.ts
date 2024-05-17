@@ -6,7 +6,7 @@ import axios from 'axios'
 
 export type AuthenticateResponse = {
   token: string
-}
+} | null
 
 export async function authenticate({ login, password }: LoginSchema) {
   const body = { login, password }

@@ -16,13 +16,25 @@ export async function POST(req: NextRequest) {
   const parsedData = loginSchema.safeParse(data)
   if (parsedData.success) {
     const body = parsedData.data
-    const { data, result } = await login(body)
+    const response = await login(body)
+    const { result } = response
 
     if (result === 0) {
       return new Response(
         JSON.stringify({
           Result: 0,
           Message: 'Usuário e/ou senha inválidos!',
+          Data: {},
+        }),
+      )
+    }
+
+    if (result === 98) {
+      return new Response(
+        JSON.stringify({
+          Result: 98,
+          Message:
+            'Sua conta ainda não foi validada. Entre em contato com a gente!',
           Data: {},
         }),
       )
@@ -37,8 +49,9 @@ export async function POST(req: NextRequest) {
         }),
       )
     }
-
-    const { token } = data
+    const {
+      data: { token },
+    } = response
 
     const decodedJwt = jwtDecode<JwtPayload>(token)
     const expirationTime = decodedJwt.exp
