@@ -3,6 +3,7 @@ import { siteRoutes } from './site'
 export type NavItem = {
   title: string
   href: string
+  isAdmin?: boolean
 }
 
 export type NavConfigItems = {
@@ -22,6 +23,7 @@ export const navConfig = {
       {
         title: 'Início',
         href: siteRoutes.public.landingPage,
+        isAdmin: false,
       },
       {
         title: 'Doações',
@@ -36,6 +38,7 @@ export const navConfig = {
       {
         title: 'Acessar',
         href: siteRoutes.public.login,
+        isAdmin: false,
       },
     ],
   },
@@ -48,6 +51,7 @@ export const navConfig = {
       {
         title: 'Verificar abrigo',
         href: siteRoutes.protected.verifyShelter,
+        isAdmin: true,
       },
     ],
     button: [],

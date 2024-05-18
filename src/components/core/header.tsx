@@ -1,7 +1,13 @@
 import { Separator } from '@/components/ui/separator'
 import { RouteVisibility, siteRoutes } from '@/config/site'
+import { cookiesNames } from '@/config/storage'
 import { cn } from '@/lib/utils'
+import { jwtUserDataSchema } from '@/schemas/jwt-user-data-schema'
+import { JwtPayload } from '@/types/api'
+import { jwtDecode } from 'jwt-decode'
+import { cookies } from 'next/headers'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import { LogoIcon } from '../icons/logo'
 import { ResgateLogoIcon } from '../icons/resgate-logo'
 import { Nav } from './nav'
@@ -12,6 +18,27 @@ type Props = {
 } & React.ComponentProps<'header'>
 
 export function Header({ routeType, className, ...props }: Props) {
+  let isAdmin = false
+  if (routeType === 'protected') {
+    const token = cookies().get(cookiesNames.session)?.value
+    if (!token) {
+      redirect(siteRoutes.public.landingPage)
+    }
+    const decodedToken = jwtDecode<JwtPayload>(token)
+
+    const userData = jwtUserDataSchema.safeParse(
+      JSON.parse(decodedToken.userData),
+    )
+
+    if (!userData.success) {
+      redirect(siteRoutes.public.landingPage)
+    }
+
+    if (userData.data.adm) {
+      isAdmin = true
+    }
+  }
+
   return (
     <header
       data-protected-route={routeType === 'protected'}
@@ -45,7 +72,7 @@ export function Header({ routeType, className, ...props }: Props) {
       </div>
       <PwaInstallButton />
 
-      <Nav routeType={routeType} />
+      <Nav routeType={routeType} isAdminUser={isAdmin} />
       {routeType === 'public' && <Separator className="block h-1 lg:hidden" />}
     </header>
   )

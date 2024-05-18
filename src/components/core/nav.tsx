@@ -11,9 +11,10 @@ import { Button, buttonVariants } from '../ui/button'
 
 type Props = {
   routeType: RouteVisibility
+  isAdminUser?: boolean
 }
 
-export function Nav({ routeType }: Props) {
+export function Nav({ routeType, isAdminUser = false }: Props) {
   const pathname = usePathname()
 
   return (
@@ -22,41 +23,49 @@ export function Nav({ routeType }: Props) {
         data-protected-route={routeType === 'protected'}
         className="flex gap-4 data-[protected-route=true]:flex-col lg:gap-8 lg:data-[protected-route=true]:flex-row"
       >
-        {navConfig[routeType].link.map((item) => (
+        {navConfig[routeType].link.flatMap((item) =>
+          !item.isAdmin || isAdminUser ? (
+            <Link
+              key={item.title}
+              href={item.href}
+              className={cn(
+                buttonVariants({ variant: 'navLink', size: 'link' }),
+                'text-xl after:bg-zinc-50/50 text-zinc-50/50 lg:after:bg-white lg:text-zinc-50',
+                ((pathname.includes(item.href) && item.href !== '/') ||
+                  pathname === item.href) &&
+                  'lg:after:w-full after:bg-white text-zinc-50',
+              )}
+              scroll={false}
+            >
+              {item.title}
+            </Link>
+          ) : (
+            []
+          ),
+        )}
+      </div>
+
+      {navConfig[routeType].button.flatMap((item) =>
+        !item.isAdmin || isAdminUser ? (
           <Link
             key={item.title}
             href={item.href}
             className={cn(
-              buttonVariants({ variant: 'navLink', size: 'link' }),
-              'text-xl after:bg-zinc-50/50 text-zinc-50/50 lg:after:bg-white lg:text-zinc-50',
-              ((pathname.includes(item.href) && item.href !== '/') ||
-                pathname === item.href) &&
-                'lg:after:w-full after:bg-white text-zinc-50',
+              buttonVariants({ variant: 'outline' }),
+              'text-xl',
+              (pathname.includes(item.href) ||
+                pathname === item.href ||
+                (pathname === siteRoutes.public.signup &&
+                  item.href === '/login')) &&
+                'bg-zinc-100 text-celeste',
             )}
-            scroll={false}
           >
             {item.title}
           </Link>
-        ))}
-      </div>
-
-      {navConfig[routeType].button.map((item) => (
-        <Link
-          key={item.title}
-          href={item.href}
-          className={cn(
-            buttonVariants({ variant: 'outline' }),
-            'text-xl',
-            (pathname.includes(item.href) ||
-              pathname === item.href ||
-              (pathname === siteRoutes.public.signup &&
-                item.href === '/login')) &&
-              'bg-zinc-100 text-celeste',
-          )}
-        >
-          {item.title}
-        </Link>
-      ))}
+        ) : (
+          []
+        ),
+      )}
 
       {routeType === 'protected' && (
         <form action={handleLogout}>

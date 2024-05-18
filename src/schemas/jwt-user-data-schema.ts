@@ -9,7 +9,7 @@ export const jwtUserDataSchema = z
   .transform((schema) => ({
     shelterId: schema.ShelterId,
     shelterName: schema.ShelterName,
-    adm: schema.ShelterName,
+    adm: schema.Adm,
   }))
 
 export type JwtUserDataSchema = z.infer<typeof jwtUserDataSchema>
