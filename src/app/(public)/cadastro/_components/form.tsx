@@ -63,7 +63,7 @@ export function CadastroForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="mb-4 flex w-full flex-col items-center justify-center space-y-4 lg:mb-0 lg:flex-1"
       >
-        <ScrollArea className="flex h-80 w-full flex-col items-center justify-center gap-4 xl:h-96 2xl:h-[28rem]">
+        <ScrollArea className="flex size-full flex-col items-center justify-center gap-4 sm:h-80 xl:h-96 2xl:h-[28rem]">
           <FormField
             control={form.control}
             name="name"

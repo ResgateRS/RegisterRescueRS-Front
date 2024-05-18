@@ -9,7 +9,11 @@ export const signupSchema = z
     login: z
       .string()
       .min(1, 'Este campo não pode ser vazio.')
-      .max(30, 'Você só pode escrever até 30 caracteres neste campo.'),
+      .max(30, 'Você só pode escrever até 30 caracteres neste campo.')
+      .refine(
+        (value) => !value.includes(' '),
+        'Este campo não pode conter espaços.',
+      ),
     password: z
       .string()
       .min(1, 'Este campo não pode ser vazio.')
