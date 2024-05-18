@@ -11,14 +11,13 @@ import {
 import { XIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
-import { RegisterNeedsForm } from '../../registrar-necessidades/_components/register-needs-form'
+import { UnverifiedShelterList } from './unverified-shelter-list'
 
 type Props = {
-  shelterId: string
   authToken: string
 }
 
-export function RegisterNeedsDialog({ shelterId, authToken }: Props) {
+export function VerifyShelterDialog({ authToken }: Props) {
   const router = useRouter()
   const onDismiss = useCallback(() => {
     router.back()
@@ -39,12 +38,13 @@ export function RegisterNeedsDialog({ shelterId, authToken }: Props) {
           <span className="sr-only">Fechar</span>
         </DialogClose>
         <DialogHeader>
-          <DialogTitle>Registrar necessidades</DialogTitle>
+          <DialogTitle>Verificar abrigo</DialogTitle>
           <DialogDescription>
-            Preencha o formulário para salvar as necessidades do abrigo.
+            Os abrigos abaixo estão esperando verificação. Preencha a latitude e
+            longitude de um abrigo e verifique-o.
           </DialogDescription>
         </DialogHeader>
-        <RegisterNeedsForm shelterId={shelterId} authToken={authToken} />
+        <UnverifiedShelterList authToken={authToken} />
       </DialogContent>
     </Dialog>
   )
