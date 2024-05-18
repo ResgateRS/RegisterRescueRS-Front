@@ -24,7 +24,11 @@ export function UnverifiedShelterList({ authToken }: Props) {
 
   return (
     <>
-      {isPendingUnverifiedShelters && <UnverifiedShelterListSkeleton />}
+      {isPendingUnverifiedShelters && (
+        <ScrollArea className="h-96">
+          <UnverifiedShelterListSkeleton />
+        </ScrollArea>
+      )}
       {!isPendingUnverifiedShelters && !!error && (
         <ErrorContainer message={error.message} />
       )}

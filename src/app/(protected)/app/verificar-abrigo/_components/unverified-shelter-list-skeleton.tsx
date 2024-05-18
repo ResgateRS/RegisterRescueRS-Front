@@ -1,15 +1,14 @@
 import { Skeleton } from '@/components/ui/skeleton'
-import { donationsListPageSize } from '@/config/donations'
+import { unverifiedSheltersListPageSize } from '@/config/shelters'
 
 export function UnverifiedShelterListSkeleton() {
   return (
     <>
-      {Array.from({ length: donationsListPageSize }).map((_, index) => (
-        <Skeleton
-          key={index}
-          className="h-56 w-[500px] gap-4 rounded-2xl px-4 py-10 2xl:h-60 2xl:w-[630px]"
-        />
-      ))}
+      {Array.from({ length: unverifiedSheltersListPageSize }).map(
+        (_, index) => (
+          <Skeleton key={index} className="mb-2 h-14 w-full rounded-none" />
+        ),
+      )}
     </>
   )
 }
