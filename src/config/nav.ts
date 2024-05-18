@@ -46,8 +46,8 @@ export const navConfig = {
         href: siteRoutes.protected.registerNeeds,
       },
       {
-        title: 'Registrar família',
-        href: siteRoutes.protected.registerFamily,
+        title: 'Verificar abrigo',
+        href: siteRoutes.protected.verifyShelter,
       },
     ],
     button: [],

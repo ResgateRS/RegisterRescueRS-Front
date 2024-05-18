@@ -113,5 +113,6 @@ export const siteRoutes = {
     families: `${prefixSiteRoutes.protected}/familias`,
     registerFamily: `${prefixSiteRoutes.protected}/registrar-familia`,
     registerNeeds: `${prefixSiteRoutes.protected}/registrar-necessidades`,
+    verifyShelter: `${prefixSiteRoutes.protected}/verificar-abrigo`,
   },
 } as const satisfies Record<RouteVisibility, Record<string, string>>

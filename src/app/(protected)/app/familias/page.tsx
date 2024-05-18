@@ -19,7 +19,7 @@ export default function FamiliasPage() {
   )
 
   return (
-    <Section className="mb-0 min-h-[calc(100vh-12.75rem)] items-start justify-start gap-7 pt-10 lg:min-h-[calc(100vh-6.75rem)] 2xl:gap-5">
+    <Section className="mb-0 min-h-[calc(100vh-12.75rem)] items-start justify-start gap-0 pt-10 lg:min-h-[calc(100vh-6.75rem)] xl:gap-7 2xl:gap-5">
       <h1 className="w-full text-center text-lg lg:text-start lg:text-2xl">
         Seja bem vindo,{' '}
         <span className="font-medium">

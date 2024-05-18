@@ -2,10 +2,15 @@
 
 import { listFamilies } from '@/api/list-families'
 import { ErrorContainer } from '@/components/core/error-container'
+import { buttonVariants } from '@/components/ui/button'
 import { infiniteFamiliesListPageSize } from '@/config/families'
+import { siteRoutes } from '@/config/site'
 import { useFamilyStore } from '@/hooks/use-family-store'
+import { cn } from '@/lib/utils'
 import { useIntersection } from '@mantine/hooks'
 import { useInfiniteQuery } from '@tanstack/react-query'
+import { PlusIcon } from 'lucide-react'
+import Link from 'next/link'
 import { useEffect, useRef } from 'react'
 import { useGeolocated } from 'react-geolocated'
 import { FamilyListSkeleton } from './families-list-skeleton'
@@ -76,7 +81,19 @@ export function FamilyList({ authToken }: Props) {
   return (
     <div className="relative flex w-full flex-col gap-6 pb-8">
       <div className="flex w-full flex-col gap-3 lg:gap-0">
-        <SearchForm />
+        <div className="flex flex-col-reverse justify-between xl:flex-row xl:items-center">
+          <SearchForm />
+          <Link
+            href={siteRoutes.protected.registerFamily}
+            className={cn(
+              buttonVariants({ size: 'sm', variant: 'link' }),
+              'p-0',
+            )}
+          >
+            <PlusIcon className="mr-2 size-4" />
+            Nova família
+          </Link>
+        </div>
 
         <span className="truncate text-center text-sm lg:text-start">
           {families &&
