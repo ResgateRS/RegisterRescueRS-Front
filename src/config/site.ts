@@ -42,8 +42,8 @@ export const mainContributors = [
     href: 'https://github.com/gbombassaro',
   },
   {
-    user: 'caiocesarbrito',
-    href: 'https://github.com/caiocesarbrito',
+    user: 'lorenzo-dallagnol',
+    href: 'https://github.com/lorenzo-dallagnol',
   },
 ] satisfies Contributor[]
 

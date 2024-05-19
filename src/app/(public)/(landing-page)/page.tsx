@@ -56,7 +56,7 @@ export default function LandingPage() {
           href={siteRoutes.public.donations}
           className={cn(buttonVariants({ size: 'link', variant: 'link' }))}
         >
-          Ver todas
+          Ver todos
         </Link>
 
         <HowToDonateButton />
@@ -95,6 +95,15 @@ export default function LandingPage() {
           <CollaborationFigure className="hidden size-[400px] lg:block 2xl:size-[500px]" />
           <div className="flex w-full flex-col gap-3 lg:gap-6">
             <VolunteerList />
+            <Link
+              href={siteRoutes.public.volunteers}
+              className={cn(
+                buttonVariants({ size: 'link', variant: 'link' }),
+                'lg:self-start',
+              )}
+            >
+              Ver todos
+            </Link>
           </div>
         </div>
       </Section>
@@ -102,7 +111,7 @@ export default function LandingPage() {
       <footer className="flex flex-col items-center justify-center gap-4 bg-celeste px-4 py-5 text-zinc-50 lg:px-20 xl:flex-row xl:items-end xl:justify-between xl:gap-0 xl:px-24 2xl:px-44">
         <div className="order-2 flex flex-col items-center gap-1 xl:order-none xl:items-start">
           <span className="font-bold">Criado por:</span>
-          <div className="grid grid-cols-3 justify-start gap-x-6 gap-y-2">
+          <div className="flex flex-wrap justify-start gap-x-6 gap-y-2 ">
             {mainContributors.map((contributor) => (
               <Link
                 key={contributor.user}
